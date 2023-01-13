@@ -1,3 +1,4 @@
+// prettier-ignore
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {

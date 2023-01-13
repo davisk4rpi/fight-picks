@@ -1,0 +1,5 @@
+{
+  "workbench.editor.showTabs": true,
+  "importSorter.generalConfiguration.sortOnBeforeSave": true,
+  "java.configuration.updateBuildConfiguration": "interactive"
+}
