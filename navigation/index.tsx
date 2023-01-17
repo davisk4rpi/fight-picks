@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 /**
  * If you are not familiar with React Navigation, refer to the "Fundamentals" guide:

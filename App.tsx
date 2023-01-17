@@ -13,7 +13,7 @@ import Navigation from './navigation';
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
-  const [isThemeDark, setIsThemeDark] = useState(false);
+  const [isThemeDark, setIsThemeDark] = useState(true);
 
   let theme = isThemeDark ? DarkTheme : LightTheme;
 

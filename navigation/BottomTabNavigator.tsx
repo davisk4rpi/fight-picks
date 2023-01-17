@@ -1,11 +1,11 @@
-import { Pressable } from 'react-native';
+import React from 'react';
 
 import { FontAwesome } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import TabOneScreen from '../screens/TabOneScreen';
+import { NextEventScreen } from '../screens';
 import TabTwoScreen from '../screens/TabTwoScreen';
-import { RootTabParamList, RootTabScreenProps } from '../types';
+import { RootTabParamList } from '../types';
 
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
@@ -16,32 +16,33 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>();
 export function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="NextEvent"
       screenOptions={
         {
           // tabBarActiveTintColor: Colors[colorScheme].tint,
         }
       }>
       <BottomTab.Screen
-        name="TabOne"
-        component={TabOneScreen}
-        options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
-          title: 'Tab One',
+        name="NextEvent"
+        component={NextEventScreen}
+        // options={({ navigation }: RootTabScreenProps<'NextEventScreen'>) => ({
+        options={() => ({
+          title: 'Upcoming',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate('Modal')}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}>
-              <FontAwesome
-                name="info-circle"
-                size={25}
-                // color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
-              />
-            </Pressable>
-          ),
+          // headerRight: () => (
+          //   <Pressable
+          //     onPress={() => navigation.navigate('Modal')}
+          //     style={({ pressed }) => ({
+          //       opacity: pressed ? 0.5 : 1,
+          //     })}>
+          //     <FontAwesome
+          //       name="info-circle"
+          //       size={25}
+          //       // color={Colors[colorScheme].text}
+          //       style={{ marginRight: 15 }}
+          //     />
+          //   </Pressable>
+          // ),
         })}
       />
       <BottomTab.Screen

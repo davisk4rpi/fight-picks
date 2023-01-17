@@ -1,5 +1,8 @@
+import React from 'react';
+
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import { FightPickScreen } from '../screens/FightPick';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList } from '../types';
@@ -18,6 +21,11 @@ export function RootNavigator() {
         name="Root"
         component={BottomTabNavigator}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="FightPick"
+        component={FightPickScreen}
+        // options={{ title: true }}
       />
       <Stack.Screen
         name="NotFound"
