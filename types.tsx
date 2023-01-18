@@ -20,6 +20,7 @@ export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   FightPick: { fightId: string };
   Modal: undefined;
+  Login: undefined;
   NotFound: undefined;
 };
 

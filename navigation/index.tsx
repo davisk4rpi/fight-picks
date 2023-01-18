@@ -13,12 +13,20 @@ import {
 } from './get-adapted-navigation-theme';
 import { RootNavigator } from './RootNavigator';
 
-export default function Navigation({ theme }: { theme: RefTheme }) {
+interface NavigationProps {
+  theme: RefTheme;
+  unauthorized?: boolean;
+}
+
+export default function Navigation({
+  theme,
+  unauthorized = true,
+}: NavigationProps) {
   const navTheme = useMemo(() => getAdaptedNavigationTheme(theme), [theme]);
 
   return (
     <NavigationContainer theme={navTheme}>
-      <RootNavigator />
+      <RootNavigator unauthorized={unauthorized} />
     </NavigationContainer>
   );
 }

@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "273716360026",
+    "project_id": "fight-picks",
+    "storage_bucket": "fight-picks.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:273716360026:android:7ddc37794fab3210ac7963",
+        "android_client_info": {
+          "package_name": "com.kieranpdavis.fightpicks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "273716360026-2ao30mhdtpgetkfm572e6omttkaqatdf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kieranpdavis.fightpicks",
+            "certificate_hash": "a571bcd4d3b5074e3ef2261f9c1a826a9e7c2edf"
+          }
+        },
+        {
+          "client_id": "273716360026-drp30di6681aj4m3pv15sfuipe0mepe8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kieranpdavis.fightpicks",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "273716360026-d2lb15s8g84i00hddi7prvpmnmrje969.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgCtRyv8DiRyL5e3uDSh-opENJEfnP2Yk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "273716360026-d2lb15s8g84i00hddi7prvpmnmrje969.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "273716360026-iavhqjk20f3904tg33o0l0n3qo0v12r0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kieranpdavis.fightpicks",
+                "app_store_id": "1666182181"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

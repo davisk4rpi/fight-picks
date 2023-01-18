@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "fights",
-    "slug": "fights",
+    "name": "Fight Picks",
+    "slug": "fightPicks",
     "version": "1.0.0",
     "jsEngine": "hermes",
     "orientation": "portrait",
@@ -18,9 +18,13 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.kieranpdavis.fightpicks",
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
+      "googleServicesFile": "./google-services.json",
+      "package": "com.kieranpdavis.fightpicks",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -28,6 +32,24 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "413ec878-4df5-427d-a7a1-dc88bb155bf5"
+      }
+    },
+    "plugins": [
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth",
+      "@react-native-google-signin/google-signin",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
+      ]
+    ]
   }
 }

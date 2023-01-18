@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>273716360026-iavhqjk20f3904tg33o0l0n3qo0v12r0.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.273716360026-iavhqjk20f3904tg33o0l0n3qo0v12r0</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>273716360026-2ao30mhdtpgetkfm572e6omttkaqatdf.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBXKwNBAqOxlI3fvfO-kkPOeclGlli3tx0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>273716360026</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.kieranpdavis.fightpicks</string>
+	<key>PROJECT_ID</key>
+	<string>fight-picks</string>
+	<key>STORAGE_BUCKET</key>
+	<string>fight-picks.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:273716360026:ios:9eccc2e17fac282fac7963</string>
+</dict>
+</plist>
