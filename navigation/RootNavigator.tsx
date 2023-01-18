@@ -18,7 +18,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 export function RootNavigator({ unauthorized }: { unauthorized: boolean }) {
   return (
     <Stack.Navigator>
-      {unauthorized ? (
+      {true && unauthorized ? (
         <>
           <Stack.Screen
             name="Login"

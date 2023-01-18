@@ -9,17 +9,13 @@ export const useAuthenticatedUser = () => {
 
   useEffect(() => {
     const unsubscribe = auth().onAuthStateChanged(user => {
-      console.log('state change');
       setUser(user);
       setInitializing(false);
     });
     return () => {
-      console.log('unsubscribing');
       unsubscribe();
     }; // unsubscribe on unmount
   }, []);
-
-  console.log('User', user);
 
   return {
     user,

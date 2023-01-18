@@ -11,19 +11,12 @@ import {
 
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
-// import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { DarkTheme, LightTheme, PreferencesContext } from './app-context';
 import GoogleServives from './google-services.json';
 import useCachedResources from './hooks/useCachedResources';
 import { useAuthenticatedUser } from './libs/react-native-firebase';
 import Navigation from './navigation';
 
-console.log(
-  'LOGGGGGG',
-  GoogleServives.client[0].oauth_client.find(
-    ({ client_type }) => client_type === 3,
-  )?.client_id,
-);
 GoogleSignin.configure({
   webClientId: GoogleServives.client[0].oauth_client.find(
     ({ client_type }) => client_type === 3,
@@ -72,7 +65,7 @@ export default function App() {
         <PreferencesContext.Provider value={preferences}>
           <PaperProvider theme={theme}>
             <Navigation theme={theme} unauthorized={user === null} />
-            <StatusBar />
+            <StatusBar style={isThemeDark ? 'light' : 'dark'} />
           </PaperProvider>
         </PreferencesContext.Provider>
       </SafeAreaProvider>

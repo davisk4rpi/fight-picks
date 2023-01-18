@@ -1,6 +1,9 @@
 import React from 'react';
+import { Button } from 'react-native-paper';
 
 import { FontAwesome } from '@expo/vector-icons';
+import auth from '@react-native-firebase/auth';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { NextEventScreen } from '../screens';
@@ -13,15 +16,22 @@ import { RootTabParamList } from '../types';
  */
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
+const SignOutButton = () => {
+  const handlePress = () => {
+    auth().signOut();
+    GoogleSignin.signOut();
+  };
+  return <Button onPress={handlePress}>Sign Out</Button>;
+};
+
 export function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
       initialRouteName="NextEvent"
-      screenOptions={
-        {
-          // tabBarActiveTintColor: Colors[colorScheme].tint,
-        }
-      }>
+      screenOptions={{
+        // tabBarActiveTintColor: Colors[colorScheme].tint,
+        headerRight: SignOutButton,
+      }}>
       <BottomTab.Screen
         name="NextEvent"
         component={NextEventScreen}

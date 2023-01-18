@@ -19,3 +19,7 @@ android/
 ios/
 
 *.apk
+*.tar.gz
+*.app
+*.ipa
+credentials.json

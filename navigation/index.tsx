@@ -23,7 +23,6 @@ export default function Navigation({
   unauthorized = true,
 }: NavigationProps) {
   const navTheme = useMemo(() => getAdaptedNavigationTheme(theme), [theme]);
-
   return (
     <NavigationContainer theme={navTheme}>
       <RootNavigator unauthorized={unauthorized} />
