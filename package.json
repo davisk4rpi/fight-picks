@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "scripts": {
     "start": "expo start --dev-client",
-    "android": "expo run:android",
-    "ios": "expo run:ios",
+    "androidProd": "eas build --profile production --platform android",
+    "iosProd": "eas build --profile production --platform ios",
+    "androidDev": "eas build --profile development --platform android --local",
+    "iosDev": "eas build --profile development --platform ios --local",
+    "iosSim": "eas build --profile development-simulator --platform ios --local",
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
