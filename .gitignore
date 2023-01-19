@@ -23,3 +23,5 @@ ios/
 *.app
 *.ipa
 credentials.json
+
+*-debug.log
