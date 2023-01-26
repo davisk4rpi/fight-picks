@@ -86,3 +86,5 @@ export const DarkThemeColors: PaperTheme['colors'] = {
   onSurfaceDisabled: 'rgba(225, 227, 228, 0.38)',
   backdrop: 'rgba(42, 50, 53, 0.4)',
 };
+
+export type ThemeColorKey = keyof Omit<PaperTheme['colors'], 'elevation'>;

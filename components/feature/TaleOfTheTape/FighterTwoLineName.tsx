@@ -1,22 +1,38 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Text } from 'react-native-paper';
 
-import { Fighter } from '../../../data-access';
+import { Fighter } from '../../../data-access/db';
+import { ColorText } from '../../color-text';
 
-export const FighterTwoLineName = ({ name }: Pick<Fighter, 'name'>) => {
+interface FighterTwoLineNameProps {
+  name: Fighter['name'];
+  active?: boolean;
+}
+
+export const FighterTwoLineName = ({
+  name,
+  active = false,
+}: FighterTwoLineNameProps) => {
   const firstSpaceIdx = name.indexOf(' ');
   const firstName = name.substring(0, firstSpaceIdx);
   const secondName = name.substring(firstSpaceIdx + 1);
 
   return (
     <View style={styles.stackedName}>
-      <Text variant="labelMedium" adjustsFontSizeToFit numberOfLines={1}>
+      <ColorText
+        color="onSurfaceVariant"
+        variant="labelMedium"
+        adjustsFontSizeToFit
+        numberOfLines={1}>
         {firstName}
-      </Text>
-      <Text variant="titleLarge" adjustsFontSizeToFit numberOfLines={1}>
+      </ColorText>
+      <ColorText
+        color={active ? 'primary' : undefined}
+        variant="titleLarge"
+        adjustsFontSizeToFit
+        numberOfLines={1}>
         {secondName}
-      </Text>
+      </ColorText>
     </View>
   );
 };

@@ -1,4 +1,5 @@
 import 'expo-dev-client';
+import 'react-native-get-random-values';
 
 import { StatusBar } from 'expo-status-bar';
 import React, { useCallback, useMemo, useState } from 'react';
@@ -12,6 +13,7 @@ import {
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 import { DarkTheme, LightTheme, PreferencesContext } from './app-context';
+import { db } from './data-access/db';
 import GoogleServives from './google-services.json';
 import useCachedResources from './hooks/useCachedResources';
 import { useAuthenticatedUser } from './libs/react-native-firebase';
@@ -24,7 +26,9 @@ GoogleSignin.configure({
 });
 
 export default function App() {
-  const { user, initializing: authInitializing } = useAuthenticatedUser();
+  const { user, initializing: authInitializing } = useAuthenticatedUser({
+    onUserAuthenticated: db.users.set,
+  });
   const isLoadingComplete = useCachedResources();
   const [isThemeDark, setIsThemeDark] = useState(true);
 

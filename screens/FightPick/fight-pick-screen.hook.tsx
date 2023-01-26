@@ -2,30 +2,33 @@ import { useCallback } from 'react';
 
 import { useNavigation } from '@react-navigation/native';
 
-import { DummyEvent, DummyFightPick, FightPick } from '../../data-access';
+import { useFightPickByFightId, useFightWithFighters } from '../../data-access';
+import { db, FightPick } from '../../data-access/db';
 import { useFightPickForm } from './fight-pick-form.hook';
 
 export const useFightPickScreen = (fightId: string) => {
   const { goBack } = useNavigation();
-  const fight =
-    DummyEvent.fights.find(({ id }) => id === fightId) ?? DummyEvent.fights[0];
+  const { fight, loading: fightLoading } = useFightWithFighters(fightId);
 
-  const fightPick = DummyFightPick;
-  fightPick.winningFighterId = fight?.fighter1.id || '1';
+  const { fightPick, fightPickLoading } = useFightPickByFightId(fightId);
 
   const handleSuccess = useCallback(
     (fightPick: FightPick) => {
       // Save Fight Pick
-      console.log(fightPick);
+      db.users.setFightPick(fightId, fightPick);
       goBack();
     },
-    [goBack],
+    [goBack, fightId],
   );
-  const fightPickForm = useFightPickForm(fight, undefined, handleSuccess);
+  const fightPickForm = useFightPickForm(
+    fight ?? undefined,
+    fightPick ?? undefined,
+    handleSuccess,
+  );
 
   return {
     fight,
-    event: DummyEvent,
     fightPickForm,
+    loading: fightPickLoading || fightLoading,
   };
 };

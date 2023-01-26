@@ -6,11 +6,12 @@ import { Screen } from './Screen';
 
 interface NotFoundScreenProps {
   thing: string;
+  testID?: string;
 }
 
-export const NotFoundScreen = ({ thing }: NotFoundScreenProps) => {
+export const NotFoundScreen = ({ thing, testID }: NotFoundScreenProps) => {
   return (
-    <Screen>
+    <Screen testID={testID}>
       <Text>{Translation.sorryCouldntFindThat(thing)}</Text>
     </Screen>
   );

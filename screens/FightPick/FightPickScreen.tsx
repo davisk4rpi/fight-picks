@@ -1,15 +1,14 @@
-import React from 'react';
+import { LoadingScreen, NotFoundScreen, Screen } from '../../components';
 import { StyleSheet, View } from 'react-native';
+
 import { Button } from 'react-native-paper';
-
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-
-import { ThemeSpacing } from '../../app-context';
-import { Screen } from '../../components';
-import { TaleOfTheTape } from '../../components/feature';
+import React from 'react';
 import { RootStackParamList } from '../../types';
-import { useFightPickScreen } from './fight-pick-screen.hook';
 import { SegmentedButtonsField } from './SegmentedButtonsField';
+import { TaleOfTheTape } from '../../components/feature';
+import { ThemeSpacing } from '../../app-context';
+import { useFightPickScreen } from './fight-pick-screen.hook';
 
 type FightPickScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -18,7 +17,14 @@ type FightPickScreenProps = NativeStackScreenProps<
 
 export const FightPickScreen = ({ route }: FightPickScreenProps) => {
   const { fightId } = route.params;
-  const { fight, fightPickForm } = useFightPickScreen(fightId);
+  const { fight, fightPickForm, loading } = useFightPickScreen(fightId);
+
+  if (loading) {
+    return <LoadingScreen testID="FightPickScreen" />;
+  }
+  if (fight === null) {
+    return <NotFoundScreen testID="FightPickScreen" thing={'Fight'} />;
+  }
 
   return (
     <Screen testID="FightPickScreen">

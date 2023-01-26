@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { SegmentedButtonsProps } from 'react-native-paper';
 
 import {
@@ -8,7 +8,7 @@ import {
   FightPick,
   MethodWithWinner,
   Round,
-} from '../../data-access';
+} from '../../data-access/db';
 
 type FormValues = {
   id: string;
@@ -52,6 +52,21 @@ export const useFightPickForm = (
     round,
     confidence,
   };
+
+  useEffect(() => {
+    if (existingPick) {
+      setWinningFighterId(prev =>
+        prev !== '' ? prev : existingPick.winningFighterId,
+      );
+      setMethod(prev => (prev !== '' ? prev : existingPick.method));
+      setRound(prev =>
+        prev !== '' ? prev : existingPick.round?.toString() ?? prev,
+      );
+      setConfidence(prev =>
+        prev !== '' ? prev : existingPick.confidence.toString(),
+      );
+    }
+  }, [existingPick]);
 
   const selectWinnerButtons: SegmentedButtonsProps['buttons'] = useMemo(
     () => [

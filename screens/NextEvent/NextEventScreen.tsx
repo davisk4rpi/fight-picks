@@ -4,16 +4,17 @@ import { FlatList, Pressable, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
 
 import { ThemeSpacing } from '../../app-context';
-import { Screen } from '../../components';
+import { LoadingScreen, Screen } from '../../components';
 import { TaleOfTheTape } from '../../components/feature';
-import { Fight } from '../../data-access';
+import { FightWithPicks } from '../../data-access';
 import { useNextEventScreen } from './next-event-screen.hook';
 
 export const NextEventScreen = () => {
-  const { event, navigateToFightPickScreen } = useNextEventScreen();
+  const { loading, fightCard, fightsWithPicks, navigateToFightPickScreen } =
+    useNextEventScreen();
 
   const FightRowItem = useCallback(
-    ({ item }: { item: Fight }) => {
+    ({ item }: { item: FightWithPicks }) => {
       const handlePress = () => navigateToFightPickScreen(item.id);
       return (
         <Pressable onPress={handlePress}>
@@ -23,6 +24,7 @@ export const NextEventScreen = () => {
             weight={item.weight}
             fighter1={item.fighter1}
             fighter2={item.fighter2}
+            pick={item.pick}
             // results={item.results}
           />
         </Pressable>
@@ -30,14 +32,28 @@ export const NextEventScreen = () => {
     },
     [navigateToFightPickScreen],
   );
-  return (
-    <Screen testID="EventScreen">
-      <View style={styles.column}>
+  if (loading) return <LoadingScreen testID="EventScreen" />;
+  if (fightCard === null)
+    return (
+      <Screen testID="EventScreen">
         <Text variant="displayMedium" adjustsFontSizeToFit numberOfLines={1}>
-          {event.name}
+          No Fights Loaded
+        </Text>
+      </Screen>
+    );
+
+  return (
+    <Screen testID="EventScreen" style={styles.screen}>
+      <View style={styles.column}>
+        <Text
+          style={styles.fightCardName}
+          variant="displayMedium"
+          adjustsFontSizeToFit
+          numberOfLines={1}>
+          {fightCard.name}
         </Text>
         <Text variant="headlineSmall" adjustsFontSizeToFit numberOfLines={1}>
-          {intlFormat(event.mainCardDate, {
+          {intlFormat(fightCard.mainCardDate, {
             month: 'long',
             day: 'numeric',
             hour12: true,
@@ -47,11 +63,13 @@ export const NextEventScreen = () => {
         </Text>
         <FlatList
           style={styles.fightsFlatList}
-          data={event.fights}
+          data={fightsWithPicks}
           renderItem={FightRowItem}
           keyExtractor={({ id }) => id}
-          scrollEnabled={event.fights.length > 3}
+          scrollEnabled={fightsWithPicks.length > 3}
           horizontal={false}
+          contentContainerStyle={styles.fightsFlatListContent}
+          indicatorStyle="white"
         />
       </View>
     </Screen>
@@ -63,8 +81,19 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
+  screen: {
+    paddingBottom: 0,
+  },
+  fightCardName: {
+    marginTop: ThemeSpacing.base * 2,
+    marginBottom: ThemeSpacing.base * 2,
+  },
   fightsFlatList: {
     marginHorizontal: -1 * ThemeSpacing.horizontalScreen,
+    marginTop: ThemeSpacing.base * 2,
     paddingHorizontal: ThemeSpacing.horizontalScreen,
+  },
+  fightsFlatListContent: {
+    paddingBottom: ThemeSpacing.verticalScreen,
   },
 });

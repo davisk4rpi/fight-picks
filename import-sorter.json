@@ -1,6 +1,7 @@
 {
   "importStringConfiguration.maximumNumberOfImportExpressionsPerLine.type": "newLineEachExpressionAfterCountLimitExceptIfOnlyOne",
   "importStringConfiguration.maximumNumberOfImportExpressionsPerLine.count": 80,
-  "importSorter.importStringConfiguration.trailingComma": "multiline",
-  "importSorter.importStringConfiguration.tabSize": 2
+  "importStringConfiguration.trailingComma": "multiline",
+  "importStringConfiguration.tabSize": 2,
+  "importStringConfiguration.quoteMark": "single"
 }

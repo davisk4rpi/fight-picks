@@ -2,10 +2,21 @@ import { useCallback } from 'react';
 
 import { useNavigation } from '@react-navigation/native';
 
-import { DummyEvent } from '../../data-access';
+import {
+  useFightsWithFightersByFightCardId,
+  useFightsWithPicks,
+  useNextFightCard,
+} from '../../data-access';
 
 export const useNextEventScreen = () => {
   const { navigate } = useNavigation();
+
+  const { nextFightCard, loading: nextFightCardLoading } = useNextFightCard();
+  const { fights, loading: fightsLoading } = useFightsWithFightersByFightCardId(
+    nextFightCard?.id,
+  );
+
+  const { fightsWithPicks } = useFightsWithPicks(fights);
 
   const navigateToFightPickScreen = useCallback(
     (fightId: string) => {
@@ -15,7 +26,9 @@ export const useNextEventScreen = () => {
   );
 
   return {
-    event: DummyEvent,
+    loading: nextFightCardLoading || fightsLoading,
+    fightCard: nextFightCard,
+    fightsWithPicks,
     navigateToFightPickScreen,
   };
 };
