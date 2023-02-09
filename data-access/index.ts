@@ -1,5 +1,3 @@
-import { FightPick } from './db/types';
-
 export const DummyEvent = {
   id: '1',
   mainCardDate: new Date('2023-01-15T00:00:00.000Z'),
@@ -81,14 +79,6 @@ export const DummyEvent = {
       result: undefined,
     },
   ],
-};
-
-export const DummyFightPick: FightPick = {
-  id: '1',
-  winningFighterId: '1',
-  method: 'knockout',
-  round: 1,
-  confidence: 3,
 };
 
 export * from './hooks';
