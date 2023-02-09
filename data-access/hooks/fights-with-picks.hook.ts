@@ -1,9 +1,15 @@
 import { useEffect, useState } from 'react';
 
-import { db, Fight, FightPick, mapFightPickFromFirebase } from '../db';
+import { calculatePickScores } from '../../libs/scoring';
+import {
+  appFirestore,
+  Fight,
+  FightPickWithScore,
+  mapFightPickFromFirebase,
+} from '../db';
 
 export type FightWithPicks = Fight & {
-  pick?: FightPick;
+  pick?: FightPickWithScore;
 };
 
 export const useFightsWithPicks = (fights: Fight[]) => {
@@ -12,19 +18,30 @@ export const useFightsWithPicks = (fights: Fight[]) => {
   useEffect(() => {
     if (fights.length === 0) return;
     setFightsWithPicks(fights);
-    const fightIds = fights.map(({ id }) => id);
-    const unsubscribe = db.users.fightPicks
-      .getCollection()
-      .where('fightId', 'in', fightIds)
+    const fightRefs = fights.map(({ id }) =>
+      appFirestore.repository.fights.getDocRef(id),
+    );
+    const unsubscribe = appFirestore.repository.users
+      .getFightPicksCollection()
+      .where('fightRef', 'in', fightRefs)
       .onSnapshot(snapshot => {
-        const fightPicks: Record<string, FightPick> = {};
+        const fightPicks: Record<string, FightPickWithScore> = {};
         snapshot.docs.forEach(doc => {
           const data = doc.data();
-          fightPicks[data.fightId] = mapFightPickFromFirebase(data);
+          fightPicks[data.fightRef.id] = mapFightPickFromFirebase(data);
         });
         setFightsWithPicks(prevFights => {
           const newFights = prevFights.map(fight => {
-            fight.pick = fightPicks[fight.id];
+            const pick = fightPicks[fight.id];
+            if (pick === undefined) return fight;
+            const { score, confidenceScore } = calculatePickScores(
+              pick,
+              fight.result,
+            );
+            pick.score = score;
+            pick.confidenceScore = confidenceScore;
+            fight.pick = pick;
+
             return fight;
           });
           return newFights;

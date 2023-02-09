@@ -1,22 +1,26 @@
 import { useEffect, useState } from 'react';
 
-import { db } from '../db';
+import { appFirestore } from '../db';
 import { FirebaseFight } from '../db/firebaseTypes';
 
 export const useFirebaseFightsByFightCardId = (
   fightCardId: string | undefined,
 ) => {
-  const [firebaseFights, setFirebaseFights] = useState<FirebaseFight[]>([]);
+  const [firebaseFights, setFirebaseFights] = useState<
+    FirebaseFight[] | undefined
+  >(undefined);
 
   useEffect(() => {
     if (fightCardId === undefined) {
-      setFirebaseFights(prev =>
-        prev === undefined || prev.length === 0 ? prev : [],
-      );
+      setFirebaseFights(undefined);
       return;
     }
-    const unsubscribe = db.fights
-      .where('fightCardId', '==', fightCardId)
+    const unsubscribe = appFirestore.fightsCollection
+      .where(
+        'fightCardRef',
+        '==',
+        appFirestore.fightCardsCollection.doc(fightCardId),
+      )
       .onSnapshot(
         snapshot => {
           const fights = snapshot.docs.map(ref => ref.data());
@@ -29,6 +33,6 @@ export const useFirebaseFightsByFightCardId = (
 
   return {
     firebaseFights: firebaseFights ?? [],
-    loading: firebaseFights === undefined,
+    loading: fightCardId !== undefined && firebaseFights === undefined,
   };
 };

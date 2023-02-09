@@ -4,11 +4,17 @@
   },
   "build": {
     "production": {},
+    "production-sim": {
+      "ios": {
+        "simulator": true,
+        "buildConfiguration": "Release"
+      }
+    },
     "development": {
       "developmentClient": true,
       "distribution": "internal"
     },
-    "development-simulator": {
+    "development-sim": {
       "developmentClient": true,
       "distribution": "internal",
       "ios": {

@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 
-import { db, mapFightFromFirebase } from '../db';
+import { appFirestore, mapFightFromFirebase } from '../db';
 import { FirebaseFight } from '../db/firebaseTypes';
 import { Fight, Fighter } from '../db/types';
-import { useFightersByIds } from './fighters-by-ids';
+import { useFightersByIds } from './fighters-by-ids.hook';
 
 export const useFightWithFighters = (fightId: string) => {
   const [firebaseFight, setFirebaseFight] = useState<
@@ -11,15 +11,19 @@ export const useFightWithFighters = (fightId: string) => {
   >(undefined);
 
   useEffect(() => {
-    const unsubscribe = db.fights.doc(fightId).onSnapshot(snapshot => {
-      setFirebaseFight(snapshot.data());
-    });
+    const unsubscribe = appFirestore.fightsCollection
+      .doc(fightId)
+      .onSnapshot(snapshot => {
+        setFirebaseFight(snapshot.data());
+      });
     return unsubscribe;
   }, [fightId]);
 
   const fighterIds = useMemo(
     () =>
-      firebaseFight ? [firebaseFight.fighter1Id, firebaseFight.fighter2Id] : [],
+      firebaseFight
+        ? [firebaseFight.fighter1Ref.id, firebaseFight.fighter2Ref.id]
+        : [],
     [firebaseFight],
   );
 

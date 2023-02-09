@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { db } from '../db';
+import { appFirestore, mapFightCardFromFirebase } from '../db';
 import { FightCard } from '../db/types';
 
 export const useNextFightCard = () => {
@@ -9,18 +9,15 @@ export const useNextFightCard = () => {
   >(undefined);
 
   useEffect(() => {
-    const unsubscribe = db.fightCards
-      .where('mainCardDate', '>', new Date())
+    // TODO add a 'currentFightCardDocReference' to firebaseAppState document to create more efficient call.
+    const unsubscribe = appFirestore.fightCardsCollection
+      .where('mainCardDate', '>', new Date(Date.now() - 24 * 60 * 60 * 1000))
       .orderBy('mainCardDate')
       .onSnapshot(
         snapshot => {
           if (snapshot.docs.length > 0) {
             const fightCard = snapshot.docs[0].data();
-            setNextFightCard({
-              id: fightCard.id,
-              mainCardDate: fightCard.mainCardDate.toDate(),
-              name: fightCard.name,
-            });
+            setNextFightCard(mapFightCardFromFirebase(fightCard));
           } else {
             setNextFightCard(null);
           }

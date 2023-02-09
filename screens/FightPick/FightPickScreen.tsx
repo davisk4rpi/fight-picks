@@ -1,14 +1,15 @@
-import { LoadingScreen, NotFoundScreen, Screen } from '../../components';
-import { StyleSheet, View } from 'react-native';
-
-import { Button } from 'react-native-paper';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
-import { RootStackParamList } from '../../types';
-import { SegmentedButtonsField } from './SegmentedButtonsField';
-import { TaleOfTheTape } from '../../components/feature';
+import { StyleSheet, View } from 'react-native';
+import { Button } from 'react-native-paper';
+
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+
 import { ThemeSpacing } from '../../app-context';
+import { LoadingScreen, NotFoundScreen, Screen } from '../../components';
+import { TaleOfTheTape } from '../../components/feature';
+import { RootStackParamList } from '../../types';
 import { useFightPickScreen } from './fight-pick-screen.hook';
+import { SegmentedButtonsField } from './SegmentedButtonsField';
 
 type FightPickScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -88,6 +89,8 @@ const styles = StyleSheet.create({
   formContainer: {
     flex: 1,
     justifyContent: 'flex-end',
+    // alignItems: 'center',
+    maxWidth: 380,
   },
   formSegment: {
     marginVertical: ThemeSpacing.base,

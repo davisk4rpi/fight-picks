@@ -1,17 +1,16 @@
-import intlFormat from 'date-fns/intlFormat';
 import React, { useCallback } from 'react';
 import { FlatList, Pressable, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
 
 import { ThemeSpacing } from '../../app-context';
 import { LoadingScreen, Screen } from '../../components';
-import { TaleOfTheTape } from '../../components/feature';
+import { FightCardHeadline, TaleOfTheTape } from '../../components/feature';
 import { FightWithPicks } from '../../data-access';
-import { useNextEventScreen } from './next-event-screen.hook';
+import { useCurrentFightCardScreen } from './current-fight-card-screen.hook';
 
-export const NextEventScreen = () => {
+export const CurrentFightCardScreen = () => {
   const { loading, fightCard, fightsWithPicks, navigateToFightPickScreen } =
-    useNextEventScreen();
+    useCurrentFightCardScreen();
 
   const FightRowItem = useCallback(
     ({ item }: { item: FightWithPicks }) => {
@@ -24,18 +23,19 @@ export const NextEventScreen = () => {
             weight={item.weight}
             fighter1={item.fighter1}
             fighter2={item.fighter2}
-            pick={item.pick}
-            // results={item.results}
+            result={item.pick}
+            confidence={item.pick?.confidence}
+            elevation={2}
           />
         </Pressable>
       );
     },
     [navigateToFightPickScreen],
   );
-  if (loading) return <LoadingScreen testID="EventScreen" />;
+  if (loading) return <LoadingScreen testID="CurrentFightCardScreen" />;
   if (fightCard === null)
     return (
-      <Screen testID="EventScreen">
+      <Screen testID="CurrentFightCardScreen">
         <Text variant="displayMedium" adjustsFontSizeToFit numberOfLines={1}>
           No Fights Loaded
         </Text>
@@ -43,26 +43,13 @@ export const NextEventScreen = () => {
     );
 
   return (
-    <Screen testID="EventScreen" style={styles.screen}>
+    <Screen testID="CurrentFightCardScreen" style={styles.screen}>
       <View style={styles.column}>
-        <Text
-          style={styles.fightCardName}
-          variant="displayMedium"
-          adjustsFontSizeToFit
-          numberOfLines={1}>
-          {fightCard.name}
-        </Text>
-        <Text variant="headlineSmall" adjustsFontSizeToFit numberOfLines={1}>
-          {intlFormat(fightCard.mainCardDate, {
-            month: 'long',
-            day: 'numeric',
-            hour12: true,
-            hour: 'numeric',
-            minute: '2-digit',
-          })}
-        </Text>
+        <FightCardHeadline
+          name={fightCard.name}
+          mainCardDate={fightCard.mainCardDate}
+        />
         <FlatList
-          style={styles.fightsFlatList}
           data={fightsWithPicks}
           renderItem={FightRowItem}
           keyExtractor={({ id }) => id}
@@ -83,15 +70,6 @@ const styles = StyleSheet.create({
   },
   screen: {
     paddingBottom: 0,
-  },
-  fightCardName: {
-    marginTop: ThemeSpacing.base * 2,
-    marginBottom: ThemeSpacing.base * 2,
-  },
-  fightsFlatList: {
-    marginHorizontal: -1 * ThemeSpacing.horizontalScreen,
-    marginTop: ThemeSpacing.base * 2,
-    paddingHorizontal: ThemeSpacing.horizontalScreen,
   },
   fightsFlatListContent: {
     paddingBottom: ThemeSpacing.verticalScreen,

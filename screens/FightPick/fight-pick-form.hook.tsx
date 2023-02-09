@@ -8,6 +8,7 @@ import {
   FightPick,
   MethodWithWinner,
   Round,
+  SetFightPickInput,
 } from '../../data-access/db';
 
 type FormValues = {
@@ -26,7 +27,7 @@ type PartialFight = Pick<Fight, 'rounds'> & {
 export const useFightPickForm = (
   fight: PartialFight | undefined,
   existingPick: FightPick | undefined,
-  onSuccess: (fightPick: FightPick) => void,
+  onSuccess: (fightPick: SetFightPickInput) => void,
 ) => {
   const [winningFighterId, setWinningFighterId] = useState<string>(
     existingPick?.winningFighterId ?? '',
@@ -152,7 +153,7 @@ const ConfidenceMap: Record<string, Confidence> = {
   '5': 5,
 };
 
-const convertFormToFightPick = (formValues: FormValues): FightPick => {
+const convertFormToFightPick = (formValues: FormValues): SetFightPickInput => {
   const method = MethodMap[formValues.method] ?? 'decision';
   const confidence = ConfidenceMap[formValues.confidence] ?? 1;
   if (method === 'decision') {

@@ -19,6 +19,8 @@ declare global {
 export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   FightPick: { fightId: string };
+  LockedFightPicks: { fightId: string };
+  FightCard: { fightCardId: string };
   Modal: undefined;
   Login: undefined;
   NotFound: undefined;
@@ -28,8 +30,9 @@ export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
   NativeStackScreenProps<RootStackParamList, Screen>;
 
 export type RootTabParamList = {
-  NextEvent: undefined;
-  TabTwo: undefined;
+  CurrentFightCard: undefined;
+  PastFightCards: undefined;
+  Score: undefined;
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> =

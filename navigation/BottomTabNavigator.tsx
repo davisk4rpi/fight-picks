@@ -6,8 +6,11 @@ import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { NextEventScreen } from '../screens';
-import TabTwoScreen from '../screens/TabTwoScreen';
+import {
+  CurrentFightCardScreen,
+  PastFightCardsScreen,
+  ScoreScreen,
+} from '../screens';
 import { RootTabParamList } from '../types';
 
 /**
@@ -27,18 +30,29 @@ const SignOutButton = () => {
 export function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
-      initialRouteName="NextEvent"
+      initialRouteName="CurrentFightCard"
       screenOptions={{
         // tabBarActiveTintColor: Colors[colorScheme].tint,
         headerRight: SignOutButton,
       }}>
       <BottomTab.Screen
-        name="NextEvent"
-        component={NextEventScreen}
-        // options={({ navigation }: RootTabScreenProps<'NextEventScreen'>) => ({
+        name="PastFightCards"
+        component={PastFightCardsScreen}
+        options={{
+          title: 'Past',
+          headerTitle: 'Past Cards',
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="clock-o" color={color} />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="CurrentFightCard"
+        component={CurrentFightCardScreen}
+        // options={({ navigation }: RootTabScreenProps<'CurrentFightCardScreen'>) => ({
         options={() => ({
-          title: 'Upcoming',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Home',
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
           // headerRight: () => (
           //   <Pressable
           //     onPress={() => navigation.navigate('Modal')}
@@ -56,12 +70,27 @@ export function BottomTabNavigator() {
         })}
       />
       <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoScreen}
-        options={{
-          title: 'Tab Two',
+        name="Score"
+        component={ScoreScreen}
+        // options={({ navigation }: RootTabScreenProps<'CurrentFightCardScreen'>) => ({
+        options={() => ({
+          title: 'Score',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
+          // headerRight: () => (
+          //   <Pressable
+          //     onPress={() => navigation.navigate('Modal')}
+          //     style={({ pressed }) => ({
+          //       opacity: pressed ? 0.5 : 1,
+          //     })}>
+          //     <FontAwesome
+          //       name="info-circle"
+          //       size={25}
+          //       // color={Colors[colorScheme].text}
+          //       style={{ marginRight: 15 }}
+          //     />
+          //   </Pressable>
+          // ),
+        })}
       />
     </BottomTab.Navigator>
   );

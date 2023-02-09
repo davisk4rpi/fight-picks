@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { db, mapFightPickFromFirebase } from '../db';
+import { appFirestore, mapFightPickFromFirebase } from '../db';
 import { FightPick } from '../db/types';
 
 export const useFightPickByFightId = (fightId: string) => {
@@ -9,9 +9,14 @@ export const useFightPickByFightId = (fightId: string) => {
   );
 
   useEffect(() => {
-    const fightPicksRef = db.users.fightPicks.getCollection();
+    const fightPicksRef =
+      appFirestore.repository.users.getFightPicksCollection();
     const unsubscribe = fightPicksRef
-      .where('fightId', '==', fightId)
+      .where(
+        'fightRef',
+        '==',
+        appFirestore.repository.fights.getDocRef(fightId),
+      )
       .limit(1)
       .onSnapshot(snapshot => {
         const doc = snapshot.docs.pop();

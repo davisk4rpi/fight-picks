@@ -1,62 +1,73 @@
 import { nanoid } from 'nanoid';
 
-import { firebase } from '@react-native-firebase/auth';
 import firestore, {
   FirebaseFirestoreTypes,
 } from '@react-native-firebase/firestore';
 
-import { NotFoundError } from '../../../libs/utililities';
-import { FirebaseFightPick, FirebaseUser } from '../firebaseTypes';
-import { FightPick, User } from '../types';
+import { NotFoundError, WithOptional } from '../../../libs/utililities';
+import {
+  FirebaseFight,
+  FirebaseFighter,
+  FirebaseFightPick,
+  FirebaseUser,
+} from '../firebaseTypes';
+import { FightPick } from '../types';
+import { Repository } from './repository.abstract';
 
-export const usersRepository = (
-  collection: FirebaseFirestoreTypes.CollectionReference<FirebaseUser>,
-) => {
-  const currentAuthUser = () => firebase.auth().currentUser;
+export type SetFightPickInput = WithOptional<
+  Pick<
+    FightPick,
+    'id' | 'winningFighterId' | 'round' | 'method' | 'confidence'
+  >,
+  'id'
+>;
 
-  const getDocRef = (uid: string) => {
-    return collection.doc(uid);
-  };
+export class UsersRepository extends Repository<FirebaseUser> {
+  constructor(
+    collection: FirebaseFirestoreTypes.CollectionReference<FirebaseUser>,
+    protected fightersCollection: FirebaseFirestoreTypes.CollectionReference<FirebaseFighter>,
+    protected fightsCollection: FirebaseFirestoreTypes.CollectionReference<FirebaseFight>,
+  ) {
+    super(collection);
+  }
 
-  const get = async (uid: string) => {
-    const user = await getDocRef(uid).get();
-    const data = user.data();
-    return data !== undefined ? convertToUser(data) : null;
-  };
-  const set = async ({
+  set = async ({
     uid,
     displayName,
   }: {
     uid: string;
     displayName: string | null;
   }) => {
-    const existingUserRef = await getDocRef(uid).get();
-    if (existingUserRef.exists) {
+    const userRef = this.getDocRef(uid);
+    const existingUserSnapshot = await userRef.get();
+    if (existingUserSnapshot.exists) {
       return;
     }
-    return collection.doc(uid).set({
+    return userRef.set({
       uid,
       authDisplayName: displayName,
       createdAt: firestore.FieldValue.serverTimestamp(),
     });
   };
 
-  const setFightPick = async (
+  setFightPick = async (
     fightId: string,
-    { id, winningFighterId, round, method, confidence }: FightPick,
+    { id, winningFighterId, round, method, confidence }: SetFightPickInput,
+    uid?: string,
   ) => {
-    const currentUser = currentAuthUser();
-    if (currentUser === null) {
+    const currentUid = uid ?? this.currentAuthUser()?.uid;
+    if (currentUid === undefined) {
       // Throw Error?
       // TODO log
       return;
     }
-    const fightPicksCollection = getFightPicksCollection(currentUser.uid);
-    const docId = id === '' ? nanoid() : id;
+    const fightPicksCollection = this.getFightPicksCollection(currentUid);
+    const docId = id === undefined || id === '' ? nanoid() : id;
     const setOptions: FirebaseFirestoreTypes.SetOptions = {
       mergeFields: [
-        'fightId',
-        'winningFighterId',
+        'userRef',
+        'fightRef',
+        'winningFighterRef',
         'round',
         'method',
         'confidence',
@@ -66,52 +77,26 @@ export const usersRepository = (
     return fightPicksCollection.doc(docId).set(
       {
         id: docId,
-        fightId,
-        winningFighterId,
+        userRef: this.getDocRef(currentUid),
+        fightRef: this.fightsCollection.doc(fightId),
+        winningFighterRef: this.fightersCollection.doc(winningFighterId),
         round,
         method,
         confidence,
         createdAt: firestore.FieldValue.serverTimestamp(),
         updatedAt: firestore.FieldValue.serverTimestamp(),
       },
-      id === '' ? undefined : setOptions,
+      id === undefined || id === '' ? undefined : setOptions,
     );
   };
 
-  const getFightPicksCollection = (uid?: string) => {
-    const docId = uid ?? currentAuthUser()?.uid;
+  getFightPicksCollection = (uid?: string) => {
+    const docId = uid ?? this.currentAuthUser()?.uid;
     if (docId === undefined) {
       throw new NotFoundError('Could not find fight picks');
     }
-    return collection
-      .doc(docId)
-      .collection(
-        'fightPicks',
-      ) as FirebaseFirestoreTypes.CollectionReference<FirebaseFightPick>;
+    return this.getDocRef(docId).collection(
+      'fightPicks',
+    ) as FirebaseFirestoreTypes.CollectionReference<FirebaseFightPick>;
   };
-
-  return {
-    get,
-    set,
-    currentAuthUser,
-    setFightPick,
-    collection,
-    fightPicks: {
-      getCollection: getFightPicksCollection,
-    },
-  };
-};
-
-const convertToUser = (user: FirebaseUser | undefined): User | null => {
-  if (user === undefined) return null;
-  if (
-    typeof user.uid === 'string' &&
-    (user.authDisplayName === null || typeof user.authDisplayName === 'string')
-  ) {
-    return {
-      uid: user.uid,
-      displayName: user.authDisplayName,
-    };
-  }
-  return null;
-};
+}

@@ -2,8 +2,12 @@ import React from 'react';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { FightPickScreen } from '../screens/FightPick';
-import { LoginScreen } from '../screens/Login/LoginScreen';
+import {
+  FightCardScreen,
+  FightPickScreen,
+  LockedFightPicksScreen,
+  LoginScreen,
+} from '../screens';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList } from '../types';
@@ -17,7 +21,10 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export function RootNavigator({ unauthorized }: { unauthorized: boolean }) {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerBackTitleVisible: false,
+      }}>
       {true && unauthorized ? (
         <>
           <Stack.Screen
@@ -34,9 +41,19 @@ export function RootNavigator({ unauthorized }: { unauthorized: boolean }) {
             options={{ headerShown: false }}
           />
           <Stack.Screen
+            name="FightCard"
+            component={FightCardScreen}
+            options={{ headerTitle: 'Fight Card' }}
+          />
+          <Stack.Screen
             name="FightPick"
             component={FightPickScreen}
-            // options={{ title: true }}
+            options={{ headerTitle: 'Fight Pick' }}
+          />
+          <Stack.Screen
+            name="LockedFightPicks"
+            component={LockedFightPicksScreen}
+            options={{ headerTitle: 'Locked Fight Picks' }}
           />
           <Stack.Screen
             name="NotFound"

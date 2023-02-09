@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
 import { mapFightFromFirebase } from '../db';
-import { useFightersByIds } from './fighters-by-ids';
+import { useFightersByIds } from './fighters-by-ids.hook';
 import { useFirebaseFightsByFightCardId } from './firebase-fights-by-fight-card-id.hook';
 
 export const useFightsWithFightersByFightCardId = (
@@ -11,8 +11,8 @@ export const useFightsWithFightersByFightCardId = (
     useFirebaseFightsByFightCardId(fightCardId);
 
   const fighterIds = firebaseFights.reduce<string[]>((ids, fight) => {
-    ids.push(fight.fighter1Id);
-    ids.push(fight.fighter2Id);
+    ids.push(fight.fighter1Ref.id);
+    ids.push(fight.fighter2Ref.id);
     return ids;
   }, []);
 

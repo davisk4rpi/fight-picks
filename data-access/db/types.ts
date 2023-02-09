@@ -15,12 +15,12 @@ export type Fighter = {
   name: string;
 };
 
-export type MethodWithNoWinner = 'no_contest/draw';
+export type MethodWithNoWinner = 'no_contest' | 'draw';
 
 export const isMethodWithNoWinner = (
   method?: string | null,
 ): method is MethodWithNoWinner => {
-  return method === 'no_contest/draw';
+  return method === 'no_contest' || method === 'draw';
 };
 
 export type MethodWithFinish = 'knockout' | 'submission' | 'disqualification';
@@ -31,9 +31,12 @@ export type MethodWithWinner = Decision | MethodWithFinish;
 export const isMethodWithWinner = (
   method?: string | null,
 ): method is MethodWithWinner => {
-  return ['decision', 'knockout', 'submission', 'disqualification'].includes(
-    method ?? '',
-  );
+  return method === 'decision' || isMethodWithFinish(method);
+};
+export const isMethodWithFinish = (
+  method?: string | null,
+): method is MethodWithFinish => {
+  return ['knockout', 'submission', 'disqualification'].includes(method ?? '');
 };
 
 export type Method = MethodWithNoWinner | MethodWithWinner;
@@ -61,54 +64,56 @@ export const ConfidenceMap = {
 export type ConfidenceMapKey = keyof typeof ConfidenceMap;
 export type Confidence = (typeof ConfidenceMap)[ConfidenceMapKey];
 
-export type FightResultsWithFinish = {
-  id: string;
+export type FightResultWithFinish = {
   winningFighterId: string;
   method: MethodWithFinish;
   round: Round;
 };
-export type FightResultsWithDecision = {
-  id: string;
+export type FightResultWithDecision = {
   winningFighterId: string;
   method: Decision;
   round: null;
 };
 
-export type FightResultsWithWinner =
-  | FightResultsWithFinish
-  | FightResultsWithDecision;
+export type FightResultWithWinner =
+  | FightResultWithFinish
+  | FightResultWithDecision;
 
-export type FightResultsWithNoWinner = {
+export type FightResultWithNoWinner = {
   winningFighterId: null;
   method: MethodWithNoWinner;
   round: null;
 };
 
-export type FightResults = FightResultsWithWinner | FightResultsWithNoWinner;
+export type FightResult = FightResultWithWinner | FightResultWithNoWinner;
 
 export type Fight = {
   id: string;
+  fightCardId: string;
   rounds: 3 | 5;
   weight: number;
   sex: Sex;
   fighter1: Fighter;
   fighter2: Fighter;
-  results?: FightResults;
+  result?: FightResult;
 };
 
-export type FightPick = FightResultsWithWinner & {
+export type FightPick = FightResultWithWinner & {
+  id: string;
+  fightId: string;
   confidence: Confidence;
+  userUid: string;
+};
+export type FightPickWithScore = FightPick & {
+  score?: number;
+  confidenceScore?: number;
 };
 
 export type FightCard = {
   id: string;
   mainCardDate: Date;
   name: string;
-};
-export type FirebaseFightCard = {
-  id: string;
-  mainCardDate: Date;
-  name: string;
+  fightIds: string[];
 };
 
 export type User = {

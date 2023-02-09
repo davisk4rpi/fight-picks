@@ -1,0 +1,13 @@
+import { FirebaseFightCard } from '../firebaseTypes';
+import { FightCard } from '../types';
+
+export const mapFightCardFromFirebase = (
+  firebaseFightCard: FirebaseFightCard,
+): FightCard => {
+  return {
+    id: firebaseFightCard.id,
+    mainCardDate: firebaseFightCard.mainCardDate.toDate(),
+    name: firebaseFightCard.name,
+    fightIds: firebaseFightCard.fightRefs.map(ref => ref.id),
+  };
+};

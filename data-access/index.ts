@@ -18,7 +18,7 @@ export const DummyEvent = {
         id: '2',
         name: 'Nassourdine Imavov',
       },
-      results: undefined,
+      result: undefined,
     },
     {
       id: '2',
@@ -33,7 +33,7 @@ export const DummyEvent = {
         id: '4',
         name: 'Damon Jackson',
       },
-      results: undefined,
+      result: undefined,
     },
     {
       id: '3',
@@ -48,7 +48,7 @@ export const DummyEvent = {
         id: '6',
         name: 'Roman Kopylov',
       },
-      results: undefined,
+      result: undefined,
     },
     {
       id: '4',
@@ -63,7 +63,7 @@ export const DummyEvent = {
         id: '8',
         name: 'Raquel Pennington',
       },
-      results: undefined,
+      result: undefined,
     },
     {
       id: '5',
@@ -78,7 +78,7 @@ export const DummyEvent = {
         id: '10',
         name: 'Raoni Barcelos',
       },
-      results: undefined,
+      result: undefined,
     },
   ],
 };
