@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { appFirestore } from '../db';
+import { appFirestore, mapUserFromFirebase } from '../db';
 import { User } from '../db/types';
 
 type UsersMap = Map<string, User>;
@@ -27,11 +27,8 @@ export const useUsersByUids = (uids: string[]) => {
       .where('uid', 'in', uids)
       .onSnapshot(snapshot => {
         const newMap = snapshot.docs.reduce<UsersMap>((map, user) => {
-          const { uid, authDisplayName } = user.data();
-          map.set(uid, {
-            uid,
-            displayName: authDisplayName,
-          });
+          const userData = user.data();
+          map.set(userData.uid, mapUserFromFirebase(userData));
           return map;
         }, new Map());
         setUserMapByUid(newMap);

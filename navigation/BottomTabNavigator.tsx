@@ -1,10 +1,9 @@
-import React from 'react';
-import { Button } from 'react-native-paper';
+import React, { useCallback } from 'react';
+import { IconButton } from 'react-native-paper';
 
 import { FontAwesome } from '@expo/vector-icons';
-import auth from '@react-native-firebase/auth';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useNavigation } from '@react-navigation/native';
 
 import {
   CurrentFightCardScreen,
@@ -19,12 +18,12 @@ import { RootTabParamList } from '../types';
  */
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
-const SignOutButton = () => {
-  const handlePress = () => {
-    auth().signOut();
-    GoogleSignin.signOut();
-  };
-  return <Button onPress={handlePress}>Sign Out</Button>;
+const SettingsButton = () => {
+  const { navigate } = useNavigation();
+  const handlePress = useCallback(() => {
+    navigate('Settings');
+  }, [navigate]);
+  return <IconButton icon="cog" onPress={handlePress} />;
 };
 
 export function BottomTabNavigator() {
@@ -33,7 +32,7 @@ export function BottomTabNavigator() {
       initialRouteName="CurrentFightCard"
       screenOptions={{
         // tabBarActiveTintColor: Colors[colorScheme].tint,
-        headerRight: SignOutButton,
+        headerRight: SettingsButton,
       }}>
       <BottomTab.Screen
         name="PastFightCards"

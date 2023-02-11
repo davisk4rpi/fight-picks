@@ -6,4 +6,5 @@ export * from './fight-picks-by-fight-id.hook';
 export * from './fight-with-fighters.hook';
 export * from './fights-with-picks.hook';
 export * from './fights-with-fighters-by-fight-card-id.hook';
+export * from './users.hook';
 export * from './users-by-uids.hook';

@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import {
+  AdminHomeScreen,
   FightCardScreen,
   FightPickScreen,
   LockedFightPicksScreen,
   LoginScreen,
+  MigrationsScreen,
+  SettingsScreen,
 } from '../screens';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
@@ -19,13 +22,19 @@ import { BottomTabNavigator } from './BottomTabNavigator';
  */
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-export function RootNavigator({ unauthorized }: { unauthorized: boolean }) {
+interface RootNavigatorProps {
+  isAdmin: boolean;
+  unauthorized: boolean;
+}
+
+export function RootNavigator({ unauthorized, isAdmin }: RootNavigatorProps) {
+  const initialParams = useMemo(() => ({ isAdmin }), [isAdmin]);
   return (
     <Stack.Navigator
       screenOptions={{
         headerBackTitleVisible: false,
       }}>
-      {true && unauthorized ? (
+      {unauthorized ? (
         <>
           <Stack.Screen
             name="Login"
@@ -55,6 +64,26 @@ export function RootNavigator({ unauthorized }: { unauthorized: boolean }) {
             component={LockedFightPicksScreen}
             options={{ headerTitle: 'Locked Fight Picks' }}
           />
+          <Stack.Screen
+            name="Settings"
+            // component={SettingsScreen}
+            component={AdminHomeScreen}
+            initialParams={initialParams}
+          />
+          {isAdmin && (
+            <Stack.Group>
+              <Stack.Screen
+                name="AdminHome"
+                component={AdminHomeScreen}
+                options={{ headerTitle: 'Admin Home' }}
+              />
+              <Stack.Screen
+                name="Migrations"
+                component={MigrationsScreen}
+                options={{ headerTitle: 'Migrations' }}
+              />
+            </Stack.Group>
+          )}
           <Stack.Screen
             name="NotFound"
             component={NotFoundScreen}

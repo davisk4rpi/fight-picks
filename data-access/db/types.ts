@@ -119,4 +119,9 @@ export type FightCard = {
 export type User = {
   uid: string;
   displayName: string | null;
+  isAdmin?: boolean;
 };
+
+export const UserRoles = {
+  admin: 'admin',
+} as const;

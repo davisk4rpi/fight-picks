@@ -34,9 +34,11 @@ export class UsersRepository extends Repository<FirebaseUser> {
   set = async ({
     uid,
     displayName,
+    roles,
   }: {
     uid: string;
     displayName: string | null;
+    roles?: string[];
   }) => {
     const userRef = this.getDocRef(uid);
     const existingUserSnapshot = await userRef.get();
@@ -47,6 +49,29 @@ export class UsersRepository extends Repository<FirebaseUser> {
       uid,
       authDisplayName: displayName,
       createdAt: firestore.FieldValue.serverTimestamp(),
+      roles: roles ?? [],
+    });
+  };
+
+  addRole = async ({ uid, role }: { uid: string; role: 'admin' }) => {
+    const userRef = this.getDocRef(uid);
+    const existingUserSnapshot = await userRef.get();
+    if (!existingUserSnapshot.exists) {
+      return;
+    }
+    return userRef.update({
+      roles: firestore.FieldValue.arrayUnion(role),
+    });
+  };
+
+  removeRole = async ({ uid, role }: { uid: string; role: 'admin' }) => {
+    const userRef = this.getDocRef(uid);
+    const existingUserSnapshot = await userRef.get();
+    if (!existingUserSnapshot.exists) {
+      return;
+    }
+    return userRef.update({
+      roles: firestore.FieldValue.arrayRemove(role),
     });
   };
 

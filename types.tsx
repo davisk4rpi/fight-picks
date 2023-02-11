@@ -21,6 +21,9 @@ export type RootStackParamList = {
   FightPick: { fightId: string };
   LockedFightPicks: { fightId: string };
   FightCard: { fightCardId: string };
+  AdminHome: undefined;
+  Migrations: undefined;
+  Settings?: { isAdmin: boolean };
   Modal: undefined;
   Login: undefined;
   NotFound: undefined;

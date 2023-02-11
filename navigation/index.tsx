@@ -16,16 +16,18 @@ import { RootNavigator } from './RootNavigator';
 interface NavigationProps {
   theme: RefTheme;
   unauthorized?: boolean;
+  isAdmin?: boolean;
 }
 
 export default function Navigation({
   theme,
   unauthorized = true,
+  isAdmin = false,
 }: NavigationProps) {
   const navTheme = useMemo(() => getAdaptedNavigationTheme(theme), [theme]);
   return (
     <NavigationContainer theme={navTheme}>
-      <RootNavigator unauthorized={unauthorized} />
+      <RootNavigator unauthorized={unauthorized} isAdmin={isAdmin} />
     </NavigationContainer>
   );
 }

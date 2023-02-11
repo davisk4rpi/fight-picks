@@ -57,6 +57,7 @@ export type FirebaseUser = {
   authDisplayName: string | null;
   createdAt: FirebaseFirestoreTypes.Timestamp;
   fightPicks?: FirebaseFirestoreTypes.CollectionReference<FirebaseFightPick>;
+  roles: string[];
 };
 
 export type FirebaseFighterRef =
