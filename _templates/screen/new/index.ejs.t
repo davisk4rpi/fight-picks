@@ -1,5 +1,5 @@
 ---
-to: screens/<%=name%>/index.ts
+to: src/screens/<%=name%>/index.ts
 
 ---
 export * from './<%=name%>Screen';

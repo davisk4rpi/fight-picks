@@ -16,7 +16,7 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "genScreen": "hygen screen new",
-    "firebaseEmulators": "cd functions && npm run build && firebase emulators:start"
+    "firebaseEmulators": "firebase emulators:start"
   },
   "jest": {
     "preset": "jest-expo"

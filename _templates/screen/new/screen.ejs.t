@@ -1,5 +1,5 @@
 ---
-to: screens/<%=name%>/<%=name%>Screen.tsx
+to: src/screens/<%=name%>/<%=name%>Screen.tsx
 ---
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
