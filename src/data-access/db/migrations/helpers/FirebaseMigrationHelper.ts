@@ -8,7 +8,7 @@ import {
   FirebaseFightCardRef,
   FirebaseFighterRef,
   FirebaseMigrationRef,
-} from '../../firebaseTypes';
+} from '../../types';
 
 export type FighterNameMap = Map<string, FirebaseFighterRef>;
 

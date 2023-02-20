@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 
 import { Fight, Fighter } from '../../../models.types';
 import { appFirestore, mapFightFromFirebase } from '../db';
-import { FirebaseFight } from '../db/firebaseTypes';
+import { FirebaseFight } from '../db/types';
 import { useFightersByIds } from './fighters-by-ids.hook';
 
 export const useFightWithFighters = (fightId: string) => {

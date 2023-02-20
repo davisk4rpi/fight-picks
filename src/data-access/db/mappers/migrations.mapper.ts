@@ -1,5 +1,5 @@
 import { isMigrationStatus, Migration } from '../../../../models.types';
-import { FirebaseMigration } from '../firebaseTypes';
+import { FirebaseMigration } from '../types';
 
 export const mapMigrationFromFirebase = (
   firebaseMigration: FirebaseMigration,

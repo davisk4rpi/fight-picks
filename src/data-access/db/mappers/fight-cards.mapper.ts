@@ -1,5 +1,5 @@
 import { FightCard } from '../../../../models.types';
-import { FirebaseFightCard } from '../firebaseTypes';
+import { FirebaseFightCard } from '../types';
 
 export const mapFightCardFromFirebase = (
   firebaseFightCard: FirebaseFightCard,

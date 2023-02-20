@@ -11,7 +11,7 @@ import {
   FirebaseFighter,
   FirebaseFightPick,
   FirebaseUser,
-} from '../firebaseTypes';
+} from '../types';
 import { Repository } from './repository.abstract';
 
 export type SetFightPickInput = WithOptional<

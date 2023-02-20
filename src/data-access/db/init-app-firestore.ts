@@ -1,20 +1,35 @@
 import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 
 import {
-  AppFirestoreModule,
+  FightCardsRepository,
+  FightersRepository,
+  FightsRepository,
+  UsersRepository,
+} from './repository';
+import {
   FirebaseFight,
   FirebaseFightCard,
   FirebaseFighter,
   FirebaseFightPick,
   FirebaseMigration,
   FirebaseUser,
-} from './firebaseTypes';
-import {
-  FightCardsRepository,
-  FightersRepository,
-  FightsRepository,
-  UsersRepository,
-} from './repository';
+} from './types';
+
+export type AppFirestoreModule = {
+  usersCollection: FirebaseFirestoreTypes.CollectionReference<FirebaseUser>;
+  fightCardsCollection: FirebaseFirestoreTypes.CollectionReference<FirebaseFightCard>;
+  fightersCollection: FirebaseFirestoreTypes.CollectionReference<FirebaseFighter>;
+  fightsCollection: FirebaseFirestoreTypes.CollectionReference<FirebaseFight>;
+  migrationsCollection: FirebaseFirestoreTypes.CollectionReference<FirebaseMigration>;
+  fightPicksQuery: FirebaseFirestoreTypes.Query<FirebaseFightPick>;
+  raw: FirebaseFirestoreTypes.Module;
+  repository: {
+    users: UsersRepository;
+    fightCards: FightCardsRepository;
+    fighters: FightersRepository;
+    fights: FightsRepository;
+  };
+};
 
 export const initAppFirestore = (
   firestoreInstance: FirebaseFirestoreTypes.Module,

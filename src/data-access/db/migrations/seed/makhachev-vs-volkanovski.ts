@@ -1,7 +1,7 @@
 import firestore from '@react-native-firebase/firestore';
 
 import { MethodMap } from '../../../../../models.types';
-import { AppFirestoreModule } from '../../firebaseTypes';
+import { AppFirestoreModule } from '../../types';
 import { FirebaseMigrationHelper } from '../helpers';
 
 export const seedMakhachevVsVolkanovski = async (

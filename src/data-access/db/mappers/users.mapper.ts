@@ -1,5 +1,5 @@
 import { User, UserRoles } from '../../../../models.types';
-import { FirebaseUser } from '../firebaseTypes';
+import { FirebaseUser } from '../types';
 
 export const mapUserFromFirebase = (firebaseUser: FirebaseUser): User => {
   return {

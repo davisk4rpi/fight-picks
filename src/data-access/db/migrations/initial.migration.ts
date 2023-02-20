@@ -1,4 +1,4 @@
-import { AppFirestoreModule } from '../firebaseTypes';
+import { AppFirestoreModule } from '../types';
 import { FirebaseMigrationHelper } from './helpers';
 import {
   seedAndradeVsBlanchfield,

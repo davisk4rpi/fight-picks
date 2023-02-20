@@ -4,7 +4,7 @@ import {
   isMethodWithWinner,
   isRound,
 } from '../../../../models.types';
-import { FirebaseFightPick } from '../firebaseTypes';
+import { FirebaseFightPick } from '../types';
 
 export const mapFightPickFromFirebase = (
   firebaseFightPick: FirebaseFightPick,
