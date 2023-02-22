@@ -7,7 +7,6 @@ import {
   AdminHomeScreen,
   FightCardScreen,
   FightPickScreen,
-  LockedFightPicksScreen,
   LoginScreen,
   MigrationsScreen,
   SettingsScreen,
@@ -58,11 +57,6 @@ export function RootNavigator({ unauthorized, isAdmin }: RootNavigatorProps) {
             name="FightPick"
             component={FightPickScreen}
             options={{ headerTitle: 'Fight Pick' }}
-          />
-          <Stack.Screen
-            name="LockedFightPicks"
-            component={LockedFightPicksScreen}
-            options={{ headerTitle: 'Locked Fight Picks' }}
           />
           <Stack.Screen
             name="Settings"

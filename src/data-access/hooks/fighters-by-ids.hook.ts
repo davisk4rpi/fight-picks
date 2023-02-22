@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { Fighter } from '../../../models.types';
-import { appFirestore } from '../db';
+import { appFirestore } from '../firestore';
 
 type FightersMap = Map<string, Fighter>;
 
@@ -47,9 +47,4 @@ export const useFightersByIds = (fighterIds: string[]) => {
     fighterMapById: fighterMapById ?? emptyFighterMap,
     loading: fighterIds.length > 0 && fighterMapById === undefined,
   };
-};
-
-export const PLACEHOLDER_FIGHTER: Fighter = {
-  id: 'n/a',
-  name: 'Fighter TBA',
 };

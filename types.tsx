@@ -19,7 +19,6 @@ declare global {
 export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   FightPick: { fightId: string };
-  LockedFightPicks: { fightId: string };
   FightCard: { fightCardId: string };
   AdminHome: undefined;
   Migrations: undefined;

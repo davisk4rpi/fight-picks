@@ -4,13 +4,12 @@ import { Text } from 'react-native-paper';
 
 import { FightCard } from '../../../models.types';
 import { ThemeSpacing } from '../../app-context';
-import { LoadingScreen, Screen } from '../../components';
+import { Screen } from '../../components';
 import { FightCardHeadline } from '../../components/feature';
 import { usePastFightCardsScreen } from './past-fight-cards-screen.hook';
 
 export const PastFightCardsScreen = () => {
-  const { fightCards, loading, navigateToFightCardScreen } =
-    usePastFightCardsScreen();
+  const { fightCards, navigateToFightCardScreen } = usePastFightCardsScreen();
   const FightCardRowItem = useCallback(
     ({ item }: { item: FightCard }) => {
       const handlePress = () => navigateToFightCardScreen(item.id);
@@ -28,7 +27,6 @@ export const PastFightCardsScreen = () => {
     },
     [navigateToFightCardScreen],
   );
-  if (loading) return <LoadingScreen testID="EventScreen" />;
   if (fightCards.length === 0)
     return (
       <Screen testID="EventScreen">

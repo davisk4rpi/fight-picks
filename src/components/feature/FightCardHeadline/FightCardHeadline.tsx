@@ -7,7 +7,7 @@ import { ThemeSpacing } from '../../../app-context';
 
 interface FightCardHeadlineProps {
   name: string;
-  mainCardDate: Date;
+  mainCardDate: string;
   elevation?: SurfaceProps['elevation'];
   LeftAdornment?: () => JSX.Element;
   compact?: boolean;
@@ -35,7 +35,7 @@ export const FightCardHeadline = ({
           variant={compact ? 'titleSmall' : 'headlineSmall'}
           adjustsFontSizeToFit
           numberOfLines={1}>
-          {intlFormat(mainCardDate, {
+          {intlFormat(new Date(mainCardDate), {
             month: 'long',
             day: 'numeric',
             hour12: true,

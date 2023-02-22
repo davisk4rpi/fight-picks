@@ -36,7 +36,10 @@ export const TaleOfTheTape = ({
         />
         <View style={styles.vsContainer}>
           {result ? (
-            <ColorText color={'primary'} variant="titleMedium">
+            <ColorText
+              color={'primary'}
+              variant="titleMedium"
+              numberOfLines={2}>
               {Translation.roundMethod(
                 result.round,
                 Translation.shorthandMethodOfVictory(result.method),
@@ -77,7 +80,7 @@ const styles = StyleSheet.create({
   fightRowContainer: {
     alignItems: 'center',
     marginTop: ThemeSpacing.base * 2,
-    paddingHorizontal: ThemeSpacing.base,
+    paddingHorizontal: ThemeSpacing.base * 2,
     paddingVertical: ThemeSpacing.base * 2,
   },
   fightRow: {
@@ -89,9 +92,10 @@ const styles = StyleSheet.create({
   vsContainer: {
     marginHorizontal: ThemeSpacing.base * 2,
     alignItems: 'center',
+    flexGrow: 0,
   },
   fighterContainer: {
-    flexBasis: 150,
+    flexBasis: 40,
     flexGrow: 1,
     alignItems: 'center',
   },

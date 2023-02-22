@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { User } from '../../../models.types';
-import { appFirestore, mapUserFromFirebase } from '../db';
+import { appFirestore, mapUserFromFirebase } from '../firestore';
 
 export const useUsers = () => {
   const [users, setUsers] = useState<User[] | undefined>(undefined);

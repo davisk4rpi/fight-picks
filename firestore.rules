@@ -17,15 +17,15 @@ service cloud.firestore {
     }
 
     match /fights/{document=**} {
-      allow read: if isSignedIn();
+      allow read: if true;
       allow write: if isAdmin();
     }
     match /fightCards/{document=**} {
-      allow read: if isSignedIn();
+      allow read: if true;
       allow write: if isAdmin();
     }
     match /fighters/{document=**} {
-      allow read: if isSignedIn();
+      allow read: if true;
       allow write: if isAdmin();
     }
     match /migrations/{document=**} {
@@ -36,6 +36,10 @@ service cloud.firestore {
       allow read, create: if isSignedIn();
       allow delete: if isSelf(userId) || isAdmin();
       allow update: if (isSelf(userId) && !fieldsHaveAnyUpdates(['roles'])) || (!isSelf(userId) && isAdmin());
+    }
+    match /users/{userId}/fightPicks/{document=**} {
+      allow read: if isSignedIn();
+      allow delete, create, update: if isSelf(userId) || isAdmin();
     }
   }
 }

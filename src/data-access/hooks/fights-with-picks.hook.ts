@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { Fight, FightPickWithScore } from '../../../models.types';
 import { calculatePickScores } from '../../libs/scoring';
-import { appFirestore, mapFightPickFromFirebase } from '../db';
+import { appFirestore, mapFightPickFromFirebase } from '../firestore';
 
 export type FightWithPicks = Fight & {
   pick?: FightPickWithScore;

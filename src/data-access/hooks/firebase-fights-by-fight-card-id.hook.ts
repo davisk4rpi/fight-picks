@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import { appFirestore } from '../db';
-import { FirebaseFight } from '../db/types';
+import { appFirestore } from '../firestore';
+import { FirebaseFight } from '../firestore/types';
 
 export const useFirebaseFightsByFightCardId = (
   fightCardId: string | undefined,

@@ -3,7 +3,6 @@ export * from './past-fight-cards.hook';
 export * from './fight-card.hook';
 export * from './fight-pick-by-fight-id.hook';
 export * from './fight-picks-by-fight-id.hook';
-export * from './fight-with-fighters.hook';
 export * from './fights-with-picks.hook';
 export * from './fights-with-fighters-by-fight-card-id.hook';
 export * from './firestore-auth-user.hook';

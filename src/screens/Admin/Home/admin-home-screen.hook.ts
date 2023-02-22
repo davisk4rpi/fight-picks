@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react';
 
-import { useUsers } from '../../../data-access';
-import { appFirestore } from '../../../data-access/db';
+import { appFirestore } from '../../../data-access/firestore';
+import { useUsers } from '../../../data-access/hooks';
 
 export const useAdminHomeScreen = () => {
   const { users, loading } = useUsers();

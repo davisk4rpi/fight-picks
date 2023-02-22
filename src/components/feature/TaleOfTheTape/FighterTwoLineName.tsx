@@ -39,6 +39,7 @@ export const FighterTwoLineName = ({
 
 const styles = StyleSheet.create({
   stackedName: {
-    alignItems: 'flex-start',
+    alignItems: 'center',
+    flexShrink: 0,
   },
 });

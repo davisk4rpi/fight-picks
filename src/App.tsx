@@ -8,12 +8,12 @@ import {
 } from 'react-native-safe-area-context';
 
 import { DarkTheme, LightTheme, PreferencesContext } from './app-context';
-import { useFirestoreAuthUser } from './data-access';
-import useCachedResources from './libs/utililities/hooks/useCachedResources';
+import { useApp } from './app.hook';
 import Navigation from './navigation';
+import useCachedResources from './useCachedResources';
 
 export default function App() {
-  const { user, loading: authLoading } = useFirestoreAuthUser();
+  const { user, authLoading } = useApp();
 
   const isLoadingComplete = useCachedResources();
   const [isThemeDark, setIsThemeDark] = useState(true);

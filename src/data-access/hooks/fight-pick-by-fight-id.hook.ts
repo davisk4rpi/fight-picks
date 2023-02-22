@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { FightPick } from '../../../models.types';
-import { appFirestore, mapFightPickFromFirebase } from '../db';
+import { appFirestore, mapFightPickFromFirebase } from '../firestore';
 
 export const useFightPickByFightId = (fightId: string) => {
   const [fightPick, setFightPick] = useState<FightPick | undefined | null>(

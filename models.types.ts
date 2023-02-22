@@ -111,8 +111,8 @@ export type Fight = {
   rounds: 3 | 5;
   weight: number;
   sex: Sex;
-  fighter1: Fighter;
-  fighter2: Fighter;
+  fighter1Id: string;
+  fighter2Id: string;
   result?: FightResult;
 };
 
@@ -129,7 +129,7 @@ export type FightPickWithScore = FightPick & {
 
 export type FightCard = {
   id: string;
-  mainCardDate: Date;
+  mainCardDate: string;
   name: string;
   fightIds: string[];
 };
@@ -148,10 +148,10 @@ export const UserRoles = {
 export type Migration = {
   name: string;
   status: MigrationStatus;
-  createdAt: Date;
-  updatedAt: Date;
-  initializedAt: Date | null;
-  endedAt: Date | null;
+  createdAt: string;
+  updatedAt: string;
+  initializedAt: string | null;
+  endedAt: string | null;
 };
 
 export type MigrationFunction = () => Promise<void>;

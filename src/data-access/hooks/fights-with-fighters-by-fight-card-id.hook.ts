@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { mapFightFromFirebase } from '../db';
+import { mapFightFromFirebase } from '../firestore';
 import { useFightersByIds } from './fighters-by-ids.hook';
 import { useFirebaseFightsByFightCardId } from './firebase-fights-by-fight-card-id.hook';
 

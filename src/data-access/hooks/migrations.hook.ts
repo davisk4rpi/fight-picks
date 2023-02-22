@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { Migration } from '../../../models.types';
-import { appFirestore, mapMigrationFromFirebase } from '../db';
+import { appFirestore, mapMigrationFromFirebase } from '../firestore';
 
 export const useMigrations = () => {
   const [migrations, setMigrations] = useState<Migration[] | undefined>(

@@ -5,11 +5,11 @@
     "version": "1.0.0",
     "jsEngine": "hermes",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./src/assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./src/assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -31,12 +31,12 @@
       "googleServicesFile": "./google-services.json",
       "package": "com.kieranpdavis.fightpicks",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./src/assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./src/assets/images/favicon.png"
     },
     "extra": {
       "eas": {

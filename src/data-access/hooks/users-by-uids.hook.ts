@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { User } from '../../../models.types';
-import { appFirestore, mapUserFromFirebase } from '../db';
+import { appFirestore, mapUserFromFirebase } from '../firestore';
 
 type UsersMap = Map<string, User>;
 

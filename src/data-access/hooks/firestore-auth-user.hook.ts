@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { User } from '../../../models.types';
 import { useAuthenticatedUser } from '../../libs/react-native-firebase';
-import { appFirestore, mapUserFromFirebase } from '../db';
+import { appFirestore, mapUserFromFirebase } from '../firestore';
 
 export const useFirestoreAuthUser = () => {
   const { user: authUser, initializing } = useAuthenticatedUser();

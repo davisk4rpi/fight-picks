@@ -9,7 +9,7 @@ import {
   MethodWithWinner,
   Round,
 } from '../../../models.types';
-import { SetFightPickInput } from '../../data-access/db';
+import { SetFightPickInput } from '../../data-access/firestore';
 
 type FormValues = {
   id: string;

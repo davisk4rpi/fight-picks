@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { FightCard } from '../../../models.types';
-import { appFirestore, mapFightCardFromFirebase } from '../db';
+import { appFirestore, mapFightCardFromFirebase } from '../firestore';
 
 export const useNextFightCard = () => {
   const [nextFightCard, setNextFightCard] = useState<

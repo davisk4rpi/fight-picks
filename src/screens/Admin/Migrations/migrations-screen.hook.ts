@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 
 import { Migration } from '../../../../models.types';
-import { useMigrations } from '../../../data-access';
 import {
   makePendingMigrationsMap,
   MigrationsMap,
-} from '../../../data-access/db';
+} from '../../../data-access/firestore';
+import { useMigrations } from '../../../data-access/hooks';
 
 export const useMigrationsScreen = () => {
   const { migrations, loading } = useMigrations();
