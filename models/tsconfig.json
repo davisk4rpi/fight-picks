@@ -2,7 +2,6 @@
 {
   "compilerOptions": {
     "strict": true,
-    "allowJs": true,
     "esModuleInterop": true,
     "lib": ["DOM", "ESNext"],
     "moduleResolution": "node",

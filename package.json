@@ -2,16 +2,24 @@
   "private": true,
   "workspaces": [
     "app",
-    "models",
-    "firestore"
+    "models"
   ],
   "scripts": {
-    "start": "yarn --cwd app start",
-    "androidDev": "yarn --cwd app androidDev",
-    "androidProd": "yarn --cwd app androidProd",
-    "iosDev": "yarn --cwd app iosDev",
-    "iosProd": "yarn --cwd app iosProd",
-    "iosSim": "yarn --cwd app iosSim",
-    "iosSimProd": "yarn --cwd app iosSimProd"
-  }
+    "start": "workspace @fight-picks/app start",
+    "androidDev": "workspace @fight-picks/app androidDev",
+    "androidProd": "workspace @fight-picks/app androidProd",
+    "iosDev": "workspace @fight-picks/app iosDev",
+    "iosProd": "workspace @fight-picks/app iosProd",
+    "iosSim": "workspace @fight-picks/app iosSim",
+    "iosSimProd": "workspace @fight-picks/app iosSimProd",
+    "format": "prettier --write .",
+    "lint": "workspaces foreach run lint"
+  },
+  "devDependencies": {
+    "husky": "^8.0.3",
+    "lint-staged": "^13.1.2",
+    "prettier": "2.8.2",
+    "typescript": "^4.9.5"
+  },
+  "packageManager": "yarn@3.4.1"
 }
