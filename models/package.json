@@ -1,0 +1,7 @@
+{
+  "name": "@fight-picks/models",
+  "version": "1.0.0",
+  "dependencies": {
+    "cross-env": "5.0.5"
+  }
+}
