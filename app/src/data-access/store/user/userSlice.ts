@@ -99,5 +99,5 @@ export const {
 export const selectCurrentUser = (state: { user: UserState }) =>
   state.user.user;
 
-export const selectFightPicksStatus = (state: { user: UserState }) =>
+export const selectAuthUserFightPicksStatus = (state: { user: UserState }) =>
   state.user.fightPicks.fightPicksStatus;

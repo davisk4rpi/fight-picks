@@ -9,10 +9,6 @@ export const usePastFightCardsScreen = () => {
   const { navigate } = useNavigation();
   const fightCards = useSelector(selectPastFightCards);
 
-  // const { fightCardsWithFightsWithPicks } =
-  //   useFightCardsWithFightsWithPicks(fightCards);
-  // const { fightCardsWithPickScores } = useFightCardsWithPickScores(fightCards);
-
   const navigateToFightCardScreen = useCallback(
     (fightCardId: string) => {
       navigate('FightCard', { fightCardId });

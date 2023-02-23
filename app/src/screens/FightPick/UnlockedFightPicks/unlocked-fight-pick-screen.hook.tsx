@@ -7,9 +7,11 @@ import {
   appFirestore,
   SetFightPickInput,
 } from '../../../data-access/firestore';
-import { useFightPickByFightId } from '../../../data-access/hooks';
 import {
   PLACEHOLDER_FIGHTER,
+  selectAuthUserFightPickByFightId,
+  selectAuthUserFightPicksStatus,
+  useAppSelector,
   useSelectFightersFromFight,
 } from '../../../data-access/store';
 import { useFightPickForm } from './fight-pick-form.hook';
@@ -25,7 +27,10 @@ export const useUnlockedFightPicksScreen = (
   const fightCardDateRef = useRef(mainCardDate);
   fightCardDateRef.current = mainCardDate;
 
-  const { fightPick, fightPickLoading } = useFightPickByFightId(fight.id);
+  const fightPick = useAppSelector(state =>
+    selectAuthUserFightPickByFightId(state, fight.id),
+  );
+  const fightPicksStatus = useAppSelector(selectAuthUserFightPicksStatus);
 
   const handleSuccess = useCallback(
     (fightPick: SetFightPickInput) => {
@@ -64,6 +69,6 @@ export const useUnlockedFightPicksScreen = (
     fighter1: fighter1 ?? PLACEHOLDER_FIGHTER,
     fighter2: fighter2 ?? PLACEHOLDER_FIGHTER,
     fightPickForm,
-    loading: fightPickLoading,
+    loading: fightPicksStatus === 'pending',
   };
 };
