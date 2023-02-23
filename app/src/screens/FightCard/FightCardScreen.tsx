@@ -2,27 +2,26 @@ import React from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 import { Text } from 'react-native-paper';
 
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import { RootStackParamList } from '../../../types';
+import { RootStackParamList, RootTabParamList } from '../../../types';
 import { ThemeSpacing } from '../../app-context';
 import { LoadingScreen, Screen } from '../../components';
 import { FightCardHeadline } from '../../components/feature';
 import { useFightCardScreen } from './fight-card-screen.hook';
 import { FightRowItem } from './FightRowItem';
 
-type FightCardScreenProps = NativeStackScreenProps<
-  RootStackParamList,
-  'FightCard'
->;
+type FightCardScreenProps =
+  | NativeStackScreenProps<RootStackParamList, 'FightCard'>
+  | BottomTabScreenProps<RootTabParamList, 'CurrentFightCard'>;
 
 export const FightCardScreen = ({ route }: FightCardScreenProps) => {
-  const { fightCardId } = route.params;
+  const fightCardId = route.params?.fightCardId;
 
-  const { loading, fightCard, fightsWithPicks } =
-    useFightCardScreen(fightCardId);
+  const { loading, fightCard } = useFightCardScreen(fightCardId);
   if (loading) return <LoadingScreen testID="FightCardScreen" />;
-  if (fightCard === null)
+  if (fightCard === undefined)
     return (
       <Screen testID="FightCardScreen">
         <Text variant="displayMedium" adjustsFontSizeToFit numberOfLines={1}>
@@ -39,10 +38,16 @@ export const FightCardScreen = ({ route }: FightCardScreenProps) => {
       />
       <FlatList
         style={styles.fightsFlatList}
-        data={fightsWithPicks}
-        renderItem={obj => <FightRowItem item={obj.item} />}
-        keyExtractor={({ id }) => id}
-        scrollEnabled={fightsWithPicks.length > 3}
+        data={fightCard.fightIds}
+        renderItem={obj => (
+          <FightRowItem
+            key={obj.item}
+            fightId={obj.item}
+            elevation={fightCardId === undefined ? 2 : 1}
+          />
+        )}
+        keyExtractor={id => id}
+        scrollEnabled={fightCard.fightIds.length > 3}
         horizontal={false}
         contentContainerStyle={styles.fightsFlatListContent}
         indicatorStyle="white"

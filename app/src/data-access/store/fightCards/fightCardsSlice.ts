@@ -6,13 +6,20 @@ import {
   PayloadAction,
 } from '@reduxjs/toolkit';
 
+import { findBinaryPositionInOrderedArray } from '../../../libs/utilities';
+import { AsyncStatus } from '../types';
+
 export const FIGHT_CARDS_SLICE_NAME = 'fightCards';
 
 const fightCardsAdapter = createEntityAdapter<FightCard>({
   sortComparer: (a, b) => b.mainCardDate.localeCompare(a.mainCardDate),
 });
 
-const initialState = fightCardsAdapter.getInitialState();
+const initialState = fightCardsAdapter.getInitialState<{
+  fightCardsStatus: AsyncStatus;
+}>({ fightCardsStatus: 'pending' });
+
+type FightCardsState = typeof initialState;
 
 const fightCardsSlice = createSlice({
   name: FIGHT_CARDS_SLICE_NAME,
@@ -31,6 +38,7 @@ const fightCardsSlice = createSlice({
           action.payload.fightCardIdsToRemove,
         );
         fightCardsAdapter.upsertMany(state, action.payload.fightCardsToUpsert);
+        state.fightCardsStatus = 'complete';
       },
       prepare: (
         fightCardsToUpsert: FightCard[],
@@ -51,9 +59,14 @@ export const {
   selectAll: selectFightCards,
   selectEntities: selectFightCardEntities,
   selectById: selectFightCardById,
-} = fightCardsAdapter.getSelectors<{ fightCards: typeof initialState }>(
+} = fightCardsAdapter.getSelectors<{ fightCards: FightCardsState }>(
   ({ fightCards }) => fightCards,
 );
+
+export const selectFightCardByIdOptimistic = (
+  state: { fightCards: FightCardsState },
+  fightCardId?: string,
+) => (fightCardId ? selectFightCardById(state, fightCardId) : undefined);
 
 export const selectPastFightCards = createSelector(
   [selectFightCards],
@@ -63,14 +76,36 @@ export const selectPastFightCards = createSelector(
   },
 );
 
+const findCurrentFightCard = (fightCards: FightCard[]) => {
+  const cuttoff = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+  const idx = findBinaryPositionInOrderedArray(fightCards, fightCard => {
+    if (fightCard.mainCardDate < cuttoff) {
+      return -1;
+    } else if (fightCard.mainCardDate > cuttoff) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
+
+  const fightCard = fightCards.at(Math.max(0, idx - 1));
+  if (fightCard === undefined) return fightCards.at(idx) ?? undefined;
+  return fightCard;
+};
+
 export const selectCurrentFightCard = createSelector(
   [selectFightCards],
-  fightCards => {
-    const cuttoff = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
-    const lastFightCardIdx = fightCards.findIndex(
-      fightCard => fightCard.mainCardDate <= cuttoff,
-    );
-    if (lastFightCardIdx === -1) return null;
-    return fightCards[lastFightCardIdx - 1] ?? fightCards[lastFightCardIdx];
+  findCurrentFightCard,
+);
+
+export const selectFightCardByIdOrCurrent = createSelector(
+  [selectFightCardByIdOptimistic, selectCurrentFightCard],
+  (fightCard, currentFightCard) => {
+    if (fightCard) return fightCard;
+    return currentFightCard;
   },
 );
+
+export const selectFightCardsStatus = (state: {
+  fightCards: FightCardsState;
+}) => state.fightCards.fightCardsStatus;

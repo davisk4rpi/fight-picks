@@ -2,20 +2,25 @@ import { FightPick, User } from '@fight-picks/models';
 import {
   createEntityAdapter,
   createSlice,
-  EntityState,
   PayloadAction,
 } from '@reduxjs/toolkit';
 
+import { AsyncStatus } from '../types';
+
 export const USER_SLICE_NAME = 'user';
+
+const fightPicksAdapter = createEntityAdapter<FightPick>({
+  selectId: pick => pick.fightId,
+});
+
+const initialFightPickState = fightPicksAdapter.getInitialState<{
+  fightPicksStatus: AsyncStatus;
+}>({ fightPicksStatus: 'pending' });
 
 type UserState = {
   user: User | null;
-  fightPicks: EntityState<FightPick>;
+  fightPicks: typeof initialFightPickState;
 };
-
-const fightPicksAdapter = createEntityAdapter<FightPick>();
-
-const initialFightPickState = fightPicksAdapter.getInitialState();
 
 const initialState: UserState = {
   fightPicks: initialFightPickState,
@@ -42,6 +47,7 @@ const userSlice = createSlice({
           state.fightPicks,
           action.payload.fightPicksToUpsert,
         );
+        state.fightPicks.fightPicksStatus = 'complete';
       },
       prepare: (
         fightPicksToUpsert: FightPick[],
@@ -85,10 +91,13 @@ export const { userFightPicksChanged, userChanged } = userSlice.actions;
 export const {
   selectAll: selectAuthUserFightPicks,
   selectEntities: selectAuthUserFightPickEntities,
-  selectById: selectAuthUserFightPickById,
+  selectById: selectAuthUserFightPickByFightId,
 } = fightPicksAdapter.getSelectors<{ user: UserState }>(
   ({ user }) => user.fightPicks,
 );
 
 export const selectCurrentUser = (state: { user: UserState }) =>
   state.user.user;
+
+export const selectFightPicksStatus = (state: { user: UserState }) =>
+  state.user.fightPicks.fightPicksStatus;

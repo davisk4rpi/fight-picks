@@ -6,11 +6,17 @@ import {
   PayloadAction,
 } from '@reduxjs/toolkit';
 
+import { AsyncStatus } from '../types';
+
 export const FIGHTS_SLICE_NAME = 'fights';
 
 const fightsAdapter = createEntityAdapter<Fight>();
 
-const initialState = fightsAdapter.getInitialState();
+const initialState = fightsAdapter.getInitialState<{
+  fightsStatus: AsyncStatus;
+}>({ fightsStatus: 'pending' });
+
+type FightsState = typeof initialState;
 
 const fightsSlice = createSlice({
   name: FIGHTS_SLICE_NAME,
@@ -26,6 +32,7 @@ const fightsSlice = createSlice({
       ) => {
         fightsAdapter.removeMany(state, action.payload.fightIdsToRemove);
         fightsAdapter.upsertMany(state, action.payload.fightsToUpsert);
+        state.fightsStatus = 'complete';
       },
       prepare: (fightsToUpsert: Fight[], fightIdsToRemove: string[]) => {
         return {
@@ -43,9 +50,7 @@ export const {
   selectAll: selectFights,
   selectEntities: selectFightEntities,
   selectById: selectFightById,
-} = fightsAdapter.getSelectors<{ fights: typeof initialState }>(
-  ({ fights }) => fights,
-);
+} = fightsAdapter.getSelectors<{ fights: FightsState }>(({ fights }) => fights);
 
 export const selectFightsByIds = createSelector(
   [selectFightEntities, (_state: unknown, fightIds: string[]) => fightIds],
@@ -59,3 +64,6 @@ export const selectFightsByIds = createSelector(
     }, []);
   },
 );
+
+export const selectFightsStatus = (state: { fights: FightsState }) =>
+  state.fights.fightsStatus;

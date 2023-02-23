@@ -1,17 +1,18 @@
 import React from 'react';
 import { Pressable } from 'react-native';
 
-import { TaleOfTheTape } from '../../components/feature';
-import { FightWithPicks } from '../../data-access/hooks';
+import { TaleOfTheTape, TaleOfTheTapeProps } from '../../components/feature';
 import { useFightRowItem } from './fight-row-item.hook';
 
 interface FightRowItemProps {
-  item: FightWithPicks;
+  fightId: string;
+  elevation?: TaleOfTheTapeProps['elevation'];
 }
 
-export const FightRowItem = ({ item: fight }: FightRowItemProps) => {
-  const { navigateToFightPickScreen, fighter1, fighter2 } =
-    useFightRowItem(fight);
+export const FightRowItem = ({ fightId, elevation }: FightRowItemProps) => {
+  const { fight, fightPick, navigateToFightPickScreen, fighter1, fighter2 } =
+    useFightRowItem(fightId);
+  if (fight === undefined) return null;
   return (
     <Pressable onPress={navigateToFightPickScreen}>
       <TaleOfTheTape
@@ -19,7 +20,8 @@ export const FightRowItem = ({ item: fight }: FightRowItemProps) => {
         weight={fight.weight}
         fighter1={fighter1}
         fighter2={fighter2}
-        result={fight.result}
+        result={fight.result ?? fightPick}
+        elevation={elevation}
       />
     </Pressable>
   );

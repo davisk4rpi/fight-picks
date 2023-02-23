@@ -2,18 +2,23 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Surface, SurfaceProps, Text } from 'react-native-paper';
 
-import { Confidence, Fight, Fighter } from '@fight-picks/models';
+import { Fight, Fighter, FightPick } from '@fight-picks/models';
 
 import { ThemeSpacing, Translation } from '../../../app-context';
 import { ColorText } from '../../color-text';
 import { FighterTwoLineName } from './FighterTwoLineName';
 
-interface TaleOfTheTapeProps
-  extends Pick<Fight, 'rounds' | 'weight' | 'result'> {
+type TaleOfTheTapeResult =
+  | FightPick
+  | (Fight['result'] & {
+      confidence?: undefined;
+    });
+
+export interface TaleOfTheTapeProps extends Pick<Fight, 'rounds' | 'weight'> {
   fighter1: Pick<Fighter, 'name' | 'id'>;
   fighter2: Pick<Fighter, 'name' | 'id'>;
   elevation?: SurfaceProps['elevation'];
-  confidence?: Confidence;
+  result?: TaleOfTheTapeResult;
 }
 
 export const TaleOfTheTape = ({
@@ -22,7 +27,6 @@ export const TaleOfTheTape = ({
   fighter1,
   fighter2,
   result,
-  confidence,
   elevation,
 }: TaleOfTheTapeProps) => {
   return (
@@ -49,9 +53,9 @@ export const TaleOfTheTape = ({
           ) : (
             <Text variant="headlineSmall">{Translation.vs}</Text>
           )}
-          {confidence && (
+          {result?.confidence && (
             <ColorText color={'secondary'} variant="labelLarge">
-              {Translation.confidenceMeter(confidence)}
+              {Translation.confidenceMeter(result.confidence)}
             </ColorText>
           )}
         </View>

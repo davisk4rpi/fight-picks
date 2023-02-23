@@ -1,6 +1,6 @@
 import firestore from '@react-native-firebase/firestore';
 
-import { MigrationAlreadyExistsError } from '../../../../libs/utililities';
+import { MigrationAlreadyExistsError } from '../../../../libs/utilities';
 import {
   AppFirestoreModule,
   FirebaseFight,

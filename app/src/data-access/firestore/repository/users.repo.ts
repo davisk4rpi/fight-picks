@@ -5,7 +5,7 @@ import firestore, {
   FirebaseFirestoreTypes,
 } from '@react-native-firebase/firestore';
 
-import { NotFoundError, WithOptional } from '../../../libs/utililities';
+import { NotFoundError, WithOptional } from '../../../libs/utilities';
 import {
   FirebaseFight,
   FirebaseFighter,

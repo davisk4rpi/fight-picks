@@ -1,5 +1,4 @@
 export * from './Admin';
-export * from './CurrentFightCard';
 export * from './FightCard';
 export * from './FightPick';
 export * from './Login';

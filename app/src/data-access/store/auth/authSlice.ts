@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export const AUTH_SLICE_NAME = 'auth';
+import { AsyncStatus } from '../types';
 
-type AuthStatus = 'pending' | 'complete';
+export const AUTH_SLICE_NAME = 'auth';
 
 type AuthUser = {
   uid: string;
@@ -10,7 +10,7 @@ type AuthUser = {
 };
 type AuthState = {
   user: AuthUser | null;
-  authStatus: AuthStatus;
+  authStatus: AsyncStatus;
 };
 
 const initialState: AuthState = {

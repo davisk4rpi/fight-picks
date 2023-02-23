@@ -7,11 +7,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 
 import { RootTabParamList } from '../../types';
-import {
-  CurrentFightCardScreen,
-  PastFightCardsScreen,
-  ScoreScreen,
-} from '../screens';
+import { FightCardScreen, PastFightCardsScreen, ScoreScreen } from '../screens';
 
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
@@ -45,7 +41,7 @@ export function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="CurrentFightCard"
-        component={CurrentFightCardScreen}
+        component={FightCardScreen}
         options={() => ({
           title: 'Home',
           tabBarIcon: CurrentCardTabBarIcon,

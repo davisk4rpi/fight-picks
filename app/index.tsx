@@ -1,6 +1,7 @@
 import '@react-native-firebase/app';
 import 'expo-dev-client';
 import 'react-native-get-random-values';
+import 'core-js/actual/array/at';
 
 import { registerRootComponent } from 'expo';
 import React from 'react';
@@ -9,7 +10,6 @@ import { Provider } from 'react-redux';
 
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import functions from '@react-native-firebase/functions';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 import GoogleServives from './google-services.json';
@@ -26,7 +26,6 @@ if (__DEV__) {
   firestore().useEmulator(localhost, devEnv.firebase.firestoreEmulatorPort);
   const authUrl = `http://${localhost}:${devEnv.firebase.authEmulatorPort}`;
   auth().useEmulator(authUrl);
-  functions().useEmulator(localhost, devEnv.firebase.functionsEmulatorPort);
 }
 
 GoogleSignin.configure({

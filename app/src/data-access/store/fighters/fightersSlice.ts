@@ -5,11 +5,17 @@ import {
   PayloadAction,
 } from '@reduxjs/toolkit';
 
+import { AsyncStatus } from '../types';
+
 export const FIGHTERS_SLICE_NAME = 'fighters';
 
 const fightersAdapter = createEntityAdapter<Fighter>();
 
-const initialState = fightersAdapter.getInitialState();
+const initialState = fightersAdapter.getInitialState<{
+  fightersStatus: AsyncStatus;
+}>({ fightersStatus: 'pending' });
+
+type FightersState = typeof initialState;
 
 const fightersSlice = createSlice({
   name: FIGHTERS_SLICE_NAME,
@@ -25,6 +31,7 @@ const fightersSlice = createSlice({
       ) => {
         fightersAdapter.removeMany(state, action.payload.fighterIdsToRemove);
         fightersAdapter.upsertMany(state, action.payload.fightersToUpsert);
+        state.fightersStatus = 'pending';
       },
       prepare: (fightersToUpsert: Fighter[], fighterIdsToRemove: string[]) => {
         return {
@@ -42,7 +49,7 @@ export const {
   selectAll: selectFighters,
   selectEntities: selectFighterEntities,
   selectById: selectFighterById,
-} = fightersAdapter.getSelectors<{ fighters: typeof initialState }>(
+} = fightersAdapter.getSelectors<{ fighters: FightersState }>(
   ({ fighters }) => fighters,
 );
 
@@ -50,3 +57,6 @@ export const PLACEHOLDER_FIGHTER: Fighter = {
   id: 'n/a',
   name: 'Fighter TBA',
 };
+
+export const selectFightersStatus = (state: { fighters: FightersState }) =>
+  state.fighters.fightersStatus;

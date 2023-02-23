@@ -5,15 +5,15 @@
     "models"
   ],
   "scripts": {
-    "start": "workspace @fight-picks/app start",
-    "androidDev": "workspace @fight-picks/app androidDev",
-    "androidProd": "workspace @fight-picks/app androidProd",
-    "iosDev": "workspace @fight-picks/app iosDev",
-    "iosProd": "workspace @fight-picks/app iosProd",
-    "iosSim": "workspace @fight-picks/app iosSim",
-    "iosSimProd": "workspace @fight-picks/app iosSimProd",
+    "start": "yarn workspace @fight-picks/app start",
+    "androidDev": "yarn workspace @fight-picks/app androidDev",
+    "androidProd": "yarn workspace @fight-picks/app androidProd",
+    "iosDev": "yarn workspace @fight-picks/app iosDev",
+    "iosProd": "yarn workspace @fight-picks/app iosProd",
+    "iosSim": "yarn workspace @fight-picks/app iosSim",
+    "iosSimProd": "yarn workspace @fight-picks/app iosSimProd",
     "format": "prettier --write .",
-    "lint": "workspaces foreach run lint"
+    "lint": "yarn workspaces foreach run lint"
   },
   "devDependencies": {
     "husky": "^8.0.3",
