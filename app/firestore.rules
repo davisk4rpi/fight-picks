@@ -15,6 +15,9 @@ service cloud.firestore {
     function fieldsHaveAnyUpdates(fields) {
       return request.resource.data.diff(resource.data).affectedKeys().hasAny(fields)
     }
+    match /{document=**} {
+      allow read, write: if false;
+    }
 
     match /fights/{document=**} {
       allow read: if true;

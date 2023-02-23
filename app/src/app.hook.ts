@@ -29,6 +29,7 @@ export const useApp = () => {
   const user = useAppSelector(selectCurrentUser);
   const authStatus = useAppSelector(selectAuthStatus);
   const authUserUid = useAppSelector(selectAuthUserUid);
+
   const dispatch = useDispatch();
 
   const onCurrentUserUpdate = useCallback<OnCurrentUserUpdate>(

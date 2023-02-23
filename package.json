@@ -2,6 +2,7 @@
   "private": true,
   "workspaces": [
     "app",
+    "firebase-admin",
     "models"
   ],
   "scripts": {
@@ -13,7 +14,9 @@
     "iosSim": "yarn workspace @fight-picks/app iosSim",
     "iosSimProd": "yarn workspace @fight-picks/app iosSimProd",
     "format": "prettier --write .",
-    "lint": "yarn workspaces foreach run lint"
+    "lint": "yarn workspaces foreach run lint",
+    "firebaseEmulators": "yarn workspace @fight-picks/app firebaseEmulators",
+    "deployFirestoreRules": "yarn workspace @fight-picks/app deployFirestoreRules"
   },
   "devDependencies": {
     "husky": "^8.0.3",

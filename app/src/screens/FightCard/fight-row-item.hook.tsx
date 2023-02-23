@@ -15,6 +15,7 @@ export const useFightRowItem = (fightId: string) => {
   const fightPick = useAppSelector(state =>
     selectAuthUserFightPickByFightId(state, fightId),
   );
+
   const { fighter1, fighter2 } = useSelectFightersFromFight(fight);
 
   const navigateToFightPickScreen = useCallback(

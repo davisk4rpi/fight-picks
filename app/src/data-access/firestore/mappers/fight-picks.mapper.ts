@@ -21,7 +21,7 @@ export const mapFightPickFromFirebase = (
   if (method === 'decision') {
     return {
       id: firebaseFightPick.id,
-      fightId: firebaseFightPick.winningFighterRef.id,
+      fightId: firebaseFightPick.fightRef.id,
       userUid: firebaseFightPick.userRef.id,
       winningFighterId: firebaseFightPick.winningFighterRef.id,
       method,
@@ -35,7 +35,7 @@ export const mapFightPickFromFirebase = (
 
     return {
       id: firebaseFightPick.id,
-      fightId: firebaseFightPick.winningFighterRef.id,
+      fightId: firebaseFightPick.fightRef.id,
       userUid: firebaseFightPick.userRef.id,
       winningFighterId: firebaseFightPick.winningFighterRef.id,
       method,

@@ -16,7 +16,8 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "genScreen": "hygen screen new",
-    "firebaseEmulators": "firebase emulators:start"
+    "firebaseEmulators": "firebase emulators:start --project fight-picks",
+    "deployFirestoreRules": "firebase deploy --only firestore:rules"
   },
   "jest": {
     "preset": "jest-expo"
