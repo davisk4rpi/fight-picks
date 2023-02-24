@@ -11,7 +11,6 @@ import {
   FirebaseFightCard,
   FirebaseFighter,
   FirebaseFightPick,
-  FirebaseMigration,
   FirebaseUser,
 } from './types';
 
@@ -20,7 +19,6 @@ export type AppFirestoreModule = {
   fightCardsCollection: FirebaseFirestoreTypes.CollectionReference<FirebaseFightCard>;
   fightersCollection: FirebaseFirestoreTypes.CollectionReference<FirebaseFighter>;
   fightsCollection: FirebaseFirestoreTypes.CollectionReference<FirebaseFight>;
-  migrationsCollection: FirebaseFirestoreTypes.CollectionReference<FirebaseMigration>;
   fightPicksQuery: FirebaseFirestoreTypes.Query<FirebaseFightPick>;
   raw: FirebaseFirestoreTypes.Module;
   repository: {
@@ -43,8 +41,6 @@ export const initAppFirestore = (
     firestoreInstance.collection<FirebaseFighter>('fighters');
   const fightsCollection =
     firestoreInstance.collection<FirebaseFight>('fights');
-  const migrationsCollection =
-    firestoreInstance.collection<FirebaseMigration>('migrations');
 
   const fightPicksQuery =
     firestoreInstance.collectionGroup<FirebaseFightPick>('fightPicks');
@@ -55,7 +51,6 @@ export const initAppFirestore = (
     fightersCollection,
     fightsCollection,
     fightPicksQuery,
-    migrationsCollection,
     repository: {
       users: new UsersRepository(
         usersCollection,

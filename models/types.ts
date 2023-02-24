@@ -143,26 +143,3 @@ export type User = {
 export const UserRoles = {
   admin: 'admin',
 } as const;
-
-// Admin
-export type Migration = {
-  name: string;
-  status: MigrationStatus;
-  createdAt: string;
-  updatedAt: string;
-  initializedAt: string | null;
-  endedAt: string | null;
-};
-
-export type MigrationFunction = () => Promise<void>;
-
-export type MigrationStatus = 'pending' | 'initialized' | 'failed' | 'complete';
-
-export const isMigrationStatus = (
-  status?: string | null,
-): status is MigrationStatus => {
-  return (
-    typeof status === 'string' &&
-    ['pending', 'initialized', 'failed', 'complete'].includes(status)
-  );
-};

@@ -3,7 +3,6 @@ import { FlatList, StyleSheet, View } from 'react-native';
 import { Button, Surface, Text } from 'react-native-paper';
 
 import { User } from '@fight-picks/models';
-import { useNavigation } from '@react-navigation/native';
 
 import { ThemeSpacing, Translation } from '../../../app-context';
 import { LoadingScreen, Screen } from '../../../components';
@@ -12,21 +11,6 @@ import { useAdminHomeScreen } from './admin-home-screen.hook';
 export interface AdminHomeScreenProps {}
 
 const TEST_ID = 'AdminHomeScreen';
-
-const MigrationsButton = () => {
-  const { navigate } = useNavigation();
-  const handlePress = useCallback(() => {
-    navigate('Migrations');
-  }, [navigate]);
-  return (
-    <Button
-      onPress={handlePress}
-      mode="contained-tonal"
-      style={styles.migrationsButton}>
-      {Translation.migrations}
-    </Button>
-  );
-};
 
 export const AdminHomeScreen = ({}: AdminHomeScreenProps) => {
   const { loading, users, addAdminRoleToUser, removeAdminRoleFromUser } =
@@ -55,7 +39,6 @@ export const AdminHomeScreen = ({}: AdminHomeScreenProps) => {
   return (
     <Screen testID={TEST_ID}>
       <View style={styles.view}>
-        <MigrationsButton />
         <Text style={styles.usersTitle} variant="titleMedium">
           {Translation.users}
         </Text>

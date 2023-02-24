@@ -8,7 +8,6 @@ import {
   FightCardScreen,
   FightPickScreen,
   LoginScreen,
-  MigrationsScreen,
   SettingsScreen,
 } from '../screens';
 import ModalScreen from '../screens/ModalScreen';
@@ -69,11 +68,6 @@ export function RootNavigator({ unauthorized, isAdmin }: RootNavigatorProps) {
                 name="AdminHome"
                 component={AdminHomeScreen}
                 options={{ headerTitle: 'Admin Home' }}
-              />
-              <Stack.Screen
-                name="Migrations"
-                component={MigrationsScreen}
-                options={{ headerTitle: 'Migrations' }}
               />
             </Stack.Group>
           )}

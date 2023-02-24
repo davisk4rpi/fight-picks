@@ -67,16 +67,3 @@ export type FirebaseFightPickRef =
 export type FirebaseAppState = {
   currentFightCardRef: FirebaseFightCardRef;
 };
-
-// Admin
-export type FirebaseMigration = {
-  name: string;
-  status: string;
-  createdAt: FirebaseFirestoreTypes.Timestamp;
-  updatedAt: FirebaseFirestoreTypes.Timestamp;
-  initializedAt: FirebaseFirestoreTypes.Timestamp | null;
-  endedAt: FirebaseFirestoreTypes.Timestamp | null;
-};
-
-export type FirebaseMigrationRef =
-  FirebaseFirestoreTypes.DocumentReference<FirebaseMigration>;

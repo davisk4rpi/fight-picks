@@ -15,7 +15,6 @@ export const Translation = {
   },
   logOut: 'Log Out',
   name: 'Name',
-  migrations: 'Migrations',
   pageXOfY: (x: number, y: number) => `page ${x} of ${y}`,
   perPage: 'per page',
   roundMethod: (round: number | string | undefined | null, method: string) => {
