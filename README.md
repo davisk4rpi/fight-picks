@@ -34,6 +34,8 @@ Typescript, Expo, React Native, Redux Toolkit, Firebase, React Navigation, React
 
 ### Planned Features
 - NEXT: View scores and compare with other players
+- User Onboarding with customization
+- NO SPOILERS feature to prevent unsuspected fight outcomes from ruining your day
 - Create a private league for you and your friends
 - Automated Production seeding of fight information before and after an event occurs
 - Populate app with Vegas betting odds using web scraping or apis
