@@ -90,6 +90,8 @@ export type FirestoreMigrationsCollectionReference =
   CollectionReference<FirestoreMigration>;
 export type FirestoreFightPicksCollectionGroup =
   CollectionGroup<FirestoreFightPick>;
+export type FirestoreFightPicksCollectionReference =
+  CollectionReference<FirestoreFightPick>;
 
 export type AdminFirestoreModule = {
   usersCollection: FirestoreUsersCollectionReference;
@@ -98,4 +100,7 @@ export type AdminFirestoreModule = {
   fightsCollection: FirestoreFightsCollectionReference;
   migrationsCollection: FirestoreMigrationsCollectionReference;
   fightPicksQuery: FirestoreFightPicksCollectionGroup;
+  userFightPicksCollection: (
+    userRef: FirestoreUserRef,
+  ) => FirestoreFightPicksCollectionReference;
 };

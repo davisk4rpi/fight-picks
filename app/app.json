@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Fight Picks",
-    "slug": "fightPicks",
+    "name": "Cage Clash",
+    "slug": "cageClash",
     "version": "1.0.0",
     "jsEngine": "hermes",
     "orientation": "portrait",

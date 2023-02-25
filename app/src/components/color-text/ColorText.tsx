@@ -4,7 +4,7 @@ import { Text, TextProps } from 'react-native-paper';
 
 import { ThemeColorKey, useTheme } from '../../app-context';
 
-interface ColorTextProps extends TextProps {
+export interface ColorTextProps extends TextProps {
   color?: ThemeColorKey;
 }
 

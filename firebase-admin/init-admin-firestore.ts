@@ -10,8 +10,10 @@ import {
   FirestoreFightCardsCollectionReference,
   FirestoreFightersCollectionReference,
   FirestoreFightPicksCollectionGroup,
+  FirestoreFightPicksCollectionReference,
   FirestoreFightsCollectionReference,
   FirestoreMigrationsCollectionReference,
+  FirestoreUserRef,
   FirestoreUsersCollectionReference,
 } from './types';
 
@@ -40,6 +42,9 @@ export const initAdminFirestore = (
     'fightPicks',
   ) as FirestoreFightPicksCollectionGroup;
 
+  const userFightPicksCollection = (userRef: FirestoreUserRef) =>
+    userRef.collection('fightPicks') as FirestoreFightPicksCollectionReference;
+
   return {
     usersCollection,
     fightCardsCollection,
@@ -47,5 +52,6 @@ export const initAdminFirestore = (
     fightsCollection,
     fightPicksQuery,
     migrationsCollection,
+    userFightPicksCollection,
   };
 };

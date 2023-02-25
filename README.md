@@ -34,6 +34,7 @@ Typescript, Expo, React Native, Redux Toolkit, Firebase, React Navigation, React
 
 ### Planned Features
 - NEXT: View scores and compare with other players
+- Create more yarn workspaces from code with the `app` workspace
 - User Onboarding with customization
 - NO SPOILERS feature to prevent unsuspected fight outcomes from ruining your day
 - Create a private league for you and your friends

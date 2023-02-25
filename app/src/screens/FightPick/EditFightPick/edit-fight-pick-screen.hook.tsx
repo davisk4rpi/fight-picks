@@ -16,10 +16,7 @@ import {
 } from '../../../data-access/store';
 import { useFightPickForm } from './fight-pick-form.hook';
 
-export const useUnlockedFightPicksScreen = (
-  fight: Fight,
-  mainCardDate: string,
-) => {
+export const useEditFightPickScreen = (fight: Fight, mainCardDate: string) => {
   const { goBack, navigate } = useNavigation();
 
   const { fighter1, fighter2 } = useSelectFightersFromFight(fight);
