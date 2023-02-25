@@ -20,7 +20,7 @@ They score 1 point for picking the winner and win the number of `Confidence` poi
 
 ## Development
 ### Current Tech
-Typescript, Expo, React Native, Redux Toolkit, Firebase, React Navigation, React Native Paper
+Typescript, Expo, React Native, Redux Toolkit, Firebase, React Navigation, React Native Paper, Yarn Workspaces
 
 ### Planned Tech Integrations
 #### Jest & Detox
