@@ -7,20 +7,22 @@ import { Fight } from '@fight-picks/models';
 import { ThemeSpacing } from '../../../app-context';
 import { LoadingScreen, NotFoundScreen, Screen } from '../../../components';
 import { TaleOfTheTape } from '../../../components/feature';
+import { useEditFightPickScreen } from './edit-fight-pick-screen.hook';
 import { SegmentedButtonsField } from './SegmentedButtonsField';
-import { useUnlockedFightPicksScreen } from './unlocked-fight-pick-screen.hook';
 
-interface UnlockedFightPicksScreenProps {
+interface EditFightPicksScreenProps {
   fight: Fight;
   mainCardDate: string;
 }
 
-export const UnlockedFightPicksScreen = ({
+export const EditFightPickScreen = ({
   fight,
   mainCardDate,
-}: UnlockedFightPicksScreenProps) => {
-  const { fightPickForm, fighter1, fighter2, loading } =
-    useUnlockedFightPicksScreen(fight, mainCardDate);
+}: EditFightPicksScreenProps) => {
+  const { fightPickForm, fighter1, fighter2, loading } = useEditFightPickScreen(
+    fight,
+    mainCardDate,
+  );
 
   if (loading) {
     return <LoadingScreen testID="FightPickScreen" />;

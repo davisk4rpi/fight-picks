@@ -2039,6 +2039,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fight-picks/firebase-admin@workspace:firebase-admin"
   dependencies:
+    "@faker-js/faker": ^7.6.0
     "@typescript-eslint/eslint-plugin": ^5.48.1
     "@typescript-eslint/parser": ^5.48.1
     cross-env: 5.0.5

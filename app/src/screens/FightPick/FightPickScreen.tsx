@@ -4,9 +4,9 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { RootStackParamList } from '../../../types';
 import { NotFoundScreen } from '../../components';
+import { EditFightPickScreen } from './EditFightPick';
 import { useFightPickScreen } from './fight-pick-screen.hook';
-import { LockedFightPicksScreen } from './LockedFightPicks';
-import { UnlockedFightPicksScreen } from './UnlockedFightPicks';
+import { LockedFightPickScreen } from './LockedFightPick';
 
 type FightPickScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -22,10 +22,8 @@ export const FightPickScreen = ({ route }: FightPickScreenProps) => {
   }
 
   if (new Date(mainCardDate) > new Date()) {
-    return (
-      <UnlockedFightPicksScreen fight={fight} mainCardDate={mainCardDate} />
-    );
+    return <EditFightPickScreen fight={fight} mainCardDate={mainCardDate} />;
   } else {
-    return <LockedFightPicksScreen fight={fight} mainCardDate={mainCardDate} />;
+    return <LockedFightPickScreen fight={fight} mainCardDate={mainCardDate} />;
   }
 };

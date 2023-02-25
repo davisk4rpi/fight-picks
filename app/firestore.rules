@@ -44,5 +44,9 @@ service cloud.firestore {
       allow read: if isSignedIn();
       allow delete, create, update: if isSelf(userId) || isAdmin();
     }
+    match /{path=**}/fightPicks/{fightPick} {
+      allow read: if isSignedIn();
+      allow delete, create, update: if false;
+    }
   }
 }

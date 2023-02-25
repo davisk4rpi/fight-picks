@@ -1,76 +1,116 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Surface, SurfaceProps, Text } from 'react-native-paper';
+import { Surface, Text } from 'react-native-paper';
 
-import { Fight, Fighter, FightPick } from '@fight-picks/models';
+import { Fighter, FightPick } from '@fight-picks/models';
 
-import { ThemeSpacing } from '../../../app-context';
+import { ThemeSpacing, Translation } from '../../../app-context';
+import { ColorText, ColorTextProps } from '../../color-text';
 import { FighterTwoLineName } from './FighterTwoLineName';
 
-interface TaleOfTheTapePickProps extends Pick<Fight, 'rounds' | 'weight'> {
-  fighter1: Pick<Fighter, 'name' | 'id'>;
-  fighter2: Pick<Fighter, 'name' | 'id'>;
-  pick?: FightPick;
-  elevation?: SurfaceProps['elevation'];
+interface TaleOfTheTapePickProps
+  extends Pick<FightPick, 'round' | 'method' | 'confidence'> {
+  winningFighter: Pick<Fighter, 'name' | 'id'>;
+  playerName: string;
+  score?: number;
 }
 
 export const TaleOfTheTapePick = ({
-  rounds,
-  weight,
-  fighter1,
-  fighter2,
-  pick,
-  elevation,
+  round,
+  method,
+  confidence,
+  winningFighter,
+  playerName,
+  score,
 }: TaleOfTheTapePickProps) => {
-  const winningFighterId = pick?.winningFighterId ?? '';
   return (
-    <Surface elevation={elevation} style={styles.fightRowContainer}>
-      <Text variant="titleMedium">
-        {rounds} rounds at {weight}lbs
-      </Text>
+    <Surface elevation={1} style={styles.fightRowContainer}>
       <View style={styles.fightRow}>
-        <View style={styles.fighterContainer}>
-          <FighterTwoLineName
-            name={fighter1.name}
-            active={winningFighterId === fighter1.id}
-          />
-        </View>
-        <View style={styles.vsContainer}>
-          <Text variant="headlineSmall">vs</Text>
-        </View>
-        <View style={styles.fighterContainer}>
-          <FighterTwoLineName
-            name={fighter2.name}
-            active={winningFighterId === fighter2.id}
-          />
-        </View>
+        {score !== undefined && <Score>{score}</Score>}
+        <PlayerName>{playerName}</PlayerName>
+        <FighterCell isLoser={score === 0}>{winningFighter.name}</FighterCell>
+        <Prediction
+          score={score}
+          round={round}
+          method={method}
+          confidence={confidence}
+        />
       </View>
-      {pick && <PickView {...pick} fighter1={fighter1} fighter2={fighter2} />}
     </Surface>
   );
 };
 
-type PickViewProps = FightPick & {
-  fighter1: Pick<Fighter, 'name' | 'id'>;
-  fighter2: Pick<Fighter, 'name' | 'id'>;
+interface ScoreProps {
+  children: number;
+}
+
+const Score = ({ children }: ScoreProps) => {
+  return (
+    <View style={styles.scoreContainer}>
+      <ColorText
+        color={children > 0 ? 'primary' : 'secondary'}
+        variant="displaySmall">
+        {children}
+      </ColorText>
+    </View>
+  );
 };
 
-const PickView = ({
-  fighter1,
-  fighter2,
-  winningFighterId,
-  method,
-}: // round,
-// confidence,
-PickViewProps) => {
-  const winningFighter = fighter1.id === winningFighterId ? fighter1 : fighter2;
-  // const methodRound = method === 'decision' ? 'Decision' : ''
-
+interface PlayerNameProps {
+  children: string;
+}
+const PlayerName = ({ children }: PlayerNameProps) => {
   return (
-    <View style={styles.fightRow}>
-      <Text>
-        {winningFighter.name} by {method}
+    <View style={styles.playerNameContainer}>
+      <Text numberOfLines={1} variant="titleMedium">
+        {children}
       </Text>
+    </View>
+  );
+};
+
+interface FighterCellProps {
+  children: string;
+  isLoser?: boolean;
+}
+const FighterCell = ({ children, isLoser }: FighterCellProps) => {
+  return (
+    <View style={styles.fighterContainer}>
+      <FighterTwoLineName
+        name={children}
+        active
+        activeColor={isLoser ? 'error' : undefined}
+      />
+    </View>
+  );
+};
+
+const Prediction = ({
+  round,
+  method,
+  confidence,
+  score,
+}: Pick<
+  TaleOfTheTapePickProps,
+  'score' | 'round' | 'method' | 'confidence'
+>) => {
+  let confidenceColor: ColorTextProps['color'] = 'primary';
+  if (score === 0) {
+    confidenceColor = 'error';
+  } else if (score === undefined) {
+    confidenceColor = 'secondary';
+  }
+  return (
+    <View style={styles.predictionContainer}>
+      <ColorText color={'secondary'} variant="titleMedium" numberOfLines={2}>
+        {Translation.roundMethod(
+          round,
+          Translation.shorthandMethodOfVictory(method),
+        )}
+      </ColorText>
+      <ColorText color={confidenceColor} variant="labelLarge">
+        {Translation.confidenceMeter(confidence)}
+      </ColorText>
     </View>
   );
 };
@@ -88,12 +128,28 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  vsContainer: {
+  predictionContainer: {
     marginHorizontal: ThemeSpacing.base * 2,
+    alignItems: 'center',
+    flexShrink: 0,
+    flexBasis: 60,
   },
   fighterContainer: {
-    flexBasis: 150,
-    flexGrow: 1,
+    flexBasis: 40,
+    flexGrow: 2,
     alignItems: 'center',
+  },
+  playerNameContainer: {
+    flexBasis: 60,
+    flexShrink: 0,
+    flexGrow: 1,
+    marginHorizontal: ThemeSpacing.base * 2,
+    alignItems: 'flex-start',
+  },
+  scoreContainer: {
+    marginHorizontal: ThemeSpacing.base * 2,
+    alignItems: 'flex-start',
+    flexShrink: 0,
+    flexBasis: 20,
   },
 });

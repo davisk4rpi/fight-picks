@@ -4,13 +4,7 @@ import { applicationDefault, initializeApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
 
 import { initAdminFirestore } from '../init-admin-firestore';
-import {
-  seedAndradeVsBlanchfield,
-  seedKrylovVsSpann,
-  seedLewisVsSpivak,
-  seedMakhachevVsVolkanovski,
-  seedTeixeiraVsHill,
-} from '../seed';
+import { seedUserData } from '../seed/dev/seed-users';
 
 const app = initializeApp({
   credential: applicationDefault(),
@@ -23,11 +17,7 @@ firestore.settings({
 
 const runSeed = async () => {
   const adminFirestore = initAdminFirestore(firestore);
-  await seedTeixeiraVsHill(adminFirestore);
-  await seedLewisVsSpivak(adminFirestore);
-  await seedMakhachevVsVolkanovski(adminFirestore);
-  await seedAndradeVsBlanchfield(adminFirestore);
-  await seedKrylovVsSpann(adminFirestore);
+  await seedUserData(adminFirestore);
 };
 
 runSeed();

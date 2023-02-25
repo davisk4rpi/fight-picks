@@ -3,16 +3,18 @@ import { StyleSheet, View } from 'react-native';
 
 import { Fighter } from '@fight-picks/models';
 
-import { ColorText } from '../../color-text';
+import { ColorText, ColorTextProps } from '../../color-text';
 
 interface FighterTwoLineNameProps {
   name: Fighter['name'];
   active?: boolean;
+  activeColor?: ColorTextProps['color'];
 }
 
 export const FighterTwoLineName = ({
   name,
   active = false,
+  activeColor,
 }: FighterTwoLineNameProps) => {
   const firstSpaceIdx = name.indexOf(' ');
   const firstName = name.substring(0, firstSpaceIdx);
@@ -28,7 +30,7 @@ export const FighterTwoLineName = ({
         {firstName}
       </ColorText>
       <ColorText
-        color={active ? 'primary' : undefined}
+        color={active ? activeColor ?? 'primary' : undefined}
         variant="titleLarge"
         adjustsFontSizeToFit
         numberOfLines={1}>
