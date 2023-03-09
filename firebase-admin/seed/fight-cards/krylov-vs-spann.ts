@@ -1,4 +1,11 @@
-import { AdminFirestoreModule } from '../../types';
+import { MethodMap } from '@fight-picks/models';
+
+import {
+  AdminFirestoreModule,
+  FirestoreFight,
+  FirestoreFightRef,
+} from '../../types';
+import { generateFightCardId } from '../../utilities/fight-card-id';
 import { FightCardInitialData, FirestoreFightCardSeedHelper } from '../helpers';
 
 const FIGHT_CARD_STATIC_DATA: FightCardInitialData = {
@@ -58,4 +65,72 @@ export const seedKrylovVsSpann = async (
 
   await seedHelper.setFightCard();
   return;
+};
+
+export const seedKrylovVsSpannResults = async (
+  adminFirestore: AdminFirestoreModule,
+) => {
+  const fightCardId = generateFightCardId(
+    FIGHT_CARD_STATIC_DATA.org,
+    FIGHT_CARD_STATIC_DATA.mainCardDate,
+  );
+  const fightCardRef = adminFirestore.fightCardsCollection.doc(fightCardId);
+  const fightCardDoc = await fightCardRef.get();
+  const fightCard = fightCardDoc.data();
+  if (fightCard === undefined) {
+    throw new Error(`Could not find fight card ${fightCardId}`);
+  }
+  const { fightRefs } = fightCard;
+  if (fightRefs.length < 5) {
+    throw new Error(`Were missing fightRefs for some reason`);
+  }
+  const [fight1Ref, fight2Ref, fight3Ref, fight4Ref, fight5Ref] = fightRefs;
+
+  await getFightData(fight1Ref);
+  const fight2 = await getFightData(fight2Ref);
+  const fight3 = await getFightData(fight3Ref);
+  const fight4 = await getFightData(fight4Ref);
+  const fight5 = await getFightData(fight5Ref);
+
+  fight1Ref.update({
+    isCanceled: true,
+  });
+
+  fight2Ref.update({
+    result: {
+      winningFighterRef: fight2.fighter2Ref,
+      method: MethodMap.submission,
+      round: 3,
+    },
+  });
+  fight3Ref.update({
+    result: {
+      winningFighterRef: fight3.fighter1Ref,
+      method: MethodMap.decision,
+      round: null,
+    },
+  });
+  fight4Ref.update({
+    result: {
+      winningFighterRef: fight4.fighter1Ref,
+      method: MethodMap.submission,
+      round: 2,
+    },
+  });
+  fight5Ref.update({
+    result: {
+      winningFighterRef: fight5.fighter1Ref,
+      method: MethodMap.submission,
+      round: 1,
+    },
+  });
+};
+
+const getFightData = async (fightRef: FirestoreFightRef) => {
+  const fightDoc = await fightRef.get();
+  const fight = fightDoc.data();
+  if (fight === undefined) {
+    throw new Error(`fightRef ${fightRef.id} has no data!`);
+  }
+  return fight;
 };

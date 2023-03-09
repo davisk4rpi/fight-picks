@@ -111,6 +111,8 @@ export type User = {
   isAdmin?: boolean;
 };
 
+export type OrgSlug = 'ufc'; //| 'one';
+
 export const UserRoles = {
   admin: 'admin',
 } as const;

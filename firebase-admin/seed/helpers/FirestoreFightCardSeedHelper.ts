@@ -1,18 +1,20 @@
 import { FieldValue, Timestamp } from 'firebase-admin/firestore';
 
+import { OrgSlug } from '@fight-picks/models';
+
 import {
   AdminFirestoreModule,
   FirestoreFight,
-  FirestoreFightCard,
   FirestoreFightCardRef,
   FirestoreFighterRef,
   FirestoreFightRef,
 } from '../../types';
+import { generateFightCardId } from '../../utilities/fight-card-id';
 
 export type FightCardInitialData = {
   mainCardDate: Date;
   name: string;
-  org: 'ufc';
+  org: OrgSlug;
 };
 type FighterNameMap = Map<string, FirestoreFighterRef>;
 
@@ -46,9 +48,10 @@ export class FirestoreFightCardSeedHelper {
   }
 
   get fightCardId() {
-    return `${
-      this.fightCardInitalData.org
-    }-${this.fightCardInitalData.mainCardDate.toISOString()}`;
+    return generateFightCardId(
+      this.fightCardInitalData.org,
+      this.fightCardInitalData.mainCardDate,
+    );
   }
 
   public initializeFightCardSeed = async () => {

@@ -26,6 +26,7 @@ export type FirestoreFight = {
   fighter1Ref: DocumentReference<FirestoreFighter>;
   fighter2Ref: DocumentReference<FirestoreFighter>;
   result?: FirestoreFightResult;
+  isCanceled?: boolean;
   createdAt: Timestamp;
 };
 

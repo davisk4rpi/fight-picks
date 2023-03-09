@@ -25,7 +25,7 @@ export const useUsersByUids = (uids: string[]) => {
     }
 
     const unsubscribe = appFirestore.usersCollection
-      .where('uid', 'in', uids)
+      .where('uid', 'in', uids.slice(0, 9))
       .onSnapshot(snapshot => {
         const newMap = snapshot.docs.reduce<UsersMap>((map, user) => {
           const userData = user.data();
