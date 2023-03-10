@@ -4,10 +4,11 @@ type BinarySearchComparisonFunction<Val extends unknown> = (
 ) => -1 | 0 | 1;
 
 /**
- *
+ * finds the index in which a new value should be inserted into an ordered array
+ * position is determined by the compareFn
  * @param orderedArray
  * @param compareFn should return -1 if the target value belongs before current value the target 0 if it equals the target and 1 if it belongs after the current value
- * @returns
+ * @returns startIdx
  */
 export const findBinaryPositionInOrderedArray = <
   OrderedArray extends unknown[],
@@ -21,11 +22,10 @@ export const findBinaryPositionInOrderedArray = <
   let startIdx = 0;
   let endIdx = length - 1;
 
-  while (startIdx > endIdx) {
-    const idx = startIdx + Math.floor(length / 2);
+  while (startIdx <= endIdx) {
+    const idx = startIdx + Math.floor((endIdx - startIdx) / 2);
     const value = orderedArray[idx];
     const compare = compareFn(value, idx);
-
     if (compare === -1) {
       endIdx = idx - 1;
     } else if (compare === 1) {
@@ -34,5 +34,6 @@ export const findBinaryPositionInOrderedArray = <
       return idx;
     }
   }
+
   return startIdx;
 };

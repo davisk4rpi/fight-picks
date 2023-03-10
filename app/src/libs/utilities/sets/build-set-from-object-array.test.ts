@@ -2,7 +2,7 @@ import { buildSetFromObjectArray } from './build-set-from-object-array';
 
 // }
 describe('buildSetFromObjectArray', () => {
-  it('returns a JS Set containing only the values of an object field', () => {
+  test('returns a JS Set containing only the values of an object field', () => {
     const arr = [
       { status: 'complete' },
       { status: 'failed' },
@@ -17,7 +17,7 @@ describe('buildSetFromObjectArray', () => {
     expect(set).toContain('pending');
     expect(set).not.toContain('something else');
   });
-  it('returns an empty set when there are no objects in the provided array', () => {
+  test('returns an empty set when there are no objects in the provided array', () => {
     const arr: {}[] = [];
 
     const set = buildSetFromObjectArray(arr, _ => 1);
@@ -25,7 +25,7 @@ describe('buildSetFromObjectArray', () => {
     expect(set.size).toEqual(0);
   });
 
-  it('returns a JS Set containing values calculated from each object', () => {
+  test('returns a JS Set containing values calculated from each object', () => {
     const arr = [
       { startingValue: 1 },
       { startingValue: 2 },
@@ -39,7 +39,7 @@ describe('buildSetFromObjectArray', () => {
     expect(set).toContain(9);
   });
 
-  it('rethrow an error if one call on objectTransformFunc throws an error', () => {
+  test('rethrow an error if one call on objectTransformFunc throws an error', () => {
     const arr = [
       { startingValue: 1 },
       { startingValue: 2 },

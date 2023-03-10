@@ -95,7 +95,6 @@ export type FightPick = FightResultWithWinner & {
 
 export type FightPickWithScore = FightPick & {
   score?: number;
-  confidenceScore?: number;
 };
 
 export type FightCard = {

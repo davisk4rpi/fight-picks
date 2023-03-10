@@ -1,1 +1,1 @@
-export * from './calculate-pick-scores';
+export * from './calculate-pick-score';
