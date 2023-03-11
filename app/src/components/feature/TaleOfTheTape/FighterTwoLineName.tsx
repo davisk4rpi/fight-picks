@@ -8,6 +8,7 @@ import { ColorText, ColorTextProps } from '../../color-text';
 interface FighterTwoLineNameProps {
   name: Fighter['name'];
   active?: boolean;
+  isCanceled?: boolean;
   activeColor?: ColorTextProps['color'];
 }
 

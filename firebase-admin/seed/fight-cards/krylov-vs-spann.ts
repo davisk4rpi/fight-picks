@@ -1,10 +1,6 @@
 import { MethodMap } from '@fight-picks/models';
 
-import {
-  AdminFirestoreModule,
-  FirestoreFight,
-  FirestoreFightRef,
-} from '../../types';
+import { AdminFirestoreModule, FirestoreFightRef } from '../../types';
 import { generateFightCardId } from '../../utilities/fight-card-id';
 import { FightCardInitialData, FirestoreFightCardSeedHelper } from '../helpers';
 

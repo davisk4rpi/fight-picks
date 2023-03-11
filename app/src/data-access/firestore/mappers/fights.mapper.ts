@@ -19,6 +19,7 @@ export const mapFightFromFirebase = (firebaseFight: FirebaseFight): Fight => {
     fighter1Id: firebaseFight.fighter1Ref.id,
     fighter2Id: firebaseFight.fighter2Ref.id,
     result: mapFightResultFromFirebase(firebaseFight.result),
+    isCanceled: firebaseFight.isCanceled ?? false,
   };
 };
 

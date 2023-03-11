@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Surface, Text } from 'react-native-paper';
 
-import { Fighter, FightPick } from '@fight-picks/models';
+import { FightPick } from '@fight-picks/models';
 
 import { ThemeSpacing, Translation } from '../../../app-context';
 import { ColorText, ColorTextProps } from '../../color-text';
@@ -10,7 +10,7 @@ import { FighterTwoLineName } from './FighterTwoLineName';
 
 interface TaleOfTheTapePickProps
   extends Pick<FightPick, 'round' | 'method' | 'confidence'> {
-  winningFighter: Pick<Fighter, 'name' | 'id'>;
+  winningFighterName: string;
   playerName: string;
   score?: number;
 }
@@ -19,7 +19,7 @@ export const TaleOfTheTapePick = ({
   round,
   method,
   confidence,
-  winningFighter,
+  winningFighterName,
   playerName,
   score,
 }: TaleOfTheTapePickProps) => {
@@ -28,7 +28,7 @@ export const TaleOfTheTapePick = ({
       <View style={styles.fightRow}>
         {score !== undefined && <Score>{score}</Score>}
         <PlayerName>{playerName}</PlayerName>
-        <FighterCell isLoser={score === 0}>{winningFighter.name}</FighterCell>
+        <FighterCell isLoser={score === 0}>{winningFighterName}</FighterCell>
         <Prediction
           score={score}
           round={round}

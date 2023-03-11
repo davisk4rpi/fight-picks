@@ -6,6 +6,7 @@ export const Translation = {
   adminDashboard: 'Admin Dashboard',
   add: 'Add',
   cancel: 'Cancel',
+  canceled: 'Canceled',
   confirm: 'Confirm',
   confidenceMeter: (confidence: number) =>
     '$'.repeat(Math.max(0, Math.min(confidence, 5))),

@@ -1,21 +1,13 @@
 import { useMemo } from 'react';
 
-import { Fight, FightPickWithScore, User } from '@fight-picks/models';
+import { Fight, FightPickWithScore } from '@fight-picks/models';
 
-import {
-  PLACEHOLDER_USER,
-  useFightPicksByFightId,
-  useUsersByUids,
-} from '../../../data-access/hooks';
+import { useFightPicksByFightId } from '../../../data-access/hooks';
 import {
   PLACEHOLDER_FIGHTER,
   useSelectFightersFromFight,
 } from '../../../data-access/store';
 import { calculatePickScore } from '../../../libs/scoring';
-
-export type FightPickWithUserAndScore = FightPickWithScore & {
-  user: User;
-};
 
 export const useLockedFightPickScreen = (fight: Fight) => {
   const { fightPicks, loading: fightPicksLoading } = useFightPicksByFightId(
@@ -23,21 +15,13 @@ export const useLockedFightPickScreen = (fight: Fight) => {
   );
   const { fighter1, fighter2 } = useSelectFightersFromFight(fight);
 
-  const userUids = useMemo(
-    () => fightPicks.map(({ userUid }) => userUid),
-    [fightPicks],
-  );
-
-  const { userMapByUid, loading: userMapLoading } = useUsersByUids(userUids);
-
   const fightPicksWithUserAndScore = useMemo(
     () =>
       fightPicks
-        .map<FightPickWithUserAndScore>(fightPick => {
+        .map<FightPickWithScore>(fightPick => {
           const score = calculatePickScore(fightPick, fight?.result);
           return {
             ...fightPick,
-            user: userMapByUid.get(fightPick.userUid) ?? PLACEHOLDER_USER,
             score,
           };
         })
@@ -57,11 +41,11 @@ export const useLockedFightPickScreen = (fight: Fight) => {
 
           return -1;
         }),
-    [userMapByUid, fightPicks, fight?.result],
+    [fightPicks, fight?.result],
   );
   return {
     fightPicks: fightPicksWithUserAndScore,
-    loading: fightPicksLoading || userMapLoading,
+    loading: fightPicksLoading,
     fighter1: fighter1 ?? PLACEHOLDER_FIGHTER,
     fighter2: fighter2 ?? PLACEHOLDER_FIGHTER,
   };

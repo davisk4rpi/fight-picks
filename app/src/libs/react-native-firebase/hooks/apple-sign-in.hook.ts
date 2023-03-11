@@ -28,7 +28,7 @@ export const useAppleSignIn = () => {
       // Sign the user in with the credential
       return auth().signInWithCredential(appleCredential);
     } catch (error) {
-      console.log('error', error);
+      console.error('error', error);
       setErrorMessage('error');
     }
     setActive(false);

@@ -84,6 +84,7 @@ export type Fight = {
   fighter1Id: string;
   fighter2Id: string;
   result?: FightResult;
+  isCanceled: boolean;
 };
 
 export type FightPick = FightResultWithWinner & {

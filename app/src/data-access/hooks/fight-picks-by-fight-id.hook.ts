@@ -10,20 +10,23 @@ export const useFightPicksByFightId = (fightId: string) => {
   );
 
   useEffect(() => {
+    const fightRef = appFirestore.repository.fights.getDocRef(fightId);
     const unsubscribe = appFirestore.fightPicksQuery
-      .where(
-        'fightRef',
-        '==',
-        appFirestore.repository.fights.getDocRef(fightId),
-      )
-      .onSnapshot(async snapshot => {
-        if (snapshot === null || snapshot.docs.length < 1)
-          return setFightPicks([]);
-        const fightPicks = snapshot.docs.map(doc =>
-          mapFightPickFromFirebase(doc.data()),
-        );
-        setFightPicks(fightPicks);
-      });
+      .where('fightRef', '==', fightRef)
+      .onSnapshot(
+        async snapshot => {
+          if (snapshot === null || snapshot.docs.length < 1)
+            return setFightPicks([]);
+          const fightPicks = snapshot.docs.map(doc =>
+            mapFightPickFromFirebase(doc.data()),
+          );
+
+          setFightPicks(fightPicks);
+        },
+        error => {
+          console.error(error);
+        },
+      );
     return unsubscribe;
   }, [fightId]);
 

@@ -37,7 +37,7 @@ export const useGoogleSignIn = () => {
           setErrorMessage('Please update play services');
         }
       }
-      console.log('error', error);
+      console.error('error', error);
     }
     setActive(false);
   }, []);

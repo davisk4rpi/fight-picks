@@ -14,6 +14,7 @@ import {
   useAppSelector,
   useSelectFightersFromFight,
 } from '../../../data-access/store';
+import { devEnv } from '../../../environments';
 import { useFightPickForm } from './fight-pick-form.hook';
 
 export const useEditFightPickScreen = (fight: Fight, mainCardDate: string) => {
@@ -32,7 +33,12 @@ export const useEditFightPickScreen = (fight: Fight, mainCardDate: string) => {
   const handleSuccess = useCallback(
     (fightPick: SetFightPickInput) => {
       // Save Fight Pick
-      if (new Date(fightCardDateRef.current) > new Date()) {
+      // appFirestore.repository.users.setFightPick(fight.id, fightPick);
+
+      if (
+        (__DEV__ && devEnv.allowLatePicks) ||
+        new Date(fightCardDateRef.current) > new Date()
+      ) {
         appFirestore.repository.users.setFightPick(fight.id, fightPick);
       } else {
         // Send Toast alerting user that picks are already locked

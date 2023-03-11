@@ -1,15 +1,13 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 
 import { Fight } from '@fight-picks/models';
 
 import { ThemeSpacing } from '../../../app-context';
 import { LoadingScreen, NotFoundScreen, Screen } from '../../../components';
-import { TaleOfTheTape, TaleOfTheTapePick } from '../../../components/feature';
-import {
-  FightPickWithUserAndScore,
-  useLockedFightPickScreen,
-} from './locked-fight-pick-screen.hook';
+import { TaleOfTheTape } from '../../../components/feature';
+import { FightPickRowItem } from './FightPickRowItem';
+import { useLockedFightPickScreen } from './locked-fight-pick-screen.hook';
 
 interface LockedFightPicksScreenProps {
   fight: Fight;
@@ -21,26 +19,6 @@ export const LockedFightPickScreen = ({
 }: LockedFightPicksScreenProps) => {
   const { fightPicks, loading, fighter1, fighter2 } =
     useLockedFightPickScreen(fight);
-  const FightPickRowItem = useCallback(
-    ({ item }: { item: FightPickWithUserAndScore }) => {
-      const { id, round, method, confidence, score, winningFighterId, user } =
-        item;
-      return (
-        <TaleOfTheTapePick
-          key={id}
-          playerName={user.displayName?.split(' ')[0] ?? ''}
-          round={round}
-          method={method}
-          score={score}
-          confidence={confidence}
-          winningFighter={
-            winningFighterId === fighter1.id ? fighter1 : fighter2
-          }
-        />
-      );
-    },
-    [fighter1, fighter2],
-  );
 
   if (loading) {
     return <LoadingScreen testID="LockedFightPicksScreen" />;
@@ -58,12 +36,13 @@ export const LockedFightPickScreen = ({
         fighter1={fighter1}
         fighter2={fighter2}
         result={fight.result}
+        isCanceled={fight.isCanceled}
         elevation={0}
       />
       <FlatList
         style={styles.fightsFlatList}
         data={fightPicks}
-        renderItem={FightPickRowItem}
+        renderItem={obj => <FightPickRowItem fightPick={obj.item} />}
         keyExtractor={({ id }) => id}
         scrollEnabled={fightPicks.length > 3}
         horizontal={false}

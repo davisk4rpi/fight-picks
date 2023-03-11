@@ -39,6 +39,7 @@ export const EditFightPickScreen = ({
         weight={fight.weight}
         fighter1={fighter1}
         fighter2={fighter2}
+        isCanceled={fight.isCanceled}
       />
       <View style={styles.formContainer}>
         <View style={styles.formSegment}>

@@ -14,7 +14,8 @@ type TaleOfTheTapeResult =
       confidence?: undefined;
     });
 
-export interface TaleOfTheTapeProps extends Pick<Fight, 'rounds' | 'weight'> {
+export interface TaleOfTheTapeProps
+  extends Pick<Fight, 'rounds' | 'weight' | 'isCanceled'> {
   fighter1: Pick<Fighter, 'name' | 'id'>;
   fighter2: Pick<Fighter, 'name' | 'id'>;
   elevation?: SurfaceProps['elevation'];
@@ -27,44 +28,60 @@ export const TaleOfTheTape = ({
   fighter1,
   fighter2,
   result,
+  isCanceled,
   elevation,
 }: TaleOfTheTapeProps) => {
   return (
     <Surface elevation={elevation} style={styles.fightRowContainer}>
-      <Text variant="titleMedium">
+      <ColorText variant="titleMedium">
         {Translation.xRoundsAtYWeight(rounds, weight)}
-      </Text>
+      </ColorText>
       <View style={styles.fightRow}>
         <FighterCell
           name={fighter1.name}
           active={result?.winningFighterId === fighter1.id}
         />
-        <View style={styles.vsContainer}>
-          {result ? (
-            <ColorText
-              color={'primary'}
-              variant="titleMedium"
-              numberOfLines={2}>
-              {Translation.roundMethod(
-                result.round,
-                Translation.shorthandMethodOfVictory(result.method),
-              )}
-            </ColorText>
-          ) : (
-            <Text variant="headlineSmall">{Translation.vs}</Text>
-          )}
-          {result?.confidence && (
-            <ColorText color={'secondary'} variant="labelLarge">
-              {Translation.confidenceMeter(result.confidence)}
-            </ColorText>
-          )}
-        </View>
+        <CenterContainer isCanceled={isCanceled} result={result} />
         <FighterCell
           name={fighter2.name}
           active={result?.winningFighterId === fighter2.id}
         />
       </View>
     </Surface>
+  );
+};
+
+interface CenterContainerProps
+  extends Pick<TaleOfTheTapeProps, 'isCanceled' | 'result'> {}
+
+const CenterContainer = ({ isCanceled, result }: CenterContainerProps) => {
+  if (isCanceled) {
+    return (
+      <View style={styles.vsContainer}>
+        <ColorText color={'error'} variant="titleMedium">
+          {Translation.canceled}
+        </ColorText>
+      </View>
+    );
+  }
+  return (
+    <View style={styles.vsContainer}>
+      {result ? (
+        <ColorText color={'primary'} variant="titleMedium" numberOfLines={2}>
+          {Translation.roundMethod(
+            result.round,
+            Translation.shorthandMethodOfVictory(result.method),
+          )}
+        </ColorText>
+      ) : (
+        <Text variant="headlineSmall">{Translation.vs}</Text>
+      )}
+      {result?.confidence && (
+        <ColorText color={'secondary'} variant="labelLarge">
+          {Translation.confidenceMeter(result.confidence)}
+        </ColorText>
+      )}
+    </View>
   );
 };
 

@@ -39,12 +39,12 @@ service cloud.firestore {
       allow read, create: if isSignedIn();
       allow delete: if isSelf(userId) || isAdmin();
       allow update: if (isSelf(userId) && !fieldsHaveAnyUpdates(['roles'])) || (!isSelf(userId) && isAdmin());
+      match /fightPicks/{fightPickId} {
+        allow read: if isSignedIn();
+        allow delete, create, update: if isSelf(userId);
+      }
     }
-    match /users/{userId}/fightPicks/{document=**} {
-      allow read: if isSignedIn();
-      allow delete, create, update: if isSelf(userId) || isAdmin();
-    }
-    match /{path=**}/fightPicks/{fightPick} {
+    match /{path=**}/fightPicks/{document} {
       allow read: if isSignedIn();
       allow delete, create, update: if false;
     }

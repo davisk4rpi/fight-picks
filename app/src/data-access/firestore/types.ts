@@ -21,6 +21,7 @@ export type FirebaseFight = {
   fighter1Ref: FirebaseFirestoreTypes.DocumentReference<FirebaseFighter>;
   fighter2Ref: FirebaseFirestoreTypes.DocumentReference<FirebaseFighter>;
   result?: FirebaseFightResult;
+  isCanceled?: boolean;
   createdAt: FirebaseFirestoreTypes.Timestamp;
 };
 
