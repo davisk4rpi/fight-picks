@@ -15,8 +15,8 @@
   },
   "scripts": {
     "lint": "eslint . --cache --fix --ext .ts",
-    "runSeed": "FIRESTORE_EMULATOR_HOST=\"localhost:8080\" ts-node ./scripts/run-seed.ts",
-    "runDevSeed": "FIRESTORE_EMULATOR_HOST=\"localhost:8080\" ts-node ./scripts/run-dev-seed.ts",
-    "runSeedProd": "ts-node ./scripts/run-seed.ts"
+    "seedDev": "FIRESTORE_EMULATOR_HOST=\"localhost:8080\" ts-node ./scripts/run-seed.ts",
+    "initDevDB": "FIRESTORE_EMULATOR_HOST=\"localhost:8080\" ts-node ./scripts/run-dev-seed.ts",
+    "seedProd": "ts-node ./scripts/run-seed.ts"
   }
 }

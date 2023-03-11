@@ -16,7 +16,10 @@
     "format": "prettier --write .",
     "lint": "yarn workspaces foreach run lint",
     "firebaseEmulators": "yarn workspace @fight-picks/app firebaseEmulators",
-    "deployFirestoreRules": "yarn workspace @fight-picks/app deployFirestoreRules"
+    "deployFirestoreRules": "yarn workspace @fight-picks/app deployFirestoreRules",
+    "seedDev": "yarn workspace @fight-picks/firebase-admin seedDev",
+    "seedProd": "yarn workspace @fight-picks/firebase-admin seedProd",
+    "initDevDB": "yarn workspace @fight-picks/firebase-admin initDevDB"
   },
   "devDependencies": {
     "husky": "^8.0.3",
