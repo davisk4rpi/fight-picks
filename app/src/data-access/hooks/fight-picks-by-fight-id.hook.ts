@@ -24,7 +24,7 @@ export const useFightPicksByFightId = (fightId: string) => {
           setFightPicks(fightPicks);
         },
         error => {
-          console.error(error);
+          console.error('useFightPicksByFightId', error);
         },
       );
     return unsubscribe;

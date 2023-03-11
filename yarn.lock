@@ -1500,25 +1500,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/traverse@npm:^7.14.0, @babel/traverse@npm:^7.20.5, @babel/traverse@npm:^7.20.7, @babel/traverse@npm:^7.21.0, @babel/traverse@npm:^7.7.4":
-  version: 7.21.0
-  resolution: "@babel/traverse@npm:7.21.0"
-  dependencies:
-    "@babel/code-frame": ^7.18.6
-    "@babel/generator": ^7.21.0
-    "@babel/helper-environment-visitor": ^7.18.9
-    "@babel/helper-function-name": ^7.21.0
-    "@babel/helper-hoist-variables": ^7.18.6
-    "@babel/helper-split-export-declaration": ^7.18.6
-    "@babel/parser": ^7.21.0
-    "@babel/types": ^7.21.0
-    debug: ^4.1.0
-    globals: ^11.1.0
-  checksum: 99241b22db509d2f01a9af51bfab1d68e73cd3b66bbc2560f0f65e49880f68a05ead913e72a4e464152430a027f0c7822f126d6f1bcc3bc3e01ef8b8558a6dc6
-  languageName: node
-  linkType: hard
-
-"@babel/traverse@npm:^7.7.2":
+"@babel/traverse@npm:^7.14.0, @babel/traverse@npm:^7.7.2":
   version: 7.21.2
   resolution: "@babel/traverse@npm:7.21.2"
   dependencies:
@@ -1533,6 +1515,24 @@ __metadata:
     debug: ^4.1.0
     globals: ^11.1.0
   checksum: d851e3f5cfbdc2fac037a014eae7b0707709de50f7d2fbb82ffbf932d3eeba90a77431529371d6e544f8faaf8c6540eeb18fdd8d1c6fa2b61acea0fb47e18d4b
+  languageName: node
+  linkType: hard
+
+"@babel/traverse@npm:^7.20.5, @babel/traverse@npm:^7.20.7, @babel/traverse@npm:^7.21.0, @babel/traverse@npm:^7.7.4":
+  version: 7.21.0
+  resolution: "@babel/traverse@npm:7.21.0"
+  dependencies:
+    "@babel/code-frame": ^7.18.6
+    "@babel/generator": ^7.21.0
+    "@babel/helper-environment-visitor": ^7.18.9
+    "@babel/helper-function-name": ^7.21.0
+    "@babel/helper-hoist-variables": ^7.18.6
+    "@babel/helper-split-export-declaration": ^7.18.6
+    "@babel/parser": ^7.21.0
+    "@babel/types": ^7.21.0
+    debug: ^4.1.0
+    globals: ^11.1.0
+  checksum: 99241b22db509d2f01a9af51bfab1d68e73cd3b66bbc2560f0f65e49880f68a05ead913e72a4e464152430a027f0c7822f126d6f1bcc3bc3e01ef8b8558a6dc6
   languageName: node
   linkType: hard
 
@@ -1930,10 +1930,10 @@ __metadata:
   linkType: hard
 
 "@expo/package-manager@npm:~0.0.53":
-  version: 0.0.57
-  resolution: "@expo/package-manager@npm:0.0.57"
+  version: 0.0.60
+  resolution: "@expo/package-manager@npm:0.0.60"
   dependencies:
-    "@expo/json-file": 8.2.36
+    "@expo/json-file": ^8.2.37
     "@expo/spawn-async": ^1.5.0
     ansi-regex: ^5.0.0
     chalk: ^4.0.0
@@ -1943,7 +1943,7 @@ __metadata:
     rimraf: ^3.0.2
     split: ^1.0.1
     sudo-prompt: 9.1.1
-  checksum: 07c7541b57e8ca2341d5436b91e35757139ae3c7a7e50d6db4845ff4cb7a32e964a89c08bd0bec9e89a6914769b59116fcd97d25f32c66a6cb1db45ac0bde91a
+  checksum: 84368554c2def5ba960b3727c8d8d6de16c7a03736bfa09f1b054ea660494d5086b0743f11c0ff3391ebe4d7206f873584971d1243b1bff04fa89e18529e9559
   languageName: node
   linkType: hard
 
@@ -2453,16 +2453,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jest/create-cache-key-function@npm:^29.0.3":
-  version: 29.4.3
-  resolution: "@jest/create-cache-key-function@npm:29.4.3"
-  dependencies:
-    "@jest/types": ^29.4.3
-  checksum: 19d230fd6219ffcbb3c6cdca0da0fa2b49de4b9e16eaa6f2c06d3dbdf9d7f9847a2a7dc1435bff54f2ffb148cf2bd36cd49cf81f4341d4c50d07470d984e63ba
-  languageName: node
-  linkType: hard
-
-"@jest/create-cache-key-function@npm:^29.2.1":
+"@jest/create-cache-key-function@npm:^29.0.3, @jest/create-cache-key-function@npm:^29.2.1":
   version: 29.5.0
   resolution: "@jest/create-cache-key-function@npm:29.5.0"
   dependencies:
@@ -2655,20 +2646,6 @@ __metadata:
     "@types/yargs": ^16.0.0
     chalk: ^4.0.0
   checksum: d1f43cc946d87543ddd79d49547aab2399481d34025d5c5f2025d3d99c573e1d9832fa83cef25e9d9b07a8583500229d15bbb07b8e233d127d911d133e2f14b1
-  languageName: node
-  linkType: hard
-
-"@jest/types@npm:^29.4.3":
-  version: 29.4.3
-  resolution: "@jest/types@npm:29.4.3"
-  dependencies:
-    "@jest/schemas": ^29.4.3
-    "@types/istanbul-lib-coverage": ^2.0.0
-    "@types/istanbul-reports": ^3.0.0
-    "@types/node": "*"
-    "@types/yargs": ^17.0.8
-    chalk: ^4.0.0
-  checksum: 1756f4149d360f98567f56f434144f7af23ed49a2c42889261a314df6b6654c2de70af618fb2ee0ee39cadaf10835b885845557184509503646c9cb9dcc02bac
   languageName: node
   linkType: hard
 
@@ -6933,15 +6910,15 @@ __metadata:
   linkType: hard
 
 "expo-linking@npm:~3.3.0":
-  version: 3.3.0
-  resolution: "expo-linking@npm:3.3.0"
+  version: 3.3.1
+  resolution: "expo-linking@npm:3.3.1"
   dependencies:
     "@types/qs": ^6.5.3
     expo-constants: ~14.0.0
     invariant: ^2.2.4
     qs: ^6.9.1
     url-parse: ^1.5.9
-  checksum: ff4beff24a971fce24baa5423bab7ef0caabda64f87c9c55d32c409cd8f0e48ea46cc08ab1e54978e51476d7a6dadca05a5ba4ab74e982063d64ddfc8230cb5e
+  checksum: 35353fc49e62064234adeae41230efce1a07c9742360defe25fd3b49b5a83238b8236f390dcd57051df037864b1c414704dd2e31dd6ad3c1a6d6406be0bc2848
   languageName: node
   linkType: hard
 
@@ -6992,9 +6969,9 @@ __metadata:
   linkType: hard
 
 "expo-status-bar@npm:~1.4.2":
-  version: 1.4.2
-  resolution: "expo-status-bar@npm:1.4.2"
-  checksum: ec61ceb71a4d72592c12f05ca6988a84fea55b77d2cd384d4c6bdb41002b98ef19a5f5af7c327a9e569f0e4754cc75af4d4da6131a9bb781cb4dd8e8bd2f0387
+  version: 1.4.4
+  resolution: "expo-status-bar@npm:1.4.4"
+  checksum: 8d36b821ff2804aed3158f339cc396f0525f365763913881b9b11e6e85e83f21ddbc3a2ede660ae8ce6d6df1a6cda825ad996c3c45f195cbc89091da7605f7e0
   languageName: node
   linkType: hard
 
@@ -12324,12 +12301,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"qs@npm:6.11.0, qs@npm:^6.9.1":
+"qs@npm:6.11.0":
   version: 6.11.0
   resolution: "qs@npm:6.11.0"
   dependencies:
     side-channel: ^1.0.4
   checksum: 6e1f29dd5385f7488ec74ac7b6c92f4d09a90408882d0c208414a34dd33badc1a621019d4c799a3df15ab9b1d0292f97c1dd71dc7c045e69f81a8064e5af7297
+  languageName: node
+  linkType: hard
+
+"qs@npm:^6.9.1":
+  version: 6.11.1
+  resolution: "qs@npm:6.11.1"
+  dependencies:
+    side-channel: ^1.0.4
+  checksum: 82ee78ef12a16f3372fae5b64f76f8aedecb000feea882bbff1af146c147f6eb66b08f9c3f34d7e076f28563586956318b9b2ca41141846cdd6d5ad6f241d52f
   languageName: node
   linkType: hard
 

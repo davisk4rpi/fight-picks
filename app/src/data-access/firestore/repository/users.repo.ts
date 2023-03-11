@@ -99,7 +99,7 @@ export class UsersRepository extends Repository<FirebaseUser> {
         'updatedAt',
       ],
     };
-    console.log('newFightPickId', docId);
+
     return fightPicksCollection.doc(docId).set(
       {
         id: docId,

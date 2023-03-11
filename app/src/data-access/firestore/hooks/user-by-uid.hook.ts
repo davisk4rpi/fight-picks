@@ -21,7 +21,7 @@ export const useUserByUid = (uid: string) => {
 
         setUser(user);
       } catch (e) {
-        console.error(e);
+        console.error('useUserByUid', e);
       }
     };
     updateUser();
