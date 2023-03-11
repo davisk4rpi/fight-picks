@@ -5,10 +5,14 @@ import { Button } from 'react-native-paper';
 import { Fight } from '@fight-picks/models';
 
 import { ThemeSpacing } from '../../../app-context';
-import { LoadingScreen, NotFoundScreen, Screen } from '../../../components';
+import {
+  LoadingScreen,
+  NotFoundScreen,
+  Screen,
+  SegmentedButtonsField,
+} from '../../../components';
 import { TaleOfTheTape } from '../../../components/feature';
 import { useEditFightPickScreen } from './edit-fight-pick-screen.hook';
-import { SegmentedButtonsField } from './SegmentedButtonsField';
 
 interface EditFightPicksScreenProps {
   fight: Fight;
@@ -94,7 +98,6 @@ const styles = StyleSheet.create({
   formContainer: {
     flex: 1,
     justifyContent: 'flex-end',
-    // alignItems: 'center',
     maxWidth: 380,
   },
   formSegment: {

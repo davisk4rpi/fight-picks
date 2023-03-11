@@ -1,11 +1,15 @@
 import {
   Confidence,
   FightResult,
+  FightResultWithDecision,
   FightResultWithFinish,
+  FightResultWithNoWinner,
   MethodMap,
   MethodWithFinish,
+  MethodWithNoRound,
   MethodWithNoWinner,
   MethodWithWinner,
+  RawFightResult,
   Round,
 } from './types';
 
@@ -21,6 +25,12 @@ export const isMethodWithNoWinner = (
   return method === MethodMap.no_contest || method === MethodMap.draw;
 };
 
+export const isMethodWithNoRound = (
+  method?: string | null,
+): method is MethodWithNoRound => {
+  return method === MethodMap.decision || isMethodWithNoWinner(method);
+};
+
 export const isMethodWithFinish = (
   method?: string | null,
 ): method is MethodWithFinish => {
@@ -32,12 +42,48 @@ export const isMethodWithFinish = (
 };
 
 export const isFightResultWithFinish = (
-  fightResult: FightResult,
+  fightResult: RawFightResult,
 ): fightResult is FightResultWithFinish => {
   if (
     isMethodWithFinish(fightResult.method) &&
     fightResult.winningFighterId !== null &&
-    typeof fightResult.winningFighterId === 'string'
+    typeof fightResult.winningFighterId === 'string' &&
+    fightResult.round !== null
+  )
+    return true;
+  return false;
+};
+export const isFightResultWithDecision = (
+  fightResult: RawFightResult,
+): fightResult is FightResultWithDecision => {
+  if (
+    fightResult.method === MethodMap.decision &&
+    fightResult.winningFighterId !== null &&
+    typeof fightResult.winningFighterId === 'string' &&
+    fightResult.round === null
+  )
+    return true;
+  return false;
+};
+export const isFightResultWithNoWinner = (
+  fightResult: RawFightResult,
+): fightResult is FightResultWithNoWinner => {
+  if (
+    isMethodWithNoWinner(fightResult.method) &&
+    fightResult.winningFighterId === null &&
+    fightResult.round === null
+  )
+    return true;
+  return false;
+};
+
+export const isFightResult = (
+  fightResult: RawFightResult,
+): fightResult is FightResult => {
+  if (
+    isFightResultWithDecision(fightResult) ||
+    isFightResultWithFinish(fightResult) ||
+    isFightResultWithNoWinner(fightResult)
   )
     return true;
   return false;

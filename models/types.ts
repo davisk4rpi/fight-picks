@@ -34,6 +34,8 @@ export type MethodWithFinish =
   | typeof MethodMap.disqualification;
 
 export type Decision = typeof MethodMap.decision;
+
+export type MethodWithNoRound = MethodWithNoWinner | Decision;
 export type MethodWithWinner = Decision | MethodWithFinish;
 
 export type Method = MethodWithNoWinner | MethodWithWinner;
@@ -74,6 +76,12 @@ export type FightResultWithNoWinner = {
 };
 
 export type FightResult = FightResultWithWinner | FightResultWithNoWinner;
+
+export type RawFightResult = {
+  method: string;
+  round: number | null;
+  winningFighterId: string | null;
+};
 
 export type Fight = {
   id: string;

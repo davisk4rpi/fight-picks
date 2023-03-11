@@ -11,6 +11,7 @@ export const Translation = {
   confidenceMeter: (confidence: number) =>
     '$'.repeat(Math.max(0, Math.min(confidence, 5))),
   dismiss: 'Dismiss',
+  editResult: 'Edit Results',
   errors: {
     unknownErrorYikes: 'Unknown Error... Yikes :(',
   },

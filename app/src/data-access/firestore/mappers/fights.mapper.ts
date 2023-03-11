@@ -24,9 +24,10 @@ export const mapFightFromFirebase = (firebaseFight: FirebaseFight): Fight => {
 };
 
 const mapFightResultFromFirebase = (
-  firebaseFightResult?: FirebaseFightResult,
+  firebaseFightResult?: FirebaseFightResult | null,
 ): FightResult | undefined => {
-  if (firebaseFightResult === undefined) return undefined;
+  if (firebaseFightResult === undefined || firebaseFightResult === null)
+    return undefined;
 
   const { winningFighterRef, method, round } = firebaseFightResult;
 

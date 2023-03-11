@@ -20,7 +20,7 @@ export type FirebaseFight = {
   weight: number;
   fighter1Ref: FirebaseFirestoreTypes.DocumentReference<FirebaseFighter>;
   fighter2Ref: FirebaseFirestoreTypes.DocumentReference<FirebaseFighter>;
-  result?: FirebaseFightResult;
+  result?: FirebaseFightResult | null;
   isCanceled?: boolean;
   createdAt: FirebaseFirestoreTypes.Timestamp;
 };

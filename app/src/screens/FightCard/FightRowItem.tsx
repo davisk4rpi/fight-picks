@@ -23,7 +23,7 @@ export const FightRowItem = ({ fightId, elevation }: FightRowItemProps) => {
         weight={fight.weight}
         fighter1={fighter1}
         fighter2={fighter2}
-        result={fight.result ?? fightPick}
+        result={fight.isCanceled ? undefined : fight.result ?? fightPick}
         elevation={elevation}
         isCanceled={fight.isCanceled}
       />

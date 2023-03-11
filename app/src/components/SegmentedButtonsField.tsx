@@ -6,7 +6,7 @@ import {
   Text,
 } from 'react-native-paper';
 
-import { ThemeSpacing } from '../../../app-context';
+import { ThemeSpacing } from '../app-context';
 
 type SegmentedButtonsFieldProps = SegmentedButtonsProps & {
   label?: string;

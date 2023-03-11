@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../types';
 import {
   AdminHomeScreen,
+  EditFightResultScreen,
   FightCardScreen,
   FightPickScreen,
   LoginScreen,
@@ -48,6 +49,13 @@ export function RootNavigator({ unauthorized, isAdmin }: RootNavigatorProps) {
             options={{ headerShown: false }}
           />
           <Stack.Screen
+            name="EditFightResult"
+            component={EditFightResultScreen}
+            options={{
+              headerTitle: 'Edit Fight Result',
+            }}
+          />
+          <Stack.Screen
             name="FightCard"
             component={FightCardScreen}
             options={{ headerTitle: 'Fight Card' }}
@@ -55,7 +63,9 @@ export function RootNavigator({ unauthorized, isAdmin }: RootNavigatorProps) {
           <Stack.Screen
             name="FightPick"
             component={FightPickScreen}
-            options={{ headerTitle: 'Fight Pick' }}
+            options={{
+              headerTitle: 'Fight Pick',
+            }}
           />
           <Stack.Screen
             name="Settings"

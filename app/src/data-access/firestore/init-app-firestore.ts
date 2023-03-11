@@ -59,7 +59,7 @@ export const initAppFirestore = (
       ),
       fightCards: new FightCardsRepository(fightCardsCollection),
       fighters: new FightersRepository(fightersCollection),
-      fights: new FightsRepository(fightsCollection),
+      fights: new FightsRepository(fightsCollection, fightersCollection),
     },
     raw: firestoreInstance,
   };

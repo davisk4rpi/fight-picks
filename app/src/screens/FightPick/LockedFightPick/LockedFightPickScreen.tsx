@@ -6,6 +6,7 @@ import { Fight } from '@fight-picks/models';
 import { ThemeSpacing } from '../../../app-context';
 import { LoadingScreen, NotFoundScreen, Screen } from '../../../components';
 import { TaleOfTheTape } from '../../../components/feature';
+import { useAdminFeatures } from './admin-features';
 import { FightPickRowItem } from './FightPickRowItem';
 import { useLockedFightPickScreen } from './locked-fight-pick-screen.hook';
 
@@ -19,6 +20,7 @@ export const LockedFightPickScreen = ({
 }: LockedFightPicksScreenProps) => {
   const { fightPicks, loading, fighter1, fighter2 } =
     useLockedFightPickScreen(fight);
+  const { editFightResultButton } = useAdminFeatures(fight.id);
 
   if (loading) {
     return <LoadingScreen testID="LockedFightPicksScreen" />;
@@ -50,6 +52,7 @@ export const LockedFightPickScreen = ({
         indicatorStyle="white"
         extraData={fight?.result}
       />
+      {editFightResultButton}
     </Screen>
   );
 };

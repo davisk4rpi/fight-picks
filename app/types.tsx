@@ -18,13 +18,14 @@ declare global {
 
 export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
+  AdminHome: undefined;
+  EditFightResult: { fightId: string };
   FightPick: { fightId: string };
   FightCard?: { fightCardId: string };
-  AdminHome: undefined;
-  Settings?: { isAdmin: boolean };
-  Modal: undefined;
   Login: undefined;
+  Modal: undefined;
   NotFound: undefined;
+  Settings?: { isAdmin: boolean };
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
