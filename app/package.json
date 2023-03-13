@@ -10,7 +10,6 @@
     "iosSim": "eas build --profile development-sim --platform ios --local",
     "iosSimProd": "eas build --profile production-sim --platform ios --local",
     "web": "expo start --web",
-    "testDev": "jest --verbose",
     "test": "jest",
     "lint": "eslint . --cache --fix --ext .js,.jsx,.ts,.tsx",
     "prepare": "husky install",
@@ -29,6 +28,8 @@
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
     "@fight-picks/models": "1.0.0",
+    "@fight-picks/native-data-access": "1.0.0",
+    "@fight-picks/utilities": "1.0.0",
     "@invertase/react-native-apple-authentication": "^2.2.2",
     "@react-native-firebase/app": "^17.1.0",
     "@react-native-firebase/auth": "^17.1.0",

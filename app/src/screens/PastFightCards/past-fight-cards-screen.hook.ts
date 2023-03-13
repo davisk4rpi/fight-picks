@@ -1,9 +1,8 @@
 import { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 
+import { selectPastFightCards } from '@fight-picks/native-data-access';
 import { useNavigation } from '@react-navigation/native';
-
-import { selectPastFightCards } from '../../data-access/store';
 
 export const usePastFightCardsScreen = () => {
   const { navigate } = useNavigation();

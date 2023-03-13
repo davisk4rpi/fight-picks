@@ -12,7 +12,9 @@ export const useUserByUid = (uid: string) => {
     let isCanceled = false;
     const updateUser = async () => {
       try {
-        const userSnapshot = await appFirestore.usersCollection.doc(uid).get();
+        const userSnapshot = await appFirestore()
+          .usersCollection.doc(uid)
+          .get();
         if (isCanceled) return;
 
         const firebaseUser = userSnapshot?.data() ?? null;

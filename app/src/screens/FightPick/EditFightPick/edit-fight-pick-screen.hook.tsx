@@ -1,19 +1,17 @@
 import { useCallback, useMemo, useRef } from 'react';
 
 import { Fight } from '@fight-picks/models';
-import { useNavigation } from '@react-navigation/native';
-
 import {
   appFirestore,
-  SetFightPickInput,
-} from '../../../data-access/firestore';
-import {
   PLACEHOLDER_FIGHTER,
   selectAuthUserFightPickByFightId,
   selectAuthUserFightPicksStatus,
+  SetFightPickInput,
   useAppSelector,
   useSelectFightersFromFight,
-} from '../../../data-access/store';
+} from '@fight-picks/native-data-access';
+import { useNavigation } from '@react-navigation/native';
+
 import { devEnv } from '../../../environments';
 import { useFightPickForm } from './fight-pick-form.hook';
 
@@ -39,7 +37,7 @@ export const useEditFightPickScreen = (fight: Fight, mainCardDate: string) => {
         (__DEV__ && devEnv.allowLatePicks) ||
         new Date(fightCardDateRef.current) > new Date()
       ) {
-        appFirestore.repository.users.setFightPick(fight.id, fightPick);
+        appFirestore().repository.users.setFightPick(fight.id, fightPick);
       } else {
         // Send Toast alerting user that picks are already locked
         navigate('FightPick', { fightId: fight.id });

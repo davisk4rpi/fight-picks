@@ -15,11 +15,11 @@ export const useFirebaseFightsByFightCardId = (
       setFirebaseFights(undefined);
       return;
     }
-    const unsubscribe = appFirestore.fightsCollection
-      .where(
+    const unsubscribe = appFirestore()
+      .fightsCollection.where(
         'fightCardRef',
         '==',
-        appFirestore.fightCardsCollection.doc(fightCardId),
+        appFirestore().fightCardsCollection.doc(fightCardId),
       )
       .onSnapshot(
         snapshot => {

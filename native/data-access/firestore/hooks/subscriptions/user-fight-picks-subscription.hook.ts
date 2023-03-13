@@ -17,7 +17,7 @@ export const useUserFightPicksSubscription = (
       return;
     }
     const fightPicksCollection =
-      appFirestore.repository.users.getFightPicksCollection(uid);
+      appFirestore().repository.users.getFightPicksCollection(uid);
     const unsubscribe = fightPicksCollection.onSnapshot(
       snapshot => {
         const updates = snapshot.docChanges().reduce<FightPicksUpdate>(

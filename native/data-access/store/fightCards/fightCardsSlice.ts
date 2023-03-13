@@ -1,4 +1,5 @@
 import { FightCard } from '@fight-picks/models';
+import { findBinaryPositionInOrderedArray } from '@fight-picks/utilities';
 import {
   createEntityAdapter,
   createSelector,
@@ -6,7 +7,6 @@ import {
   PayloadAction,
 } from '@reduxjs/toolkit';
 
-import { findBinaryPositionInOrderedArray } from '../../../libs/utilities';
 import { AsyncStatus } from '../types';
 
 export const FIGHT_CARDS_SLICE_NAME = 'fightCards';

@@ -1,13 +1,12 @@
 import { useCallback } from 'react';
 
-import { useNavigation } from '@react-navigation/native';
-
 import {
   selectAuthUserFightPickByFightId,
   selectFightById,
   useAppSelector,
   useSelectFightersFromFight,
-} from '../../data-access/store';
+} from '@fight-picks/native-data-access';
+import { useNavigation } from '@react-navigation/native';
 
 export const useFightRowItem = (fightId: string) => {
   const { navigate } = useNavigation();

@@ -1,13 +1,18 @@
 {
-  "name": "@fight-picks/models",
+  "name": "@fight-picks/native-data-access",
   "version": "1.0.0",
   "dependencies": {
+    "@fight-picks/utilities": "1.0.0",
     "cross-env": "5.0.5"
   },
   "devDependencies": {
+    "@react-native-community/eslint-config": "^3.2.0",
     "@typescript-eslint/eslint-plugin": "^5.48.1",
     "@typescript-eslint/parser": "^5.48.1",
     "eslint": "^8.31.0"
+  },
+  "peerDependencies": {
+    "@react-native-firebase/firestore": "^17.1.0"
   },
   "scripts": {
     "lint": "eslint . --cache --fix --ext .ts"

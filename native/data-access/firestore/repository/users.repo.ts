@@ -1,11 +1,11 @@
 import { nanoid } from 'nanoid';
 
 import { FightPick } from '@fight-picks/models';
+import { NotFoundError, WithOptional } from '@fight-picks/utilities';
 import firestore, {
   FirebaseFirestoreTypes,
 } from '@react-native-firebase/firestore';
 
-import { NotFoundError, WithOptional } from '../../../libs/utilities';
 import {
   FirebaseFight,
   FirebaseFighter,

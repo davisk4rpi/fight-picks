@@ -10,9 +10,9 @@ export const useFightPicksByFightId = (fightId: string) => {
   );
 
   useEffect(() => {
-    const fightRef = appFirestore.repository.fights.getDocRef(fightId);
-    const unsubscribe = appFirestore.fightPicksQuery
-      .where('fightRef', '==', fightRef)
+    const fightRef = appFirestore().repository.fights.getDocRef(fightId);
+    const unsubscribe = appFirestore()
+      .fightPicksQuery.where('fightRef', '==', fightRef)
       .onSnapshot(
         async snapshot => {
           if (snapshot === null || snapshot.docs.length < 1)

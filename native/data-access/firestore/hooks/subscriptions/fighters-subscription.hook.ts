@@ -10,7 +10,7 @@ export type OnFightersUpdate = (snapshot: FightersUpdate) => void;
 
 export const useFightersSubscription = (onSnapshot: OnFightersUpdate) => {
   useEffect(() => {
-    const unsubscribe = appFirestore.fightersCollection.onSnapshot(
+    const unsubscribe = appFirestore().fightersCollection.onSnapshot(
       snapshot => {
         const updates = snapshot.docChanges().reduce<FightersUpdate>(
           (acc, change) => {

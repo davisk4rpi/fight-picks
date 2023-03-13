@@ -40,7 +40,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/core@npm:^7.11.6, @babel/core@npm:^7.12.3, @babel/core@npm:^7.12.9, @babel/core@npm:^7.13.16, @babel/core@npm:^7.14.0":
+"@babel/core@npm:^7.11.6, @babel/core@npm:^7.12.3, @babel/core@npm:^7.12.9, @babel/core@npm:^7.13.16, @babel/core@npm:^7.14.0, @babel/core@npm:^7.21.0":
   version: 7.21.0
   resolution: "@babel/core@npm:7.21.0"
   dependencies:
@@ -1332,7 +1332,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/preset-env@npm:^7.12.9":
+"@babel/preset-env@npm:^7.12.9, @babel/preset-env@npm:^7.20.2":
   version: 7.20.2
   resolution: "@babel/preset-env@npm:7.20.2"
   dependencies:
@@ -1445,7 +1445,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/preset-typescript@npm:^7.13.0":
+"@babel/preset-typescript@npm:^7.13.0, @babel/preset-typescript@npm:^7.21.0":
   version: 7.21.0
   resolution: "@babel/preset-typescript@npm:7.21.0"
   dependencies:
@@ -2074,6 +2074,8 @@ __metadata:
     "@expo/vector-icons": ^13.0.0
     "@faker-js/faker": ^7.6.0
     "@fight-picks/models": 1.0.0
+    "@fight-picks/native-data-access": 1.0.0
+    "@fight-picks/utilities": 1.0.0
     "@invertase/react-native-apple-authentication": ^2.2.2
     "@react-native-community/eslint-config": ^3.2.0
     "@react-native-firebase/app": ^17.1.0
@@ -2145,6 +2147,38 @@ __metadata:
     "@typescript-eslint/parser": ^5.48.1
     cross-env: 5.0.5
     eslint: ^8.31.0
+  languageName: unknown
+  linkType: soft
+
+"@fight-picks/native-data-access@1.0.0, @fight-picks/native-data-access@workspace:native/data-access":
+  version: 0.0.0-use.local
+  resolution: "@fight-picks/native-data-access@workspace:native/data-access"
+  dependencies:
+    "@fight-picks/utilities": 1.0.0
+    "@react-native-community/eslint-config": ^3.2.0
+    "@typescript-eslint/eslint-plugin": ^5.48.1
+    "@typescript-eslint/parser": ^5.48.1
+    cross-env: 5.0.5
+    eslint: ^8.31.0
+  peerDependencies:
+    "@react-native-firebase/firestore": ^17.1.0
+  languageName: unknown
+  linkType: soft
+
+"@fight-picks/utilities@1.0.0, @fight-picks/utilities@workspace:utilities":
+  version: 0.0.0-use.local
+  resolution: "@fight-picks/utilities@workspace:utilities"
+  dependencies:
+    "@babel/core": ^7.21.0
+    "@babel/preset-env": ^7.20.2
+    "@babel/preset-typescript": ^7.21.0
+    "@types/jest": ^29.4.0
+    "@typescript-eslint/eslint-plugin": ^5.48.1
+    "@typescript-eslint/parser": ^5.48.1
+    babel-jest: ^29.5.0
+    cross-env: 5.0.5
+    eslint: ^8.31.0
+    jest: ^29.2.1
   languageName: unknown
   linkType: soft
 
@@ -3156,11 +3190,11 @@ __metadata:
   linkType: hard
 
 "@react-native-firebase/firestore@npm:^17.1.0":
-  version: 17.3.0
-  resolution: "@react-native-firebase/firestore@npm:17.3.0"
+  version: 17.3.2
+  resolution: "@react-native-firebase/firestore@npm:17.3.2"
   peerDependencies:
-    "@react-native-firebase/app": 17.3.0
-  checksum: d9bd958e9be09ebd07d96738ee3eff82a1f9894f618358c293a2b5f099a2dbd09c129c98e42768bcd9a805f21b67e8d949a97d1477d5958c45d8eb309c5e1651
+    "@react-native-firebase/app": 17.3.2
+  checksum: 883e14693a9f0e8c2d373e852c4b6b4274c961ce3ffcf77cfbee41fd316e0c6b18248678af2d32e35312475c09286a643c254110ae383ea16f76e237d4f4cf2a
   languageName: node
   linkType: hard
 

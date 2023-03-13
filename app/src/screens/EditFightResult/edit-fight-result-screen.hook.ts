@@ -1,15 +1,15 @@
 import { useCallback, useMemo } from 'react';
 
 import { FightResult } from '@fight-picks/models';
-import { useNavigation } from '@react-navigation/native';
-
-import { appFirestore } from '../../data-access/firestore';
 import {
+  appFirestore,
   PLACEHOLDER_FIGHTER,
   selectFightById,
   useAppSelector,
   useSelectFightersFromFight,
-} from '../../data-access/store';
+} from '@fight-picks/native-data-access';
+import { useNavigation } from '@react-navigation/native';
+
 import { useFightResultForm } from './fight-result-form.hook';
 
 export const useEditFightResultScreen = (fightId: string) => {
@@ -21,7 +21,7 @@ export const useEditFightResultScreen = (fightId: string) => {
   const handleSuccess = useCallback(
     (fightResult: FightResult | null) => {
       if (fight === undefined) return;
-      appFirestore.repository.fights.setResult(fight.id, fightResult);
+      appFirestore().repository.fights.setResult(fight.id, fightResult);
       goBack();
     },
     [goBack, fight],

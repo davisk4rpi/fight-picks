@@ -1,5 +1,8 @@
-import { useUserByUid } from '../../../data-access/firestore';
-import { selectFighterById, useAppSelector } from '../../../data-access/store';
+import {
+  selectFighterById,
+  useAppSelector,
+  useUserByUid,
+} from '@fight-picks/native-data-access';
 
 export const useFightPickRowItem = (
   userUid: string,

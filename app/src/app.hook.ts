@@ -2,28 +2,26 @@ import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
 import {
+  fightCardsChanged,
+  fightersChanged,
+  fightsChanged,
   OnCurrentUserUpdate,
   OnFightCardsUpdate,
   OnFightersUpdate,
   OnFightsUpdate,
   OnUserFightPicksUpdate,
-  useCurrentUserSubscription,
-  useFightCardsSubscription,
-  useFightersSubscription,
-  useFightsSubscription,
-  useUserFightPicksSubscription,
-} from './data-access/firestore';
-import {
-  fightCardsChanged,
-  fightersChanged,
-  fightsChanged,
   selectAuthStatus,
   selectAuthUserUid,
   selectCurrentUser,
   useAppSelector,
+  useCurrentUserSubscription,
+  useFightCardsSubscription,
+  useFightersSubscription,
+  useFightsSubscription,
   userChanged,
   userFightPicksChanged,
-} from './data-access/store';
+  useUserFightPicksSubscription,
+} from '@fight-picks/native-data-access';
 
 export const useApp = () => {
   const user = useAppSelector(selectCurrentUser);

@@ -3,7 +3,9 @@
   "workspaces": [
     "app",
     "firebase-admin",
-    "models"
+    "models",
+    "native/*",
+    "utilities"
   ],
   "scripts": {
     "start": "yarn workspace @fight-picks/app start",
@@ -19,7 +21,8 @@
     "deployFirestoreRules": "yarn workspace @fight-picks/app deployFirestoreRules",
     "seedDev": "yarn workspace @fight-picks/firebase-admin seedDev",
     "seedProd": "yarn workspace @fight-picks/firebase-admin seedProd",
-    "initDevDB": "yarn workspace @fight-picks/firebase-admin initDevDB"
+    "initDevDB": "yarn workspace @fight-picks/firebase-admin initDevDB",
+    "test": "yarn workspaces foreach run test"
   },
   "devDependencies": {
     "husky": "^8.0.3",

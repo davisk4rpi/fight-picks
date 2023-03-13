@@ -8,7 +8,7 @@ export const useUsers = () => {
   const [users, setUsers] = useState<User[] | undefined>(undefined);
 
   useEffect(() => {
-    const unsubscribe = appFirestore.usersCollection.onSnapshot(
+    const unsubscribe = appFirestore().usersCollection.onSnapshot(
       snapshot => {
         const users = snapshot.docs.map(doc => {
           return mapUserFromFirebase(doc.data());

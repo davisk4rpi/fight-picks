@@ -1,12 +1,12 @@
 import { useMemo } from 'react';
 
 import { Fight, FightPickWithScore } from '@fight-picks/models';
-
-import { useFightPicksByFightId } from '../../../data-access/hooks';
 import {
   PLACEHOLDER_FIGHTER,
+  useFightPicksByFightId,
   useSelectFightersFromFight,
-} from '../../../data-access/store';
+} from '@fight-picks/native-data-access';
+
 import { calculatePickScore } from '../../../libs/scoring';
 
 export const useLockedFightPickScreen = (fight: Fight) => {

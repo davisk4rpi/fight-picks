@@ -1,0 +1,14 @@
+// prettier-ignore
+{
+  "compilerOptions": {
+    "strict": true,
+    "esModuleInterop": true,
+    "lib": ["DOM", "ESNext"],
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "target": "ESNext",
+    "composite": true
+  },
+  "exclude": ["node_modules"],
+}

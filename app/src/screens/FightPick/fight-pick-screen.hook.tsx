@@ -2,7 +2,7 @@ import {
   selectFightById,
   selectFightCardById,
   useAppSelector,
-} from '../../data-access/store';
+} from '@fight-picks/native-data-access';
 
 export const useFightPickScreen = (fightId: string) => {
   const fight = useAppSelector(state => selectFightById(state, fightId));
