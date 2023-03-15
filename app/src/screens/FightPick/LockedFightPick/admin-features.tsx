@@ -1,16 +1,13 @@
 import React, { useCallback } from 'react';
 import { Button } from 'react-native-paper';
 
-import {
-  selectCurrentUser,
-  useAppSelector,
-} from '@fight-picks/native-data-access';
+import { useSelectCurrentUser } from '@fight-picks/native-data-access';
 import { useNavigation } from '@react-navigation/native';
 
 import { Translation } from '../../../app-context';
 
 export const useAdminFeatures = (fightId: string) => {
-  const currentUser = useAppSelector(selectCurrentUser);
+  const currentUser = useSelectCurrentUser();
   const { navigate } = useNavigation();
 
   const handleEditPicksPress = useCallback(() => {

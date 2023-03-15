@@ -4,10 +4,9 @@ import { Fight } from '@fight-picks/models';
 import {
   appFirestore,
   PLACEHOLDER_FIGHTER,
-  selectCurrentUserFightPicksStatus,
-  useAppSelector,
   useSelectCurrentUser,
   useSelectCurrentUserFightPickByFightId,
+  useSelectCurrentUserFightPicksStatus,
   useSelectFightersFromFight,
 } from '@fight-picks/native-data-access';
 import { useNavigation } from '@react-navigation/native';
@@ -40,7 +39,7 @@ export const useEditFightPickScreen = (fight: Fight, mainCardDate: string) => {
     });
   }, [fightPick, fight.id, user?.uid]);
 
-  const fightPicksStatus = useAppSelector(selectCurrentUserFightPicksStatus);
+  const fightPicksStatus = useSelectCurrentUserFightPicksStatus();
 
   const onSuccess = useCallback(
     (formValues: FightPickFormValues) => {

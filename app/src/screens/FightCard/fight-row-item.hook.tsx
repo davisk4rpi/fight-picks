@@ -1,8 +1,7 @@
 import { useCallback } from 'react';
 
 import {
-  selectCurrentUserFightPickByFightId,
-  useAppSelector,
+  useSelectCurrentUserFightPickByFightId,
   useSelectFightById,
   useSelectFightersFromFight,
 } from '@fight-picks/native-data-access';
@@ -11,9 +10,7 @@ import { useNavigation } from '@react-navigation/native';
 export const useFightRowItem = (fightId: string) => {
   const { navigate } = useNavigation();
   const fight = useSelectFightById(fightId);
-  const fightPick = useAppSelector(state =>
-    selectCurrentUserFightPickByFightId(state, fightId),
-  );
+  const fightPick = useSelectCurrentUserFightPickByFightId(fightId);
 
   const { fighter1, fighter2 } = useSelectFightersFromFight(fight);
 

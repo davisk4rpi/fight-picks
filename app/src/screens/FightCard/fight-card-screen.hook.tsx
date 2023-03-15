@@ -1,14 +1,11 @@
 import {
-  selectFightCardByIdOrCurrent,
-  selectFightCardsStatus,
-  useAppSelector,
+  useSelectFightCardByIdOrCurrent,
+  useSelectFightCardsStatus,
 } from '@fight-picks/native-data-access';
 
 export const useFightCardScreen = (fightCardId?: string) => {
-  const fightCardStatus = useAppSelector(selectFightCardsStatus);
-  const fightCard = useAppSelector(state =>
-    selectFightCardByIdOrCurrent(state, fightCardId),
-  );
+  const fightCardStatus = useSelectFightCardsStatus();
+  const fightCard = useSelectFightCardByIdOrCurrent(fightCardId);
 
   return {
     loading: fightCardStatus === 'pending',
