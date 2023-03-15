@@ -89,9 +89,9 @@ export const userReducer = userSlice.reducer;
 export const { userFightPicksChanged, userChanged } = userSlice.actions;
 
 export const {
-  selectAll: selectAuthUserFightPicks,
-  selectEntities: selectAuthUserFightPickEntities,
-  selectById: selectAuthUserFightPickByFightId,
+  selectAll: selectCurrentUserFightPicks,
+  selectEntities: selectCurrentUserFightPickEntities,
+  selectById: selectCurrentUserFightPickByFightId,
 } = fightPicksAdapter.getSelectors<{ user: UserState }>(
   ({ user }) => user.fightPicks,
 );
@@ -99,5 +99,5 @@ export const {
 export const selectCurrentUser = (state: { user: UserState }) =>
   state.user.user;
 
-export const selectAuthUserFightPicksStatus = (state: { user: UserState }) =>
+export const selectCurrentUserFightPicksStatus = (state: { user: UserState }) =>
   state.user.fightPicks.fightPicksStatus;

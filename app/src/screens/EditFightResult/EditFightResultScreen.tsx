@@ -6,7 +6,7 @@ import { isMethodWithNoRound, isMethodWithNoWinner } from '@fight-picks/models';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { RootStackParamList } from '../../../types';
-import { ThemeSpacing } from '../../app-context';
+import { ThemeSpacing, Translation } from '../../app-context';
 import {
   NotFoundScreen,
   Screen,
@@ -29,7 +29,7 @@ export const EditFightResultScreen = ({
     useEditFightResultScreen(fightId);
 
   if (fight === undefined) {
-    return <NotFoundScreen testID={TEST_ID} thing={'Fight'} />;
+    return <NotFoundScreen testID={TEST_ID} thing={Translation.fight} />;
   }
 
   return (
@@ -45,7 +45,7 @@ export const EditFightResultScreen = ({
       <View style={styles.formContainer}>
         <View style={styles.formSegment}>
           <SegmentedButtonsField
-            label="Method"
+            label={Translation.method}
             buttons={fightResultForm.selectMethodButtons}
             value={fightResultForm.method}
             onValueChange={fightResultForm.setMethod}
@@ -53,7 +53,7 @@ export const EditFightResultScreen = ({
         </View>
         <View style={styles.formSegment}>
           <SegmentedButtonsField
-            label="Winner"
+            label={Translation.winner}
             buttons={fightResultForm.selectWinnerButtons}
             value={
               isMethodWithNoWinner(fightResultForm.method)
@@ -66,7 +66,7 @@ export const EditFightResultScreen = ({
         </View>
         <View style={styles.formSegment}>
           <SegmentedButtonsField
-            label="Round"
+            label={Translation.round}
             buttons={fightResultForm.selectRoundButtons}
             value={
               isMethodWithNoRound(fightResultForm.method)

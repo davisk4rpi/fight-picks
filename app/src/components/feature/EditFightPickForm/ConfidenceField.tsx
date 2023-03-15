@@ -1,0 +1,46 @@
+import React from 'react';
+
+import { SegmentedButtonsField, SegmentedButtonsFieldProps } from '../..';
+import { Translation } from '../../../app-context';
+
+interface ConfidenceFieldProps {
+  value: string;
+  onValueChange: (val: string) => void;
+}
+
+export const ConfidenceField = ({
+  value,
+  onValueChange,
+}: ConfidenceFieldProps) => {
+  return (
+    <SegmentedButtonsField
+      label={Translation.confidence}
+      buttons={confidenceButtons}
+      value={value}
+      onValueChange={onValueChange}
+    />
+  );
+};
+
+const confidenceButtons: SegmentedButtonsFieldProps['buttons'] = [
+  {
+    value: '1',
+    label: '1',
+  },
+  {
+    value: '2',
+    label: '2',
+  },
+  {
+    value: '3',
+    label: '3',
+  },
+  {
+    value: '4',
+    label: '4',
+  },
+  {
+    value: '5',
+    label: '5',
+  },
+];

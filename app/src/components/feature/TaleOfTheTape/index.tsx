@@ -1,2 +1,2 @@
 export * from './TaleOfTheTape';
-export * from './TaleOfTheTapePick';
+export * from './Pick';

@@ -20,6 +20,12 @@ export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   AdminHome: undefined;
   EditFightResult: { fightId: string };
+  AdminEditFightPick: {
+    fightId: string;
+    userUid: string;
+    existingFightPickId?: string;
+  };
+  AdminEditFightPicks: { fightId: string };
   FightPick: { fightId: string };
   FightCard?: { fightCardId: string };
   Login: undefined;

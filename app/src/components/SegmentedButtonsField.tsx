@@ -8,7 +8,7 @@ import {
 
 import { ThemeSpacing } from '../app-context';
 
-type SegmentedButtonsFieldProps = SegmentedButtonsProps & {
+export type SegmentedButtonsFieldProps = SegmentedButtonsProps & {
   label?: string;
   disabled?: boolean;
 };

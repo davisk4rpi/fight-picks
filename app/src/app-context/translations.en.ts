@@ -7,18 +7,23 @@ export const Translation = {
   add: 'Add',
   cancel: 'Cancel',
   canceled: 'Canceled',
+  confidence: 'confidence',
   confirm: 'Confirm',
   confidenceMeter: (confidence: number) =>
     '$'.repeat(Math.max(0, Math.min(confidence, 5))),
   dismiss: 'Dismiss',
   editResult: 'Edit Results',
+  editPicks: 'Edit Picks',
   errors: {
     unknownErrorYikes: 'Unknown Error... Yikes :(',
   },
+  fight: 'Fight',
   logOut: 'Log Out',
   name: 'Name',
+  method: 'Method',
   pageXOfY: (x: number, y: number) => `page ${x} of ${y}`,
   perPage: 'per page',
+  round: 'Round',
   roundMethod: (round: number | string | undefined | null, method: string) => {
     if (!round) return method;
     return `R${round} ${method}`;
@@ -36,6 +41,7 @@ export const Translation = {
   },
   users: 'Users',
   vs: 'vs',
+  winner: 'Winner',
   xRoundsAtYWeight: (rounds: number | string, weight: number | string) =>
     `${rounds} rounds at ${weight}lbs`,
   yes: 'Yes',

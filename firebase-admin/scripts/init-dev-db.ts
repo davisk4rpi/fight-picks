@@ -16,7 +16,7 @@ firestore.settings({
   ignoreUndefinedProperties: true,
 });
 
-const runSeed = async () => {
+const runInitDevDb = async () => {
   const adminFirestore = initAdminFirestore(firestore);
   await seed0(adminFirestore);
   await seed1(adminFirestore);
@@ -25,4 +25,4 @@ const runSeed = async () => {
   await seedUserData(adminFirestore);
 };
 
-runSeed();
+runInitDevDb();

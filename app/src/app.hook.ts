@@ -1,5 +1,4 @@
 import { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
 
 import {
   fightCardsChanged,
@@ -10,25 +9,25 @@ import {
   OnFightersUpdate,
   OnFightsUpdate,
   OnUserFightPicksUpdate,
-  selectAuthStatus,
-  selectAuthUserUid,
-  selectCurrentUser,
-  useAppSelector,
+  useAppDispatch,
   useCurrentUserSubscription,
   useFightCardsSubscription,
   useFightersSubscription,
   useFightsSubscription,
   userChanged,
   userFightPicksChanged,
+  useSelectAuthStatus,
+  useSelectAuthUserUid,
+  useSelectCurrentUser,
   useUserFightPicksSubscription,
 } from '@fight-picks/native-data-access';
 
 export const useApp = () => {
-  const user = useAppSelector(selectCurrentUser);
-  const authStatus = useAppSelector(selectAuthStatus);
-  const authUserUid = useAppSelector(selectAuthUserUid);
+  const user = useSelectCurrentUser();
+  const authStatus = useSelectAuthStatus();
+  const authUserUid = useSelectAuthUserUid();
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const onCurrentUserUpdate = useCallback<OnCurrentUserUpdate>(
     user => {

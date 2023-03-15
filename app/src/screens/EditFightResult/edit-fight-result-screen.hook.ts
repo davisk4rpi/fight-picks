@@ -4,8 +4,7 @@ import { FightResult } from '@fight-picks/models';
 import {
   appFirestore,
   PLACEHOLDER_FIGHTER,
-  selectFightById,
-  useAppSelector,
+  useSelectFightById,
   useSelectFightersFromFight,
 } from '@fight-picks/native-data-access';
 import { useNavigation } from '@react-navigation/native';
@@ -14,7 +13,7 @@ import { useFightResultForm } from './fight-result-form.hook';
 
 export const useEditFightResultScreen = (fightId: string) => {
   const { goBack } = useNavigation();
-  const fight = useAppSelector(state => selectFightById(state, fightId));
+  const fight = useSelectFightById(fightId);
 
   const { fighter1, fighter2 } = useSelectFightersFromFight(fight);
 

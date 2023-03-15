@@ -36,6 +36,7 @@ export type FirebaseFightPick = Omit<
   fightRef: FirebaseFirestoreTypes.DocumentReference<FirebaseFight>;
   createdAt: FirebaseFirestoreTypes.Timestamp;
   updatedAt: FirebaseFirestoreTypes.Timestamp;
+  updatedBy: FirebaseFirestoreTypes.DocumentReference<FirebaseUser>;
 };
 
 export type FirebaseFightCard = {

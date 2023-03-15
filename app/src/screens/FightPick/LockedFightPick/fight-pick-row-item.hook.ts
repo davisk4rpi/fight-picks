@@ -1,17 +1,10 @@
-import {
-  selectFighterById,
-  useAppSelector,
-  useUserByUid,
-} from '@fight-picks/native-data-access';
+import { FightPick } from '@fight-picks/models';
+import { useFightPickUserAndWinningFighter } from '@fight-picks/native-data-access';
 
 export const useFightPickRowItem = (
-  userUid: string,
-  winningFighterId: string,
+  fightPick: Pick<FightPick, 'userUid' | 'winningFighterId'>,
 ) => {
-  const { user } = useUserByUid(userUid);
-  const winningFighter = useAppSelector(state =>
-    selectFighterById(state, winningFighterId),
-  );
+  const { user, winningFighter } = useFightPickUserAndWinningFighter(fightPick);
 
   return {
     playerName: user?.displayName?.split(' ')[0] ?? '',

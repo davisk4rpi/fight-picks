@@ -16,7 +16,7 @@
   "scripts": {
     "lint": "eslint . --cache --fix --ext .ts",
     "seedDev": "FIRESTORE_EMULATOR_HOST=\"localhost:8080\" ts-node ./scripts/run-seed.ts",
-    "initDevDB": "FIRESTORE_EMULATOR_HOST=\"localhost:8080\" ts-node ./scripts/run-dev-seed.ts",
+    "initDevDb": "FIRESTORE_EMULATOR_HOST=\"localhost:8080\" ts-node ./scripts/init-dev-db.ts",
     "seedProd": "ts-node ./scripts/run-seed.ts"
   },
   "private": true

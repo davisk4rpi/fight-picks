@@ -4,7 +4,7 @@ import { FlatList, StyleSheet } from 'react-native';
 import { Fight } from '@fight-picks/models';
 
 import { ThemeSpacing } from '../../../app-context';
-import { LoadingScreen, NotFoundScreen, Screen } from '../../../components';
+import { LoadingScreen, Screen } from '../../../components';
 import { TaleOfTheTape } from '../../../components/feature';
 import { useAdminFeatures } from './admin-features';
 import { FightPickRowItem } from './FightPickRowItem';
@@ -14,23 +14,23 @@ interface LockedFightPicksScreenProps {
   fight: Fight;
   mainCardDate: string;
 }
+const TEST_ID = 'LockedFightPicksScreen';
 
 export const LockedFightPickScreen = ({
   fight,
 }: LockedFightPicksScreenProps) => {
   const { fightPicks, loading, fighter1, fighter2 } =
     useLockedFightPickScreen(fight);
-  const { editFightResultButton } = useAdminFeatures(fight.id);
+  const { editFightResultButton, editFightPicksButton } = useAdminFeatures(
+    fight.id,
+  );
 
   if (loading) {
-    return <LoadingScreen testID="LockedFightPicksScreen" />;
-  }
-  if (fight === null) {
-    return <NotFoundScreen testID="LockedFightPicksScreen" thing={'Fight'} />;
+    return <LoadingScreen testID={TEST_ID} />;
   }
 
   return (
-    <Screen testID="LockedFightPicksScreen">
+    <Screen testID={TEST_ID}>
       <TaleOfTheTape
         key={fight.id}
         rounds={fight.rounds}
@@ -53,14 +53,12 @@ export const LockedFightPickScreen = ({
         extraData={fight?.result}
       />
       {editFightResultButton}
+      {editFightPicksButton}
     </Screen>
   );
 };
 
 const styles = StyleSheet.create({
-  screen: {
-    paddingBottom: 0,
-  },
   fightsFlatList: {
     marginHorizontal: -1 * ThemeSpacing.horizontalScreen,
     paddingHorizontal: ThemeSpacing.horizontalScreen,

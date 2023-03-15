@@ -12,10 +12,8 @@ interface FightPickRowItemProps {
   >;
 }
 export const FightPickRowItem = ({ fightPick }: FightPickRowItemProps) => {
-  const { playerName, winningFighterName } = useFightPickRowItem(
-    fightPick.userUid,
-    fightPick.winningFighterId,
-  );
+  const { playerName, winningFighterName } = useFightPickRowItem(fightPick);
+
   return (
     <TaleOfTheTapePick
       playerName={playerName}

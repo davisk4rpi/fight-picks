@@ -41,7 +41,7 @@ service cloud.firestore {
       allow update: if (isSelf(userId) && !fieldsHaveAnyUpdates(['roles'])) || (!isSelf(userId) && isAdmin());
       match /fightPicks/{fightPickId} {
         allow read: if isSignedIn();
-        allow delete, create, update: if isSelf(userId);
+        allow delete, create, update: if isSelf(userId) || isAdmin();
       }
     }
     match /{path=**}/fightPicks/{document} {

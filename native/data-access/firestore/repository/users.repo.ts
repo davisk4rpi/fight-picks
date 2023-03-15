@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
 
 import { FightPick } from '@fight-picks/models';
-import { NotFoundError, WithOptional } from '@fight-picks/utilities';
+import { NotFoundError } from '@fight-picks/utilities';
 import firestore, {
   FirebaseFirestoreTypes,
 } from '@react-native-firebase/firestore';
@@ -13,14 +13,6 @@ import {
   FirebaseUser,
 } from '../types';
 import { Repository } from './repository.abstract';
-
-export type SetFightPickInput = WithOptional<
-  Pick<
-    FightPick,
-    'id' | 'winningFighterId' | 'round' | 'method' | 'confidence'
-  >,
-  'id'
->;
 
 export class UsersRepository extends Repository<FirebaseUser> {
   constructor(
@@ -75,19 +67,17 @@ export class UsersRepository extends Repository<FirebaseUser> {
     });
   };
 
-  setFightPick = async (
-    fightId: string,
-    { id, winningFighterId, round, method, confidence }: SetFightPickInput,
-    uid?: string,
-  ) => {
-    const currentUid = uid ?? this.currentAuthUser()?.uid;
-    if (currentUid === undefined) {
-      // Throw Error?
-      // TODO log
-      return;
-    }
-    const fightPicksCollection = this.getFightPicksCollection(currentUid);
-    const docId = id === undefined || id === '' ? nanoid() : id;
+  setFightPick = async ({
+    id,
+    userUid,
+    fightId,
+    winningFighterId,
+    round,
+    method,
+    confidence,
+  }: FightPick) => {
+    const fightPicksCollection = this.getFightPicksCollection(userUid);
+    const docId = id === '' ? nanoid() : id;
     const setOptions: FirebaseFirestoreTypes.SetOptions = {
       mergeFields: [
         'userRef',
@@ -97,13 +87,15 @@ export class UsersRepository extends Repository<FirebaseUser> {
         'method',
         'confidence',
         'updatedAt',
+        'updatedBy',
       ],
     };
+    const updatedBy = this.getDocRef(this.currentAuthUser()?.uid ?? userUid);
 
     return fightPicksCollection.doc(docId).set(
       {
         id: docId,
-        userRef: this.getDocRef(currentUid),
+        userRef: this.getDocRef(userUid),
         fightRef: this.fightsCollection.doc(fightId),
         winningFighterRef: this.fightersCollection.doc(winningFighterId),
         round,
@@ -111,8 +103,9 @@ export class UsersRepository extends Repository<FirebaseUser> {
         confidence,
         createdAt: firestore.FieldValue.serverTimestamp(),
         updatedAt: firestore.FieldValue.serverTimestamp(),
+        updatedBy,
       },
-      id === undefined || id === '' ? undefined : setOptions,
+      id === '' ? undefined : setOptions,
     );
   };
 

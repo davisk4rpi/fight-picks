@@ -1,10 +1,7 @@
 import { Fight } from '@fight-picks/models';
 
-import {
-  PLACEHOLDER_FIGHTER,
-  selectFighterById,
-} from '../fighters/fightersSlice';
-import { useAppSelector } from '../store';
+import { PLACEHOLDER_FIGHTER, selectFighterById } from '../../fighters';
+import { useAppSelector } from '../../store';
 
 export const useSelectFightersFromFight = (fight?: Fight) => {
   const fighter1 = useAppSelector(state =>

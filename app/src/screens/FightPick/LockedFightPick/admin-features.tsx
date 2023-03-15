@@ -13,14 +13,22 @@ export const useAdminFeatures = (fightId: string) => {
   const currentUser = useAppSelector(selectCurrentUser);
   const { navigate } = useNavigation();
 
-  const handlePress = useCallback(() => {
+  const handleEditPicksPress = useCallback(() => {
+    navigate('AdminEditFightPicks', { fightId });
+  }, [navigate, fightId]);
+  const handleEditResultPress = useCallback(() => {
     navigate('EditFightResult', { fightId });
   }, [navigate, fightId]);
 
   const editFightResultButton = (
-    <Button onPress={handlePress}>{Translation.editResult}</Button>
+    <Button onPress={handleEditResultPress}>{Translation.editResult}</Button>
+  );
+
+  const editFightPicksButton = (
+    <Button onPress={handleEditPicksPress}>{Translation.editPicks}</Button>
   );
   return {
     editFightResultButton: currentUser?.isAdmin ? editFightResultButton : null,
+    editFightPicksButton: currentUser?.isAdmin ? editFightPicksButton : null,
   };
 };

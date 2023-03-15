@@ -1,18 +1,21 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Surface, Text } from 'react-native-paper';
+import { ActivityIndicator, Text } from 'react-native-paper';
 
 import { FightPick } from '@fight-picks/models';
 
-import { ThemeSpacing, Translation } from '../../../app-context';
-import { ColorText, ColorTextProps } from '../../color-text';
-import { FighterTwoLineName } from './FighterTwoLineName';
+import { ThemeSpacing, Translation } from '../../../../app-context';
+import { ColorText, ColorTextProps } from '../../../color-text';
+import { FighterTwoLineName } from '../FighterTwoLineName';
+import { TaleOfTheTapeContainer } from './TaleOfTheTapePickContainer';
 
 interface TaleOfTheTapePickProps
   extends Pick<FightPick, 'round' | 'method' | 'confidence'> {
   winningFighterName: string;
   playerName: string;
+  playerLoading?: boolean;
   score?: number;
+  leftAdornment?: () => JSX.Element;
 }
 
 export const TaleOfTheTapePick = ({
@@ -21,22 +24,25 @@ export const TaleOfTheTapePick = ({
   confidence,
   winningFighterName,
   playerName,
+  playerLoading = false,
   score,
+  leftAdornment,
 }: TaleOfTheTapePickProps) => {
   return (
-    <Surface elevation={1} style={styles.fightRowContainer}>
-      <View style={styles.fightRow}>
-        {score !== undefined && <Score>{score}</Score>}
-        <PlayerName>{playerName}</PlayerName>
-        <FighterCell isLoser={score === 0}>{winningFighterName}</FighterCell>
-        <Prediction
-          score={score}
-          round={round}
-          method={method}
-          confidence={confidence}
-        />
-      </View>
-    </Surface>
+    <TaleOfTheTapeContainer>
+      {leftAdornment && leftAdornment()}
+      {score !== undefined && <Score>{score}</Score>}
+      <PlayerName>
+        {playerLoading ? <ActivityIndicator /> : playerName}
+      </PlayerName>
+      <FighterCell isLoser={score === 0}>{winningFighterName}</FighterCell>
+      <Prediction
+        score={score}
+        round={round}
+        method={method}
+        confidence={confidence}
+      />
+    </TaleOfTheTapeContainer>
   );
 };
 
@@ -56,9 +62,7 @@ const Score = ({ children }: ScoreProps) => {
   );
 };
 
-interface PlayerNameProps {
-  children: string;
-}
+interface PlayerNameProps extends PropsWithChildren<{}> {}
 const PlayerName = ({ children }: PlayerNameProps) => {
   return (
     <View style={styles.playerNameContainer}>
@@ -116,18 +120,6 @@ const Prediction = ({
 };
 
 const styles = StyleSheet.create({
-  fightRowContainer: {
-    alignItems: 'center',
-    marginTop: ThemeSpacing.base * 2,
-    paddingHorizontal: ThemeSpacing.base,
-    paddingVertical: ThemeSpacing.base * 2,
-  },
-  fightRow: {
-    marginTop: ThemeSpacing.base,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   predictionContainer: {
     marginHorizontal: ThemeSpacing.base * 2,
     alignItems: 'center',

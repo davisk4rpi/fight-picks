@@ -21,7 +21,7 @@
     "deployFirestoreRules": "yarn workspace @fight-picks/app deployFirestoreRules",
     "seedDev": "yarn workspace @fight-picks/firebase-admin seedDev",
     "seedProd": "yarn workspace @fight-picks/firebase-admin seedProd",
-    "initDevDB": "yarn workspace @fight-picks/firebase-admin initDevDB",
+    "initDevDb": "yarn workspace @fight-picks/firebase-admin initDevDb",
     "test": "yarn workspaces foreach run test"
   },
   "devDependencies": {
