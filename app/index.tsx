@@ -1,8 +1,8 @@
 import '@react-native-firebase/app';
 import 'expo-dev-client';
 import 'react-native-get-random-values';
-import 'core-js/actual/array/at';
 
+// import 'core-js/actual/array/at';
 import { registerRootComponent } from 'expo';
 import React from 'react';
 import { Platform } from 'react-native';
