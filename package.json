@@ -30,5 +30,9 @@
     "prettier": "2.8.2",
     "typescript": "^4.9.5"
   },
-  "packageManager": "yarn@3.4.1"
+  "packageManager": "yarn@3.4.1",
+  "resolutions": {
+    "@react-native-firebase/app/@expo/config-plugins": "6.0.1",
+    "@react-native-firebase/auth/@expo/config-plugins": "6.0.1"
+  }
 }
