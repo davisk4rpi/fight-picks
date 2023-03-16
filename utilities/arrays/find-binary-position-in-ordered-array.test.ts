@@ -1,5 +1,5 @@
 import { convertNumberToSignedBinary } from '../numbers';
-import { findBinaryPositionInOrderedArray } from './binary-search';
+import { findBinaryPositionInOrderedArray } from './find-binary-position-in-ordered-array';
 
 describe('findBinaryPositionInOrderedArray', () => {
   test('orderedArray.length === 0', () => {

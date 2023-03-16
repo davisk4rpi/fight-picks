@@ -1,13 +1,10 @@
-type BinarySearchComparisonFunction<Val extends unknown> = (
-  val: Val,
-  idx: number,
-) => -1 | 0 | 1;
+import { BinarySearchComparisonFunction } from './types';
 
 /**
  * finds the index in which a new value should be inserted into an ordered array
  * position is determined by the compareFn
  * @param orderedArray
- * @param compareFn should return -1 if the target value belongs before current value the target 0 if it equals the target and 1 if it belongs after the current value
+ * @param compareFn should return -1 if the newValue belongs before existingValue, 0 if newValue === existingValue, and 1 if newValue belongs after the existingValue
  * @returns startIdx
  */
 export const findBinaryPositionInOrderedArray = <
