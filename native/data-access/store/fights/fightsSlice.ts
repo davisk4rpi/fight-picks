@@ -6,7 +6,7 @@ import {
   PayloadAction,
 } from '@reduxjs/toolkit';
 
-import { AsyncStatus } from '../types';
+import { AsyncStatus, NormalizedFights } from '../types';
 
 export const FIGHTS_SLICE_NAME = 'fights';
 
@@ -62,6 +62,19 @@ export const selectFightsByIds = createSelector(
       }
       return fights;
     }, []);
+  },
+);
+
+export const selectNormalizedFightsByIds = createSelector(
+  [selectFightEntities, (_state: unknown, fightIds: string[]) => fightIds],
+  (fightsMap, fightIds) => {
+    return fightIds.reduce<NormalizedFights>((fights, fightId) => {
+      const fight = fightsMap[fightId];
+      if (fight) {
+        fights.set(fightId, fight);
+      }
+      return fights;
+    }, new Map());
   },
 );
 

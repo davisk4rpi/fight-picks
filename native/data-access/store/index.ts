@@ -4,4 +4,5 @@ export * from './fights';
 export * from './fighters';
 export * from './hooks';
 export * from './store';
+export * from './types';
 export * from './user';

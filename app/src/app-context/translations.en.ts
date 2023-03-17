@@ -18,16 +18,21 @@ export const Translation = {
     unknownErrorYikes: 'Unknown Error... Yikes :(',
   },
   fight: 'Fight',
+  fights: 'Fights',
   logOut: 'Log Out',
   name: 'Name',
   method: 'Method',
   pageXOfY: (x: number, y: number) => `page ${x} of ${y}`,
   perPage: 'per page',
+  player: 'Player',
+  rank: 'Rank',
   round: 'Round',
   roundMethod: (round: number | string | undefined | null, method: string) => {
     if (!round) return method;
     return `R${round} ${method}`;
   },
+  score: 'Score',
+  scores: 'Scores',
   sorryCouldntFindThat: (thing: string) =>
     `Sorry, couldn't find that ${thing}.`,
   shorthandMethodOfVictory: (method: string) => {
@@ -39,6 +44,7 @@ export const Translation = {
     if (method === MethodMap.disqualification) return 'DQ';
     return 'ERR';
   },
+  thereAreNoScoresYet: 'There are no scores yet',
   users: 'Users',
   vs: 'vs',
   winner: 'Winner',

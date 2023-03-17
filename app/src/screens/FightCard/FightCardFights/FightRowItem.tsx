@@ -1,7 +1,7 @@
 import React from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 
-import { TaleOfTheTape, TaleOfTheTapeProps } from '../../components/feature';
+import { TaleOfTheTape, TaleOfTheTapeProps } from '../../../components/feature';
 import { useFightRowItem } from './fight-row-item.hook';
 
 interface FightRowItemProps {

@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 
 import { User } from '@fight-picks/models';
 
-import { appFirestore, mapUserFromFirebase } from '../firestore';
+import { appFirestore } from '../app-firestore';
+import { mapUserFromFirebase } from '../mappers';
 
 export const useUsers = () => {
   const [users, setUsers] = useState<User[] | undefined>(undefined);

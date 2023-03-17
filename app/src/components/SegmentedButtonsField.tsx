@@ -27,18 +27,12 @@ export const SegmentedButtonsField = ({
     return buttons;
   }, [disabled, buttons]);
 
-  const textStyle = useMemo(() => {
-    if (disabled) {
-      return StyleSheet.compose<TextStyle>(styles.text, {
-        opacity: 0.38,
-      });
-    }
-    return styles.text;
-  }, [disabled]);
   return (
     <View style={styles.container}>
       {label && (
-        <Text style={textStyle} variant="titleSmall">
+        <Text
+          style={disabled ? disabledTextStyle : styles.text}
+          variant="titleSmall">
           {label}
         </Text>
       )}
@@ -54,4 +48,8 @@ const styles = StyleSheet.create({
   text: {
     marginBottom: ThemeSpacing.base * 3,
   },
+});
+
+const disabledTextStyle = StyleSheet.compose<TextStyle>(styles.text, {
+  opacity: 0.38,
 });

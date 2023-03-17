@@ -2,8 +2,11 @@ import { useEffect, useState } from 'react';
 
 import { FightPick } from '@fight-picks/models';
 
-import { appFirestore, mapFightPickFromFirebase } from '../firestore';
+import { appFirestore } from '../app-firestore';
+import { mapFightPickFromFirebase } from '../mappers';
 
+// TODO refactor this since it wont scale well with users
+// Plan on either scoping this to a "league" or use cloud functions to make this query unnecessary
 export const useFightPicksByFightId = (fightId: string) => {
   const [fightPicks, setFightPicks] = useState<FightPick[] | undefined>(
     undefined,
