@@ -62,7 +62,7 @@ const mapTotalScoreToUid = (fightPicks: FightPickWithScore[]) =>
       map.set(userUid, {
         userUid,
         score: existing.score + score,
-        confidence,
+        confidence: existing.confidence + confidence,
       });
     }
     return map;
