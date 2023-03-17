@@ -23,7 +23,7 @@ type CreateFightInputResultsField = Omit<
   'winningFighterRef'
 > & { winningFighter: 1 | 2 | null };
 
-type CreateFightInput = Omit<
+export type CreateFightInput = Omit<
   FirestoreFight,
   'createdAt' | 'id' | 'fightCardRef' | 'fighter1Ref' | 'fighter2Ref' | 'result'
 > & {

@@ -5,7 +5,7 @@ import { stdin, stdout } from 'node:process';
 import readline from 'node:readline/promises';
 
 import { initAdminFirestore } from '../init-admin-firestore';
-import { seed2 } from './history';
+import { seed3 } from './history';
 
 const rl = readline.createInterface({
   input: stdin,
@@ -32,7 +32,7 @@ const runSeed = async () => {
   }
   console.log('seeding prod...');
   const adminFirestore = initAdminFirestore(firestore);
-  await seed2(adminFirestore);
+  await seed3(adminFirestore);
   console.log('complete');
 };
 
