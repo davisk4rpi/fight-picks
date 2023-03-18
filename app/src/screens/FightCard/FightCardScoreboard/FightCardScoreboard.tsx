@@ -43,7 +43,7 @@ export const FightCardScoreboard = ({
 const NoScores = () => {
   return (
     <View style={styles.noScoresYet}>
-      <Text>{Translation.thereAreNoScoresYetForThisEvent}</Text>
+      <Text>{Translation.thereAreNoScoresYet}</Text>
     </View>
   );
 };
