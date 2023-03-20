@@ -1,27 +1,14 @@
 import { insertValueInOrderedArray } from '@fight-picks/utilities';
 
 import { UserScore, UserScoreUidMap } from './types';
+import { userScoreBinaryComparisonFunction } from './user-score-binary-comparison-function';
 
 export const convertUserScoreMapToOrderedArray = (map: UserScoreUidMap) => {
   const arr: UserScore[] = [];
   for (let entry of map) {
     const [, uidScore] = entry;
     // TODO abstract comparisonFunc into a utility for ordering pick scores
-    insertValueInOrderedArray(uidScore, arr, (target, existing) => {
-      if (target.score > existing.score) {
-        return -1;
-      } else if (target.score < existing.score) {
-        return 1;
-      } else {
-        if (target.confidence > existing.confidence) {
-          return target.score === 0 ? 1 : -1;
-        } else if (target.confidence < existing.confidence) {
-          return target.score === 0 ? -1 : 1;
-        } else {
-          return 0;
-        }
-      }
-    });
+    insertValueInOrderedArray(uidScore, arr, userScoreBinaryComparisonFunction);
   }
   return arr;
 };

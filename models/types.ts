@@ -124,3 +124,12 @@ export type OrgSlug = 'ufc'; //| 'one';
 export const UserRoles = {
   admin: 'admin',
 } as const;
+
+export const LeagueInviteStatusMap = {
+  pending: 'pending',
+  rejected: 'rejected',
+  accepted: 'accepted',
+} as const;
+export type LeagueInviteStatusMapKey = keyof typeof LeagueInviteStatusMap;
+export type LeagueInviteStatus =
+  (typeof LeagueInviteStatusMap)[LeagueInviteStatusMapKey];
