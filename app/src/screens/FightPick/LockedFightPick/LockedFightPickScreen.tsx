@@ -13,14 +13,18 @@ import { useLockedFightPickScreen } from './locked-fight-pick-screen.hook';
 interface LockedFightPicksScreenProps {
   fight: Fight;
   mainCardDate: string;
+  noSpoilers?: boolean;
 }
 const TEST_ID = 'LockedFightPicksScreen';
 
 export const LockedFightPickScreen = ({
   fight,
+  noSpoilers = true,
 }: LockedFightPicksScreenProps) => {
-  const { fightPicks, loading, fighter1, fighter2 } =
-    useLockedFightPickScreen(fight);
+  const { fightPicks, loading, fighter1, fighter2 } = useLockedFightPickScreen(
+    fight,
+    noSpoilers,
+  );
   const { editFightResultButton, editFightPicksButton } = useAdminFeatures(
     fight.id,
   );
@@ -37,7 +41,7 @@ export const LockedFightPickScreen = ({
         weight={fight.weight}
         fighter1={fighter1}
         fighter2={fighter2}
-        result={fight.result}
+        result={noSpoilers ? undefined : fight.result}
         isCanceled={fight.isCanceled}
         elevation={0}
       />

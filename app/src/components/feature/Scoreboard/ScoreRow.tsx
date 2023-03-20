@@ -2,8 +2,8 @@ import React, { PropsWithChildren, useMemo } from 'react';
 import { StyleSheet, View, ViewStyle } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 
+import { ColorText, ColorTextProps } from '../..';
 import { ThemeSpacing, Translation } from '../../../app-context';
-import { ColorText, ColorTextProps } from '../../../components';
 import { useScoreRow } from './score-row.hook';
 
 interface ScoreRowProps {

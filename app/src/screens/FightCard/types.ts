@@ -1,1 +1,1 @@
-export type FightCardScreenContext = 'fights' | 'scores';
+export type FightCardScreenContext = 'picks' | 'results' | 'scores';

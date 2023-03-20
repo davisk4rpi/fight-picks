@@ -21,11 +21,14 @@ export const Translation = {
   fights: 'Fights',
   logOut: 'Log Out',
   name: 'Name',
+  noFightsLoaded: 'No Fights Loaded',
   method: 'Method',
   pageXOfY: (x: number, y: number) => `page ${x} of ${y}`,
   perPage: 'per page',
+  picks: 'Picks',
   player: 'Player',
   rank: 'Rank',
+  results: 'Results',
   round: 'Round',
   roundMethod: (round: number | string | undefined | null, method: string) => {
     if (!round) return method;

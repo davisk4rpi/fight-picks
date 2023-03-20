@@ -3,31 +3,32 @@ import { FlatList, FlatListProps, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
 
 import { ThemeSpacing, Translation } from '../../../app-context';
-import { useFightCardScoreboard } from './fight-card-scoreboard.hook';
+import { UserScore } from '../../../libs/scoring';
 import { ScoreRow, ScoreRowHeader } from './ScoreRow';
 
-interface FightCardScoreboardProps
+interface ScoreboardProps
   extends Pick<FlatListProps<unknown>, 'style' | 'contentContainerStyle'> {
-  fightIds: string[];
+  scoreboard: UserScore[];
+  loading?: boolean;
 }
 
-export const FightCardScoreboard = ({
-  fightIds,
+export const Scoreboard = ({
   style,
   contentContainerStyle,
-}: FightCardScoreboardProps) => {
-  const { scores, fightPicksLoading } = useFightCardScoreboard(fightIds);
+  scoreboard,
+  loading,
+}: ScoreboardProps) => {
   return (
     <FlatList
       style={style}
       contentContainerStyle={contentContainerStyle}
       indicatorStyle="white"
-      scrollEnabled={scores.length > 4}
+      scrollEnabled={scoreboard.length > 4}
       horizontal={false}
       keyExtractor={({ userUid }) => userUid}
-      data={scores}
-      ListHeaderComponent={scores.length > 0 ? ScoreRowHeader : undefined}
-      ListEmptyComponent={fightPicksLoading ? undefined : NoScores}
+      data={scoreboard}
+      ListHeaderComponent={scoreboard.length > 0 ? ScoreRowHeader : undefined}
+      ListEmptyComponent={loading ? undefined : NoScores}
       renderItem={({ item, index }) => (
         <ScoreRow
           rank={index + 1}

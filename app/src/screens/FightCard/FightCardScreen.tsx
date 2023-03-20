@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Text } from 'react-native-paper';
 
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -8,6 +7,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList, RootTabParamList } from '../../../types';
 import { ThemeSpacing, Translation } from '../../app-context';
 import {
+  EmptyScreen,
   LoadingScreen,
   Screen,
   SegmentedButtonsField,
@@ -15,34 +15,27 @@ import {
 } from '../../components';
 import { FightCardHeadline } from '../../components/feature';
 import { useFightCardScreen } from './fight-card-screen.hook';
-import { FightCardFights } from './FightCardFights';
-import { FightCardScoreboard } from './FightCardScoreboard';
+import { FightCardFights } from './Fights';
+import { FightCardScoreboard } from './Scoreboard';
 
 type FightCardScreenProps =
   | NativeStackScreenProps<RootStackParamList, 'FightCard'>
   | BottomTabScreenProps<RootTabParamList, 'CurrentFightCard'>;
 
+const TEST_ID = 'FightCardScreen';
+
 export const FightCardScreen = ({ route }: FightCardScreenProps) => {
   const fightCardId = route.params?.fightCardId;
 
-  const {
-    loading,
-    fightCard,
-    context,
-    onContextValueChange,
-    isFightCardInFuture,
-  } = useFightCardScreen(fightCardId);
-  if (loading) return <LoadingScreen testID="FightCardScreen" />;
+  const { loading, fightCard, context, onContextValueChange, showNavigation } =
+    useFightCardScreen(fightCardId);
+  if (loading) return <LoadingScreen testID={TEST_ID} />;
   if (fightCard === undefined)
     return (
-      <Screen testID="FightCardScreen">
-        <Text variant="displayMedium" adjustsFontSizeToFit numberOfLines={1}>
-          No Fights Loaded
-        </Text>
-      </Screen>
+      <EmptyScreen testID={TEST_ID} message={Translation.noFightsLoaded} />
     );
 
-  const scoreBoard = isFightCardInFuture ? undefined : (
+  const scoreBoard = showNavigation ? undefined : (
     <FightCardScoreboard
       style={context === 'scores' ? styles.fightsFlatList : styles.displayNone}
       contentContainerStyle={styles.fightsFlatListContent}
@@ -51,19 +44,20 @@ export const FightCardScreen = ({ route }: FightCardScreenProps) => {
   );
   const fights = (
     <FightCardFights
-      style={context === 'fights' ? styles.fightsFlatList : styles.displayNone}
+      context={context}
+      style={context !== 'scores' ? styles.fightsFlatList : styles.displayNone}
       contentContainerStyle={styles.fightsFlatListContent}
       fightCard={fightCard}
     />
   );
 
   return (
-    <Screen testID="FightCardScreen" style={styles.screen}>
+    <Screen testID={TEST_ID} style={styles.screen}>
       <FightCardHeadline
         name={fightCard.name}
         mainCardDate={fightCard.mainCardDate}
       />
-      {!isFightCardInFuture && (
+      {!showNavigation && (
         <SegmentedButtonsField
           value={context}
           buttons={contextButtons}
@@ -77,7 +71,8 @@ export const FightCardScreen = ({ route }: FightCardScreenProps) => {
 };
 
 const contextButtons: SegmentedButtonsFieldProps['buttons'] = [
-  { label: Translation.fights, value: 'fights' },
+  { label: Translation.picks, value: 'picks' },
+  { label: Translation.results, value: 'results' },
   { label: Translation.scores, value: 'scores' },
 ];
 
@@ -88,6 +83,7 @@ const styles = StyleSheet.create({
   fightsFlatList: {
     marginHorizontal: -1 * ThemeSpacing.horizontalScreen,
     paddingHorizontal: ThemeSpacing.horizontalScreen,
+    marginTop: ThemeSpacing.base,
   },
   fightsFlatListContent: {
     paddingBottom: ThemeSpacing.verticalScreen,

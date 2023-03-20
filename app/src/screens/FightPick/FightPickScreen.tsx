@@ -18,7 +18,7 @@ type FightPickScreenProps = NativeStackScreenProps<
 const TEST_ID = 'FightPickScreen';
 
 export const FightPickScreen = ({ route }: FightPickScreenProps) => {
-  const { fightId } = route.params;
+  const { fightId, noSpoilers } = route.params;
   const { fight, mainCardDate } = useFightPickScreen(fightId);
 
   if (fight === undefined) {
@@ -31,6 +31,12 @@ export const FightPickScreen = ({ route }: FightPickScreenProps) => {
   ) {
     return <EditFightPickScreen fight={fight} mainCardDate={mainCardDate} />;
   } else {
-    return <LockedFightPickScreen fight={fight} mainCardDate={mainCardDate} />;
+    return (
+      <LockedFightPickScreen
+        fight={fight}
+        mainCardDate={mainCardDate}
+        noSpoilers={noSpoilers}
+      />
+    );
   }
 };

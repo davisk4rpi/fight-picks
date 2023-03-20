@@ -13,6 +13,8 @@ export type SegmentedButtonsFieldProps = SegmentedButtonsProps & {
   disabled?: boolean;
 };
 
+export type SegmentedButton = SegmentedButtonsFieldProps['buttons'][number];
+
 export const SegmentedButtonsField = ({
   label,
   disabled,

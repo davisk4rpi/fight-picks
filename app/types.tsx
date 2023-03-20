@@ -26,7 +26,7 @@ export type RootStackParamList = {
     existingFightPickId?: string;
   };
   AdminEditFightPicks: { fightId: string };
-  FightPick: { fightId: string };
+  FightPick: { fightId: string; noSpoilers?: boolean };
   FightCard?: { fightCardId: string };
   Login: undefined;
   Modal: undefined;
