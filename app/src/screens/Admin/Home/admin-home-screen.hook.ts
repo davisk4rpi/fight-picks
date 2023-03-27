@@ -1,16 +1,22 @@
 import { useCallback, useMemo } from 'react';
 
-import { appFirestore, useUsers } from '@fight-picks/native-data-access';
+import {
+  addUserRole,
+  removeUserRole,
+  useUsers,
+} from '@fight-picks/native-data-access';
 
 export const useAdminHomeScreen = () => {
   const { users, loading } = useUsers();
+
   const addAdminRoleToUser = useCallback((uid: string) => {
-    appFirestore().repository.users.addRole({ uid, role: 'admin' });
+    addUserRole({ uid, role: 'admin' });
   }, []);
+
   const removeAdminRoleFromUser = useCallback((uid: string) => {
     // TODO handle Firebase permission error
     // Error: [firestore/permission-denied] The caller does not have permission to execute the specified operation.
-    appFirestore().repository.users.removeRole({ uid, role: 'admin' });
+    removeUserRole({ uid, role: 'admin' });
   }, []);
 
   // TODO this will not scale

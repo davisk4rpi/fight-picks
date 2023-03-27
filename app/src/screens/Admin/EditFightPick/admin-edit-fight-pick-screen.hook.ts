@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useMemo } from 'react';
 
 import {
-  appFirestore,
+  mapFightPickToFirebaseUpsertInput,
+  upsertFightPick,
   useFightPickByIdAndUid,
+  useSelectAuthUserUid,
   useSelectFightById,
   useSelectFightersFromFight,
 } from '@fight-picks/native-data-access';
@@ -21,6 +23,7 @@ export const useAdminEditFightPickScreen = (
 ) => {
   const { goBack } = useNavigation();
   const fight = useSelectFightById(fightId);
+  const adminUid = useSelectAuthUserUid();
   const { fighter1, fighter2 } = useSelectFightersFromFight(fight);
   const { fightPick, loading: fightPickLoading } = useFightPickByIdAndUid(
     fightPickId ?? '',
@@ -47,10 +50,10 @@ export const useAdminEditFightPickScreen = (
     (formValues: FightPickFormValues) => {
       // Save Fight Pick
       const fightPick = mapEditFormValuesToFightPick(formValues);
-      appFirestore().repository.users.setFightPick(fightPick);
+      upsertFightPick(mapFightPickToFirebaseUpsertInput(fightPick, adminUid));
       goBack();
     },
-    [goBack],
+    [goBack, adminUid],
   );
 
   return {

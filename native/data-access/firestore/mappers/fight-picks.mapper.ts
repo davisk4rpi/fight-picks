@@ -4,8 +4,15 @@ import {
   isMethodWithWinner,
   isRound,
 } from '@fight-picks/models';
+import { WithOptional } from '@fight-picks/utilities';
+import {
+  FirebaseFightPick,
+  getFighterRef,
+  getFightRef,
+  getUserRef,
+} from '../db';
 
-import { FirebaseFightPick } from '../types';
+import { FirebaseFightPickUpsertInput } from '../crud';
 
 export const mapFightPickFromFirebase = (
   firebaseFightPick: FirebaseFightPick,
@@ -43,4 +50,22 @@ export const mapFightPickFromFirebase = (
       confidence,
     };
   }
+};
+
+export const mapFightPickToFirebaseUpsertInput = (
+  fightPick: WithOptional<FightPick, 'id'>,
+  updatedByUserUid?: string | null,
+): FirebaseFightPickUpsertInput => {
+  const userRef = getUserRef(fightPick.userUid);
+  const id = !fightPick?.id ? undefined : fightPick.id;
+  return {
+    id,
+    fightRef: getFightRef(fightPick.fightId),
+    userRef,
+    winningFighterRef: getFighterRef(fightPick.winningFighterId),
+    method: fightPick.method,
+    round: fightPick.round,
+    confidence: fightPick.confidence,
+    updatedBy: updatedByUserUid ? getUserRef(updatedByUserUid) : userRef,
+  };
 };

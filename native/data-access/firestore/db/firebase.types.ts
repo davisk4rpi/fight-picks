@@ -65,7 +65,3 @@ export type FirebaseUserRef =
   FirebaseFirestoreTypes.DocumentReference<FirebaseUser>;
 export type FirebaseFightPickRef =
   FirebaseFirestoreTypes.DocumentReference<FirebaseFightPick>;
-
-export type FirebaseAppState = {
-  currentFightCardRef: FirebaseFightCardRef;
-};

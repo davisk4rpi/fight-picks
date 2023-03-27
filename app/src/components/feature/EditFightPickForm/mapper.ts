@@ -4,6 +4,7 @@ import {
   isMethodWithWinner,
   isRound,
 } from '@fight-picks/models';
+import { WithOptional } from '@fight-picks/utilities';
 
 import { FightPickFormValues } from './types';
 
@@ -15,14 +16,15 @@ export const mapEditFormValuesToFightPick = ({
   method,
   confidence,
   round,
-}: FightPickFormValues): FightPick => {
+}: FightPickFormValues): WithOptional<FightPick, 'id'> => {
+  const validId = id === '' ? undefined : id;
   const validMethod = isMethodWithWinner(method) ? method : 'decision';
 
   const confidenceNum = Number(confidence);
   const validConfidence = isConfidence(confidenceNum) ? confidenceNum : 1;
   if (validMethod === 'decision') {
     return {
-      id,
+      id: validId,
       userUid,
       fightId,
       winningFighterId,
@@ -35,7 +37,7 @@ export const mapEditFormValuesToFightPick = ({
   const roundNum = Number(round);
   const validRound = isRound(roundNum) ? roundNum : 1;
   return {
-    id,
+    id: validId,
     userUid,
     fightId,
     winningFighterId,

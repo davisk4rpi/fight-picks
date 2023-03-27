@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { Fighter } from '@fight-picks/models';
 
-import { appFirestore } from '../../app-firestore';
+import { fightersCollection } from '../../db';
 import { mapFighterFromFirebase } from '../../mappers';
 
 type FightersUpdate = { upserts: Fighter[]; removedIds: string[] };
@@ -10,7 +10,7 @@ export type OnFightersUpdate = (snapshot: FightersUpdate) => void;
 
 export const useFightersSubscription = (onSnapshot: OnFightersUpdate) => {
   useEffect(() => {
-    const unsubscribe = appFirestore().fightersCollection.onSnapshot(
+    const unsubscribe = fightersCollection().onSnapshot(
       snapshot => {
         const updates = snapshot.docChanges().reduce<FightersUpdate>(
           (acc, change) => {

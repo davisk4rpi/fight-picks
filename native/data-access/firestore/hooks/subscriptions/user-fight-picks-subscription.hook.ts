@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { FightPick } from '@fight-picks/models';
 
-import { appFirestore } from '../../app-firestore';
+import { getFightPicksCollectionByUser } from '../../db';
 import { mapFightPickFromFirebase } from '../../mappers';
 
 type FightPicksUpdate = { upserts: FightPick[]; removedIds: string[] };
@@ -16,8 +16,7 @@ export const useUserFightPicksSubscription = (
     if (!uid) {
       return;
     }
-    const fightPicksCollection =
-      appFirestore().repository.users.getFightPicksCollection(uid);
+    const fightPicksCollection = getFightPicksCollectionByUser(uid);
     const unsubscribe = fightPicksCollection.onSnapshot(
       snapshot => {
         const updates = snapshot.docChanges().reduce<FightPicksUpdate>(

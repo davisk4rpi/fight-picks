@@ -2,8 +2,9 @@ import { useCallback, useMemo, useRef } from 'react';
 
 import { Fight } from '@fight-picks/models';
 import {
-  appFirestore,
+  mapFightPickToFirebaseUpsertInput,
   PLACEHOLDER_FIGHTER,
+  upsertFightPick,
   useSelectCurrentUser,
   useSelectCurrentUserFightPickByFightId,
   useSelectCurrentUserFightPicksStatus,
@@ -49,7 +50,7 @@ export const useEditFightPickScreen = (fight: Fight, mainCardDate: string) => {
         new Date(fightCardDateRef.current) > new Date()
       ) {
         const fightPick = mapEditFormValuesToFightPick(formValues);
-        appFirestore().repository.users.setFightPick(fightPick);
+        upsertFightPick(mapFightPickToFirebaseUpsertInput(fightPick));
       } else {
         // Send Toast alerting user that picks are already locked
         navigate('FightPick', { fightId: fight.id });

@@ -2,8 +2,9 @@ import { useCallback, useMemo } from 'react';
 
 import { FightResult } from '@fight-picks/models';
 import {
-  appFirestore,
+  mapFightResultToFirebaseResult,
   PLACEHOLDER_FIGHTER,
+  updateFightResult,
   useSelectFightById,
   useSelectFightersFromFight,
 } from '@fight-picks/native-data-access';
@@ -20,7 +21,7 @@ export const useEditFightResultScreen = (fightId: string) => {
   const handleSuccess = useCallback(
     (fightResult: FightResult | null) => {
       if (fight === undefined) return;
-      appFirestore().repository.fights.setResult(fight.id, fightResult);
+      updateFightResult(fight.id, mapFightResultToFirebaseResult(fightResult));
       goBack();
     },
     [goBack, fight],

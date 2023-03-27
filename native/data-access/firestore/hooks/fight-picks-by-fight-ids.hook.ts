@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { FightPick } from '@fight-picks/models';
 
-import { appFirestore } from '../app-firestore';
+import { getFightPicksQueryByFights } from '../crud';
 import { mapFightPickFromFirebase } from '../mappers';
 
 // TODO refactor this since it wont scale well with users
@@ -13,25 +13,21 @@ export const useFightPicksByFightIds = (fightIds: string[]) => {
   );
 
   useEffect(() => {
-    const fightRefs = fightIds.map(fightId =>
-      appFirestore().repository.fights.getDocRef(fightId),
-    );
-    const unsubscribe = appFirestore()
-      .fightPicksQuery.where('fightRef', 'in', fightRefs)
-      .onSnapshot(
-        async snapshot => {
-          if (snapshot === null || snapshot.docs.length < 1)
-            return setFightPicks([]);
-          const fightPicks = snapshot.docs.map(doc =>
-            mapFightPickFromFirebase(doc.data()),
-          );
+    const fightPicksQuery = getFightPicksQueryByFights(fightIds);
+    const unsubscribe = fightPicksQuery.onSnapshot(
+      async snapshot => {
+        if (snapshot === null || snapshot.docs.length < 1)
+          return setFightPicks([]);
+        const fightPicks = snapshot.docs.map(doc =>
+          mapFightPickFromFirebase(doc.data()),
+        );
 
-          setFightPicks(fightPicks);
-        },
-        error => {
-          console.error('useFightPicksByFightId', error);
-        },
-      );
+        setFightPicks(fightPicks);
+      },
+      error => {
+        console.error('useFightPicksByFightId', error);
+      },
+    );
     return unsubscribe;
   }, [fightIds]);
 

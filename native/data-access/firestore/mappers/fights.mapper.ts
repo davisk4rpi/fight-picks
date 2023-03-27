@@ -7,7 +7,7 @@ import {
   isRound,
 } from '@fight-picks/models';
 
-import { FirebaseFight, FirebaseFightResult } from '../types';
+import { FirebaseFight, FirebaseFightResult, getFighterRef } from '../db';
 
 export const mapFightFromFirebase = (firebaseFight: FirebaseFight): Fight => {
   return {
@@ -61,4 +61,21 @@ const mapFightResultFromFirebase = (
 
   // TODO Log abnormality
   return undefined;
+};
+
+export const mapFightResultToFirebaseResult = (
+  fightResult?: FightResult | null,
+): FirebaseFightResult | null => {
+  if (fightResult === undefined || fightResult === null) return null;
+
+  const { winningFighterId, method, round } = fightResult;
+
+  const winningFighterRef =
+    winningFighterId === null ? null : getFighterRef(winningFighterId);
+
+  return {
+    winningFighterRef,
+    method,
+    round,
+  };
 };

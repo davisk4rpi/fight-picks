@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { FightPick } from '@fight-picks/models';
 
-import { appFirestore } from '../app-firestore';
+import { getFightPickRef } from '../db';
 import { mapFightPickFromFirebase } from '../mappers';
 
 export const useFightPickByIdAndUid = (fightPickId: string, uid: string) => {
@@ -17,9 +17,8 @@ export const useFightPickByIdAndUid = (fightPickId: string, uid: string) => {
     let isCanceled = false;
     const updateFightPick = async () => {
       try {
-        const fightPicksCollection =
-          appFirestore().repository.users.getFightPicksCollection(uid);
-        const fightPickDoc = await fightPicksCollection.doc(fightPickId).get();
+        const fightPicksRef = getFightPickRef(uid, fightPickId);
+        const fightPickDoc = await fightPicksRef.get();
         if (isCanceled) return;
 
         const firebaseFightPick = fightPickDoc?.data() ?? null;

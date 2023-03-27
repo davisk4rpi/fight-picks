@@ -1,7 +1,7 @@
 import '@react-native-firebase/app';
+import 'core-js/actual/array/at';
 import 'expo-dev-client';
 import 'react-native-get-random-values';
-import 'core-js/actual/array/at';
 
 import { registerRootComponent } from 'expo';
 import React from 'react';
@@ -9,8 +9,8 @@ import { Platform } from 'react-native';
 import { Provider } from 'react-redux';
 
 import {
-  appFirestore,
   authChanged,
+  createAuthUserIfNotExists,
   enableFirestoreEmulator,
   setFirestoreInstance,
   store,
@@ -43,7 +43,7 @@ GoogleSignin.configure({
   )?.client_id,
 });
 auth().onAuthStateChanged(async user => {
-  if (user) appFirestore().repository.users.set(user);
+  if (user) createAuthUserIfNotExists(user);
   store.dispatch(authChanged(user));
 });
 // registerRootComponent calls AppRegistry.registerComponent('main', () => App);

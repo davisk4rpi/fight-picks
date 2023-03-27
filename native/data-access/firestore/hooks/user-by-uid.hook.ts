@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 
 import { User } from '@fight-picks/models';
 
-import { appFirestore } from '../../firestore/app-firestore';
 import { mapUserFromFirebase } from '../../firestore/mappers';
+import { getUserRef } from '../db';
 
 export const useUserByUid = (uid: string) => {
   const [user, setUser] = useState<User | undefined | null>(undefined);
@@ -12,9 +12,7 @@ export const useUserByUid = (uid: string) => {
     let isCanceled = false;
     const updateUser = async () => {
       try {
-        const userSnapshot = await appFirestore()
-          .usersCollection.doc(uid)
-          .get();
+        const userSnapshot = await getUserRef(uid).get();
         if (isCanceled) return;
 
         const firebaseUser = userSnapshot?.data() ?? null;
