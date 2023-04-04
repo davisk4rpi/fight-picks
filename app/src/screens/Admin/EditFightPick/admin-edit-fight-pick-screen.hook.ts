@@ -28,6 +28,7 @@ export const useAdminEditFightPickScreen = (
   const { fightPick, loading: fightPickLoading } = useFightPickByIdAndUid(
     fightPickId ?? '',
     userUid,
+    fighter1.id,
   );
 
   useEffect(() => {

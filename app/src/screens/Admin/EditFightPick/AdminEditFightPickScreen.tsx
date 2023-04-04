@@ -35,7 +35,7 @@ export const AdminEditFightPickScreen = ({
     <Screen testID={TEST_ID}>
       <View style={styles.formContainer}>
         <EditFightPickForm
-          fight={fight}
+          maxRounds={fight.rounds}
           fighter1={fighter1}
           fighter2={fighter2}
           initialValues={initialValues}

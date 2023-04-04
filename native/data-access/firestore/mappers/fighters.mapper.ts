@@ -1,6 +1,6 @@
 import { Fighter } from '@fight-picks/models';
 
-import { FirebaseFighter } from '../types';
+import { FirebaseFighter } from '../db';
 
 export const mapFighterFromFirebase = (
   firebaseFighter: FirebaseFighter,

@@ -38,6 +38,7 @@ export const Translation = {
   scores: 'Scores',
   sorryCouldntFindThat: (thing: string) =>
     `Sorry, couldn't find that ${thing}.`,
+  spoilers: 'Spoilers',
   shorthandMethodOfVictory: (method: string) => {
     if (method === MethodMap.decision) return 'DEC';
     if (method === MethodMap.knockout) return 'KO';

@@ -35,7 +35,7 @@ export const EditFightPickScreen = ({
       />
       <View style={styles.formContainer}>
         <EditFightPickForm
-          fight={fight}
+          maxRounds={fight.rounds}
           fighter1={fighter1}
           fighter2={fighter2}
           onSuccess={onSuccess}

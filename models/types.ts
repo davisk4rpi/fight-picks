@@ -54,13 +54,14 @@ export const ConfidenceMap = {
 export type ConfidenceMapKey = keyof typeof ConfidenceMap;
 export type Confidence = (typeof ConfidenceMap)[ConfidenceMapKey];
 
+export type FightResultWinningFighter = 1 | 2;
 export type FightResultWithFinish = {
-  winningFighterId: string;
+  winningFighter: FightResultWinningFighter;
   method: MethodWithFinish;
   round: Round;
 };
 export type FightResultWithDecision = {
-  winningFighterId: string;
+  winningFighter: FightResultWinningFighter;
   method: Decision;
   round: null;
 };
@@ -70,7 +71,7 @@ export type FightResultWithWinner =
   | FightResultWithDecision;
 
 export type FightResultWithNoWinner = {
-  winningFighterId: null;
+  winningFighter: null;
   method: MethodWithNoWinner;
   round: null;
 };
@@ -80,7 +81,7 @@ export type FightResult = FightResultWithWinner | FightResultWithNoWinner;
 export type RawFightResult = {
   method: string;
   round: number | null;
-  winningFighterId: string | null;
+  winningFighter: number | null;
 };
 
 export type Fight = {
@@ -91,15 +92,16 @@ export type Fight = {
   sex: Sex;
   fighter1Id: string;
   fighter2Id: string;
-  result?: FightResult;
+  resultCode: string | null;
   isCanceled: boolean;
 };
 
-export type FightPick = FightResultWithWinner & {
+export type FightPick = {
   id: string;
   fightId: string;
   confidence: Confidence;
   userUid: string;
+  resultCode: string;
 };
 
 export type FightPickWithScore = FightPick & {

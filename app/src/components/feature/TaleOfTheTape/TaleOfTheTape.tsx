@@ -2,24 +2,19 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Surface, SurfaceProps, Text } from 'react-native-paper';
 
-import { Fight, Fighter, FightPick } from '@fight-picks/models';
+import { Confidence, Fight, Fighter, FightResult } from '@fight-picks/models';
 
 import { ThemeSpacing, Translation } from '../../../app-context';
 import { ColorText } from '../../color-text';
 import { FighterTwoLineName } from './FighterTwoLineName';
-
-type TaleOfTheTapeResult =
-  | FightPick
-  | (Fight['result'] & {
-      confidence?: undefined;
-    });
 
 export interface TaleOfTheTapeProps
   extends Pick<Fight, 'rounds' | 'weight' | 'isCanceled'> {
   fighter1: Pick<Fighter, 'name' | 'id'>;
   fighter2: Pick<Fighter, 'name' | 'id'>;
   elevation?: SurfaceProps['elevation'];
-  result?: TaleOfTheTapeResult;
+  result?: FightResult;
+  confidence?: Confidence;
 }
 
 export const TaleOfTheTape = ({
@@ -28,6 +23,7 @@ export const TaleOfTheTape = ({
   fighter1,
   fighter2,
   result,
+  confidence,
   isCanceled,
   elevation,
 }: TaleOfTheTapeProps) => {
@@ -39,12 +35,16 @@ export const TaleOfTheTape = ({
       <View style={styles.fightRow}>
         <FighterCell
           name={fighter1.name}
-          active={result?.winningFighterId === fighter1.id}
+          active={result?.winningFighter === 1}
         />
-        <CenterContainer isCanceled={isCanceled} result={result} />
+        <CenterContainer
+          isCanceled={isCanceled}
+          result={result}
+          confidence={confidence}
+        />
         <FighterCell
           name={fighter2.name}
-          active={result?.winningFighterId === fighter2.id}
+          active={result?.winningFighter === 2}
         />
       </View>
     </Surface>
@@ -52,9 +52,13 @@ export const TaleOfTheTape = ({
 };
 
 interface CenterContainerProps
-  extends Pick<TaleOfTheTapeProps, 'isCanceled' | 'result'> {}
+  extends Pick<TaleOfTheTapeProps, 'isCanceled' | 'result' | 'confidence'> {}
 
-const CenterContainer = ({ isCanceled, result }: CenterContainerProps) => {
+const CenterContainer = ({
+  isCanceled,
+  result,
+  confidence,
+}: CenterContainerProps) => {
   if (isCanceled) {
     return (
       <View style={styles.vsContainer}>
@@ -76,9 +80,9 @@ const CenterContainer = ({ isCanceled, result }: CenterContainerProps) => {
       ) : (
         <Text variant="headlineSmall">{Translation.vs}</Text>
       )}
-      {result?.confidence && (
+      {confidence && (
         <ColorText color={'secondary'} variant="labelLarge">
-          {Translation.confidenceMeter(result.confidence)}
+          {Translation.confidenceMeter(confidence)}
         </ColorText>
       )}
     </View>
@@ -115,6 +119,7 @@ const styles = StyleSheet.create({
     marginHorizontal: ThemeSpacing.base * 2,
     alignItems: 'center',
     flexGrow: 0,
+    flexBasis: 60,
   },
   fighterContainer: {
     flexBasis: 40,

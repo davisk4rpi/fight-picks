@@ -21,8 +21,14 @@ export const AdminEditFightPicksScreen = ({
   route,
 }: AdminEditFightPicksScreenProps) => {
   const { fightId } = route.params;
-  const { fightPicks, fight, fightPicksLoading, fighter1, fighter2 } =
-    useAdminEditFightPicksScreen(fightId);
+  const {
+    fightPicks,
+    fight,
+    fightPicksLoading,
+    fighter1,
+    fighter2,
+    fightResult,
+  } = useAdminEditFightPicksScreen(fightId);
   if (fight === undefined) {
     return <NotFoundScreen testID={TEST_ID} thing={Translation.fight} />;
   }
@@ -35,7 +41,7 @@ export const AdminEditFightPicksScreen = ({
         weight={fight.weight}
         fighter1={fighter1}
         fighter2={fighter2}
-        result={fight.result}
+        result={fightResult ?? undefined}
         isCanceled={fight.isCanceled}
         elevation={0}
       />
@@ -45,13 +51,19 @@ export const AdminEditFightPicksScreen = ({
         <FlatList
           style={styles.fightsFlatList}
           data={fightPicks}
-          renderItem={obj => <FightPickRowItem fightPick={obj.item} />}
+          renderItem={obj => (
+            <FightPickRowItem
+              fightPick={obj.item}
+              fighter1={fighter1}
+              fighter2={fighter2}
+            />
+          )}
           keyExtractor={({ id }) => id}
           scrollEnabled={fightPicks.length > 3}
           horizontal={false}
           contentContainerStyle={styles.fightsFlatListContent}
           indicatorStyle="white"
-          extraData={fight?.result}
+          extraData={fight?.resultCode}
         />
       )}
     </Screen>

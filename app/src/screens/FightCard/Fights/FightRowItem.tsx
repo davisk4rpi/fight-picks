@@ -22,6 +22,7 @@ export const FightRowItem = ({
     fighter1,
     fighter2,
     taleOfTheTapeResult,
+    confidence,
   } = useFightRowItem(fightId, context);
   if (fight === undefined) return null;
   if (
@@ -43,6 +44,7 @@ export const FightRowItem = ({
         result={taleOfTheTapeResult}
         elevation={elevation}
         isCanceled={fight.isCanceled}
+        confidence={confidence}
       />
     </Pressable>
   );

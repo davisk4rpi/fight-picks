@@ -9,11 +9,12 @@ import {
   getFightRef,
 } from '../db';
 
-export type FirebaseFightPickUpsertInput = Omit<
+export type FirebaseFightPickUpsertInput = Pick<
   FirebaseFightPick,
-  'createdAt' | 'updatedAt' | 'id'
+  'userRef' | 'confidence' | 'fightRef' | 'updatedBy'
 > & {
   id?: string;
+  resultCode: string;
 };
 
 const UPSERT_FIGHT_PICK_SET_OPTIONS: FirebaseFirestoreTypes.SetOptions = {
@@ -24,6 +25,7 @@ const UPSERT_FIGHT_PICK_SET_OPTIONS: FirebaseFirestoreTypes.SetOptions = {
     'round',
     'method',
     'confidence',
+    'resultCode',
     'updatedAt',
     'updatedBy',
   ],
@@ -33,11 +35,9 @@ export const upsertFightPick = async ({
   id,
   userRef,
   fightRef,
-  winningFighterRef,
-  round,
-  method,
   confidence,
   updatedBy,
+  resultCode,
 }: FirebaseFightPickUpsertInput) => {
   const fightPickRef = getFightPickRef(userRef, id);
   return fightPickRef.set(
@@ -45,10 +45,8 @@ export const upsertFightPick = async ({
       id: fightPickRef.id,
       userRef,
       fightRef,
-      winningFighterRef,
-      round,
-      method,
       confidence,
+      resultCode,
       createdAt: FirestoreFieldValue.serverTimestamp(),
       updatedAt: FirestoreFieldValue.serverTimestamp(),
       updatedBy,

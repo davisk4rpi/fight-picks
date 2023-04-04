@@ -1,11 +1,6 @@
-import {
-  FightPick,
-  FightPickWithScore,
-  FightResult,
-} from '@fight-picks/models';
+import { FightPick, FightPickWithScore } from '@fight-picks/models';
 import { NormalizedFights } from '@fight-picks/native-data-access';
-
-import { calculatePickScore } from './calculate-pick-score';
+import { FightResultsScoreMap } from './fight-result-score-map';
 
 /**
  *
@@ -15,9 +10,14 @@ import { calculatePickScore } from './calculate-pick-score';
  */
 export const addScoreToFightPick = (
   fightPick: FightPick,
-  fightResult?: FightResult,
+  fightResultCode: string | null,
 ): FightPickWithScore => {
-  const score = calculatePickScore(fightPick, fightResult);
+  if (fightResultCode === null)
+    return {
+      ...fightPick,
+      score: undefined,
+    };
+  const score = FightResultsScoreMap[fightResultCode][fightPick.resultCode];
   return {
     ...fightPick,
     score,
@@ -35,14 +35,15 @@ export const addScoresToFightPicks = (
   normalizedFights: NormalizedFights,
 ): FightPickWithScore[] =>
   fightPicks.map(fightPick => {
-    const fightResult = normalizedFights.get(fightPick.fightId)?.result;
-    return addScoreToFightPick(fightPick, fightResult);
+    const fightResultCode =
+      normalizedFights.get(fightPick.fightId)?.resultCode ?? null;
+    return addScoreToFightPick(fightPick, fightResultCode);
   });
 
 export const addScoreToFightPicks = (
   fightPicks: FightPick[],
-  fightResult?: FightResult,
+  fightResultCode: string | null,
 ): FightPickWithScore[] =>
   fightPicks.map(fightPick => {
-    return addScoreToFightPick(fightPick, fightResult);
+    return addScoreToFightPick(fightPick, fightResultCode);
   });

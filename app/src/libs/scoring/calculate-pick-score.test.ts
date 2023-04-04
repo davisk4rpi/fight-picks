@@ -1,22 +1,19 @@
 import { FightResult, MethodMap, Round } from '@fight-picks/models';
 
-import {
-  calculatePickScore,
-  CalculatePickScoresFightPick,
-} from './calculate-pick-score';
+import { calculatePickScore } from './calculate-pick-score';
 
 const rounds: Round[] = [1, 2, 3, 4, 5];
 
 describe('calculatePickScore', () => {
   describe('no winner fightResult', () => {
     it('returns 0 score and negative confidenceScore when fightResult.method === "no_contest"', () => {
-      const fightPick: CalculatePickScoresFightPick = {
-        winningFighterId: '1',
+      const fightPick: FightResult = {
+        winningFighter: 1,
         method: MethodMap.decision,
         round: null,
       };
       let fightResult: FightResult = {
-        winningFighterId: null,
+        winningFighter: null,
         method: MethodMap.no_contest,
         round: null,
       };
@@ -25,13 +22,13 @@ describe('calculatePickScore', () => {
     });
 
     it('returns 0 score and negative confidenceScore when fightResult.method === "draw"', () => {
-      const fightPick: CalculatePickScoresFightPick = {
-        winningFighterId: '1',
+      const fightPick: FightResult = {
+        winningFighter: 1,
         method: MethodMap.decision,
         round: null,
       };
       let fightResult: FightResult = {
-        winningFighterId: null,
+        winningFighter: null,
         method: MethodMap.draw,
         round: null,
       };
@@ -43,14 +40,14 @@ describe('calculatePickScore', () => {
 
   describe('decision fightResult', () => {
     const decisionfightResult: FightResult = {
-      winningFighterId: '1',
+      winningFighter: 1,
       method: MethodMap.decision,
       round: null,
     };
 
     test('has incorrect winner', () => {
-      const fightPick: CalculatePickScoresFightPick = {
-        winningFighterId: '2',
+      const fightPick: FightResult = {
+        winningFighter: 2,
         method: MethodMap.decision,
         round: null,
       };
@@ -61,8 +58,8 @@ describe('calculatePickScore', () => {
 
     describe('has correct winner', () => {
       test('perfect pick', () => {
-        const fightPick: CalculatePickScoresFightPick = {
-          winningFighterId: '1',
+        const fightPick: FightResult = {
+          winningFighter: 1,
           method: MethodMap.decision,
           round: null,
         };
@@ -72,8 +69,8 @@ describe('calculatePickScore', () => {
       });
 
       test('has correct winner, incorrect method', () => {
-        const fightPick: CalculatePickScoresFightPick = {
-          winningFighterId: '1',
+        const fightPick: FightResult = {
+          winningFighter: 1,
           method: MethodMap.knockout,
           round: 1,
         };
@@ -92,12 +89,12 @@ describe('calculatePickScore', () => {
     describe('has incorrect winner', () => {
       test.each(rounds)(`correct round (%i) and method (${method})`, round => {
         const fightResult: FightResult = {
-          winningFighterId: '1',
+          winningFighter: 1,
           method,
           round,
         };
-        const fightPick: CalculatePickScoresFightPick = {
-          winningFighterId: '2',
+        const fightPick: FightResult = {
+          winningFighter: 2,
           method: MethodMap.decision,
           round: null,
         };
@@ -110,13 +107,13 @@ describe('calculatePickScore', () => {
     describe('has correct winner', () => {
       describe.each(rounds)('correct round (%i)', round => {
         test('correct method', () => {
-          const fightPick: CalculatePickScoresFightPick = {
-            winningFighterId: '1',
+          const fightPick: FightResult = {
+            winningFighter: 1,
             method,
             round,
           };
           const fightResult: FightResult = {
-            winningFighterId: '1',
+            winningFighter: 1,
             method,
             round,
           };
@@ -125,8 +122,8 @@ describe('calculatePickScore', () => {
           expect(actScore).toEqual(expScore);
         });
         test('incorrect method', () => {
-          const fightPick: CalculatePickScoresFightPick = {
-            winningFighterId: '1',
+          const fightPick: FightResult = {
+            winningFighter: 1,
             method:
               method === MethodMap.knockout
                 ? MethodMap.submission
@@ -134,7 +131,7 @@ describe('calculatePickScore', () => {
             round,
           };
           const fightResult: FightResult = {
-            winningFighterId: '1',
+            winningFighter: 1,
             method,
             round,
           };
@@ -146,8 +143,8 @@ describe('calculatePickScore', () => {
 
       describe('incorrect round', () => {
         test('incorrect method', () => {
-          const fightPick: CalculatePickScoresFightPick = {
-            winningFighterId: '1',
+          const fightPick: FightResult = {
+            winningFighter: 1,
             method:
               method === MethodMap.knockout
                 ? MethodMap.submission
@@ -155,7 +152,7 @@ describe('calculatePickScore', () => {
             round: 2,
           };
           const fightResult: FightResult = {
-            winningFighterId: '1',
+            winningFighter: 1,
             method,
             round: 1,
           };
@@ -164,13 +161,13 @@ describe('calculatePickScore', () => {
           expect(actScore).toEqual(1);
         });
         test('correct method', () => {
-          const fightPick: CalculatePickScoresFightPick = {
-            winningFighterId: '1',
+          const fightPick: FightResult = {
+            winningFighter: 1,
             method,
             round: 2,
           };
           const fightResult: FightResult = {
-            winningFighterId: '1',
+            winningFighter: 1,
             method,
             round: 1,
           };

@@ -19,6 +19,8 @@ import {
   useSelectAuthStatus,
   useSelectAuthUserUid,
   useSelectCurrentUser,
+  useSelectFightEntities,
+  useSelectFightsStatus,
   useUserFightPicksSubscription,
 } from '@fight-picks/native-data-access';
 
@@ -26,7 +28,8 @@ export const useApp = () => {
   const user = useSelectCurrentUser();
   const authStatus = useSelectAuthStatus();
   const authUserUid = useSelectAuthUserUid();
-
+  const fightsStatus = useSelectFightsStatus();
+  const fightEntities = useSelectFightEntities();
   const dispatch = useAppDispatch();
 
   const onCurrentUserUpdate = useCallback<OnCurrentUserUpdate>(
@@ -65,6 +68,7 @@ export const useApp = () => {
   useUserFightPicksSubscription(
     user?.uid ?? null,
     onCurrentUserFightPicksUpdate,
+    fightsStatus === 'complete' ? fightEntities : undefined,
   );
   useFightCardsSubscription(onFightCardsUpdate);
   useFightsSubscription(onFightsUpdate);

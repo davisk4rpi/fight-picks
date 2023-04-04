@@ -1,16 +1,17 @@
 import { useCallback, useMemo } from 'react';
 
-import { FightResult } from '@fight-picks/models';
 import {
-  mapFightResultToFirebaseResult,
   PLACEHOLDER_FIGHTER,
-  updateFightResult,
+  updateFightResultCode,
   useSelectFightById,
   useSelectFightersFromFight,
 } from '@fight-picks/native-data-access';
 import { useNavigation } from '@react-navigation/native';
-
-import { useFightResultForm } from './fight-result-form.hook';
+import {
+  FightResultFormValues,
+  mapEditFormValuesToFightResultCode,
+  mapFightResultCodeToEditFormValues,
+} from '../../components/feature';
 
 export const useEditFightResultScreen = (fightId: string) => {
   const { goBack } = useNavigation();
@@ -18,37 +19,28 @@ export const useEditFightResultScreen = (fightId: string) => {
 
   const { fighter1, fighter2 } = useSelectFightersFromFight(fight);
 
-  const handleSuccess = useCallback(
-    (fightResult: FightResult | null) => {
+  const onSuccess = useCallback(
+    (fightResult: FightResultFormValues | null) => {
       if (fight === undefined) return;
-      updateFightResult(fight.id, mapFightResultToFirebaseResult(fightResult));
+      const resultCode =
+        fightResult === null
+          ? null
+          : mapEditFormValuesToFightResultCode(fightResult);
+      updateFightResultCode(fight.id, resultCode);
       goBack();
     },
     [goBack, fight],
   );
-
-  const formFight = useMemo(() => {
-    if (
-      fight === undefined ||
-      fighter1 === undefined ||
-      fighter2 === undefined
-    ) {
-      return undefined;
-    }
-    return {
-      result: fight.result,
-      rounds: fight.rounds,
-      fighter1,
-      fighter2,
-    };
-  }, [fight, fighter1, fighter2]);
-
-  const fightResultForm = useFightResultForm(formFight, handleSuccess);
+  const initialValues = useMemo(
+    () => mapFightResultCodeToEditFormValues(fight?.resultCode),
+    [fight?.resultCode],
+  );
 
   return {
     fight,
     fighter1: fighter1 ?? PLACEHOLDER_FIGHTER,
     fighter2: fighter2 ?? PLACEHOLDER_FIGHTER,
-    fightResultForm,
+    onSuccess,
+    initialValues,
   };
 };

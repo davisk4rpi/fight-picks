@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { IconButton } from 'react-native-paper';
 
-import { FightPick } from '@fight-picks/models';
+import { Fighter, FightPick } from '@fight-picks/models';
 import { useNavigation } from '@react-navigation/native';
 
 import { TaleOfTheTapePick } from '../../../components/feature';
@@ -10,18 +10,18 @@ import { useFightPickRowItem } from './fight-pick-row-item.hook';
 interface FightPickRowItemProps {
   fightPick: Pick<
     FightPick,
-    | 'id'
-    | 'fightId'
-    | 'userUid'
-    | 'winningFighterId'
-    | 'round'
-    | 'method'
-    | 'confidence'
+    'id' | 'fightId' | 'userUid' | 'resultCode' | 'confidence'
   >;
+  fighter1: Fighter;
+  fighter2: Fighter;
 }
-export const FightPickRowItem = ({ fightPick }: FightPickRowItemProps) => {
-  const { playerName, playerLoading, winningFighterName } =
-    useFightPickRowItem(fightPick);
+export const FightPickRowItem = ({
+  fightPick,
+  fighter1,
+  fighter2,
+}: FightPickRowItemProps) => {
+  const { playerName, playerLoading, winningFighterName, result } =
+    useFightPickRowItem(fightPick, fighter1, fighter2);
   const leftAdornment = useCallback(() => {
     return (
       <EditPickButton
@@ -35,8 +35,8 @@ export const FightPickRowItem = ({ fightPick }: FightPickRowItemProps) => {
     <TaleOfTheTapePick
       playerName={playerName}
       playerLoading={playerLoading}
-      round={fightPick.round}
-      method={fightPick.method}
+      round={result.round}
+      method={result.method}
       confidence={fightPick.confidence}
       winningFighterName={winningFighterName}
       leftAdornment={leftAdornment}
@@ -57,7 +57,6 @@ const EditPickButton = ({
 }: EditPickButtonProps) => {
   const { navigate } = useNavigation();
   const handleEditPress = useCallback(() => {
-    console.log('navigation');
     navigate('AdminEditFightPick', {
       fightId,
       userUid,

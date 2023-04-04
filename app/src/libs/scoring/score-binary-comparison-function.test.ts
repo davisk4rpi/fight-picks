@@ -1,7 +1,7 @@
+import { scoreBinaryComparisonFunction } from './score-binary-comparison-function';
 import { UserScore } from './types';
-import { userScoreBinaryComparisonFunction } from './user-score-binary-comparison-function';
 
-describe('userScoreBinaryComparisonFunction', () => {
+describe('scoreBinaryComparisonFunction', () => {
   test('higher score should return -1', () => {
     const targetValue: UserScore = {
       userUid: '1',
@@ -13,7 +13,7 @@ describe('userScoreBinaryComparisonFunction', () => {
       score: 3,
       confidence: 5,
     };
-    const act = userScoreBinaryComparisonFunction(targetValue, existingValue);
+    const act = scoreBinaryComparisonFunction(targetValue, existingValue);
     expect(act).toBe(-1);
   });
   test('lower score should return 1', () => {
@@ -27,7 +27,7 @@ describe('userScoreBinaryComparisonFunction', () => {
       score: 3,
       confidence: 2,
     };
-    const act = userScoreBinaryComparisonFunction(targetValue, existingValue);
+    const act = scoreBinaryComparisonFunction(targetValue, existingValue);
     expect(act).toBe(1);
   });
   test('equal score but higher confidence should return -1', () => {
@@ -41,7 +41,7 @@ describe('userScoreBinaryComparisonFunction', () => {
       score: 2,
       confidence: 1,
     };
-    const act = userScoreBinaryComparisonFunction(targetValue, existingValue);
+    const act = scoreBinaryComparisonFunction(targetValue, existingValue);
     expect(act).toBe(-1);
   });
   test('equal score but lower confidence should return 1', () => {
@@ -55,7 +55,7 @@ describe('userScoreBinaryComparisonFunction', () => {
       score: 2,
       confidence: 5,
     };
-    const act = userScoreBinaryComparisonFunction(targetValue, existingValue);
+    const act = scoreBinaryComparisonFunction(targetValue, existingValue);
     expect(act).toBe(1);
   });
   test('equal score and equal confidence should return 0', () => {
@@ -69,7 +69,7 @@ describe('userScoreBinaryComparisonFunction', () => {
       score: 2,
       confidence: 1,
     };
-    const act = userScoreBinaryComparisonFunction(targetValue, existingValue);
+    const act = scoreBinaryComparisonFunction(targetValue, existingValue);
     expect(act).toBe(0);
   });
 });

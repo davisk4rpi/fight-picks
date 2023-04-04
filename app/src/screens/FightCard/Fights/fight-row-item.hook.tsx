@@ -7,6 +7,7 @@ import {
 } from '@fight-picks/native-data-access';
 import { useNavigation } from '@react-navigation/native';
 
+import { decodeFightResult } from '@fight-picks/models';
 import { FightCardScreenContext } from '../types';
 
 export const useFightRowItem = (
@@ -16,7 +17,6 @@ export const useFightRowItem = (
   const { navigate } = useNavigation();
   const fight = useSelectFightById(fightId);
   const fightPick = useSelectCurrentUserFightPickByFightId(fightId);
-
   const { fighter1, fighter2 } = useSelectFightersFromFight(fight);
 
   const navigateToFightPickScreen = useCallback(
@@ -31,8 +31,13 @@ export const useFightRowItem = (
   const taleOfTheTapeResult = useMemo(() => {
     if (fight === undefined || fight.isCanceled || context === 'scores')
       return undefined;
-    if (context === 'picks') return fightPick;
-    return fight.result;
+    if (context === 'picks') {
+      if (fightPick) {
+        return decodeFightResult(fightPick?.resultCode);
+      }
+      return undefined;
+    }
+    return decodeFightResult(fight.resultCode) ?? undefined;
   }, [fight, fightPick, context]);
 
   return {
@@ -41,5 +46,6 @@ export const useFightRowItem = (
     fighter2: fighter2,
     fight,
     taleOfTheTapeResult,
+    confidence: fightPick?.confidence,
   };
 };

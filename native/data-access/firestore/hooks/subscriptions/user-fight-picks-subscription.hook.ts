@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 
-import { FightPick } from '@fight-picks/models';
+import { Fight, FightPick } from '@fight-picks/models';
 
-import { getFightPicksCollectionByUser } from '../../db';
+import { getFighterRef, getFightPicksCollectionByUser } from '../../db';
 import { mapFightPickFromFirebase } from '../../mappers';
 
 type FightPicksUpdate = { upserts: FightPick[]; removedIds: string[] };
@@ -11,9 +11,10 @@ export type OnUserFightPicksUpdate = (snapshot: FightPicksUpdate) => void;
 export const useUserFightPicksSubscription = (
   uid: string | null,
   onSnapshot: OnUserFightPicksUpdate,
+  fightEntities?: Record<string, Fight | undefined>,
 ) => {
   useEffect(() => {
-    if (!uid) {
+    if (!uid || fightEntities === undefined) {
       return;
     }
     const fightPicksCollection = getFightPicksCollectionByUser(uid);
@@ -24,7 +25,14 @@ export const useUserFightPicksSubscription = (
             if (change.type === 'removed') {
               acc.removedIds.push(change.doc.id);
             } else {
-              acc.upserts.push(mapFightPickFromFirebase(change.doc.data()));
+              const fightPick = change.doc.data();
+              const fight = fightEntities[fightPick.fightRef.id];
+              if (fight === undefined) return acc;
+
+              const fighter1Ref = getFighterRef(fight.fighter1Id);
+              acc.upserts.push(
+                mapFightPickFromFirebase(fightPick, fighter1Ref),
+              );
             }
             return acc;
           },
@@ -35,5 +43,5 @@ export const useUserFightPicksSubscription = (
       error => console.error('useUserFightPicksSubscription', error),
     );
     return unsubscribe;
-  }, [uid, onSnapshot]);
+  }, [uid, onSnapshot, fightEntities]);
 };

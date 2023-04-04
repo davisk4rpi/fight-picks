@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
 
-import { FightPick } from '@fight-picks/models';
+import { Fight, FightPick } from '@fight-picks/models';
 
-import { getFightPickRef } from '../db';
+import { getFighterRef, getFightPickRef } from '../db';
 import { mapFightPickFromFirebase } from '../mappers';
 
-export const useFightPickByIdAndUid = (fightPickId: string, uid: string) => {
+export const useFightPickByIdAndUid = (
+  fightPickId: string,
+  uid: string,
+  fighter1Id: Fight['fighter1Id'],
+) => {
   const [fightPick, setFightPick] = useState<FightPick | undefined | null>(
     undefined,
   );
@@ -25,7 +29,10 @@ export const useFightPickByIdAndUid = (fightPickId: string, uid: string) => {
         const fightPick =
           firebaseFightPick === null
             ? null
-            : mapFightPickFromFirebase(firebaseFightPick);
+            : mapFightPickFromFirebase(
+                firebaseFightPick,
+                getFighterRef(fighter1Id),
+              );
 
         setFightPick(fightPick);
       } catch (e) {
@@ -36,7 +43,7 @@ export const useFightPickByIdAndUid = (fightPickId: string, uid: string) => {
     return () => {
       isCanceled = true;
     };
-  }, [uid, fightPickId]);
+  }, [uid, fightPickId, fighter1Id]);
 
   return {
     fightPick: fightPick ?? null,

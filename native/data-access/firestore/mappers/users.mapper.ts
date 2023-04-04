@@ -1,6 +1,6 @@
 import { User, UserRoles } from '@fight-picks/models';
 
-import { FirebaseUser } from '../types';
+import { FirebaseUser } from '../db';
 
 export const mapUserFromFirebase = (firebaseUser: FirebaseUser): User => {
   return {

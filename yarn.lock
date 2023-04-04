@@ -2142,10 +2142,16 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fight-picks/models@workspace:models"
   dependencies:
+    "@babel/core": ^7.21.0
+    "@babel/preset-env": ^7.20.2
+    "@babel/preset-typescript": ^7.21.0
+    "@types/jest": ^29.4.0
     "@typescript-eslint/eslint-plugin": ^5.48.1
     "@typescript-eslint/parser": ^5.48.1
+    babel-jest: ^29.5.0
     cross-env: 5.0.5
     eslint: ^8.31.0
+    jest: ^29.2.1
   languageName: unknown
   linkType: soft
 

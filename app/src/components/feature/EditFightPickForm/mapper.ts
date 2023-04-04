@@ -1,9 +1,11 @@
 import {
+  decodeFightResult,
+  encodeFightResult,
   FightPick,
-  isConfidence,
+  FightResult,
   isMethodWithWinner,
-  isRound,
 } from '@fight-picks/models';
+
 import { WithOptional } from '@fight-picks/utilities';
 
 import { FightPickFormValues } from './types';
@@ -12,38 +14,37 @@ export const mapEditFormValuesToFightPick = ({
   id,
   userUid,
   fightId,
-  winningFighterId,
+  winningFighter,
   method,
   confidence,
   round,
 }: FightPickFormValues): WithOptional<FightPick, 'id'> => {
   const validId = id === '' ? undefined : id;
-  const validMethod = isMethodWithWinner(method) ? method : 'decision';
 
-  const confidenceNum = Number(confidence);
-  const validConfidence = isConfidence(confidenceNum) ? confidenceNum : 1;
-  if (validMethod === 'decision') {
-    return {
-      id: validId,
-      userUid,
-      fightId,
-      winningFighterId,
-      method: validMethod,
-      confidence: validConfidence,
-      round: null,
-    };
-  }
+  const validConfidence = confidence ?? 1;
 
-  const roundNum = Number(round);
-  const validRound = isRound(roundNum) ? roundNum : 1;
+  const validMethod = method ?? 'decision';
+  const validWinningFighter = winningFighter ?? 1;
+  const validRound = round ?? 1;
+
+  const result: FightResult =
+    validMethod === 'decision'
+      ? {
+          method: validMethod,
+          winningFighter: validWinningFighter,
+          round: null,
+        }
+      : {
+          method: validMethod,
+          winningFighter: validWinningFighter,
+          round: validRound,
+        };
   return {
     id: validId,
     userUid,
     fightId,
-    winningFighterId,
-    method: validMethod,
+    resultCode: encodeFightResult(result),
     confidence: validConfidence,
-    round: validRound,
   };
 };
 
@@ -58,23 +59,27 @@ export const mapFightPickToEditFightPickFormValues = (
   fightPick: FightPick | Pick<FightPick, 'userUid' | 'fightId'>,
 ): FightPickFormValues => {
   if (isFullFightPick(fightPick)) {
+    const { method, winningFighter, round } = decodeFightResult(
+      fightPick.resultCode,
+    );
+    const validMethod = isMethodWithWinner(method) ? method : null;
     return {
       id: fightPick.id,
       userUid: fightPick.userUid,
       fightId: fightPick.fightId,
-      winningFighterId: fightPick.winningFighterId,
-      method: fightPick.method,
-      confidence: fightPick.confidence.toString(),
-      round: fightPick.round?.toString() ?? '',
+      winningFighter,
+      method: validMethod,
+      round,
+      confidence: fightPick.confidence,
     };
   }
   return {
     id: '',
     userUid: fightPick.userUid,
     fightId: fightPick.fightId,
-    winningFighterId: '',
-    method: '',
-    confidence: '',
-    round: '',
+    winningFighter: null,
+    method: null,
+    confidence: null,
+    round: null,
   };
 };

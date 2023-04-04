@@ -1,49 +1,43 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
-import { Fight } from '@fight-picks/models';
+import { isMethodWithWinner } from '@fight-picks/models';
 
+import { FightResultMethodFieldValue } from '../FightResultFields';
 import { FightPickFormValues } from './types';
 
 interface UseFightPickFormParams {
-  fight: Pick<Fight, 'rounds'> | undefined;
   initialValues: FightPickFormValues;
   onSuccess: (formValues: FightPickFormValues) => void;
 }
 
 export const useFightPickForm = ({
-  fight,
   initialValues,
   onSuccess,
 }: UseFightPickFormParams) => {
-  const [winningFighterId, setWinningFighterId] = useState<string>(
-    initialValues.winningFighterId,
+  const [winningFighter, setWinningFighter] = useState(
+    initialValues.winningFighter,
   );
-  const [method, setMethod] = useState<string>(initialValues.method);
-  const [round, setRound] = useState<string>(initialValues.round);
-  const [confidence, setConfidence] = useState<string>(
-    initialValues.confidence,
-  );
+  const [method, _setMethod] = useState(initialValues.method);
+  const [round, setRound] = useState(initialValues.round);
+  const [confidence, setConfidence] = useState(initialValues.confidence);
+  const setMethod = useCallback((method: FightResultMethodFieldValue) => {
+    if (isMethodWithWinner(method)) {
+      _setMethod(method);
+    } else {
+      _setMethod(null);
+    }
+  }, []);
+
   const formValuesRef = useRef<FightPickFormValues>(initialValues);
   formValuesRef.current = {
     id: initialValues.id,
     userUid: initialValues.userUid,
     fightId: initialValues.fightId,
-    winningFighterId,
+    winningFighter,
     method,
     round,
     confidence,
   };
-
-  useEffect(() => {
-    if (initialValues) {
-      setWinningFighterId(prev =>
-        prev !== '' ? prev : initialValues.winningFighterId,
-      );
-      setMethod(prev => (prev !== '' ? prev : initialValues.method));
-      setRound(prev => (prev !== '' ? prev : initialValues.round ?? prev));
-      setConfidence(prev => (prev !== '' ? prev : initialValues.confidence));
-    }
-  }, [initialValues]);
 
   const handleSubmit = useCallback(() => {
     if (isValidForm(formValuesRef.current)) {
@@ -51,15 +45,14 @@ export const useFightPickForm = ({
     }
   }, [onSuccess]);
 
-  const submitDisabled =
-    fight === undefined || !isValidForm(formValuesRef.current);
+  const submitDisabled = !isValidForm(formValuesRef.current);
 
   return {
-    winningFighterId,
+    winningFighter,
     method,
     round,
     confidence,
-    setWinningFighterId,
+    setWinningFighter,
     setMethod,
     setRound,
     setConfidence,
@@ -70,15 +63,15 @@ export const useFightPickForm = ({
 };
 
 const isValidForm = ({
-  winningFighterId,
+  winningFighter,
   method,
   round,
   confidence,
 }: Omit<FightPickFormValues, 'id'>) => {
   return !(
-    winningFighterId === '' ||
-    method === '' ||
-    confidence === '' ||
-    (method !== 'decision' && round === '')
+    winningFighter === null ||
+    method === null ||
+    confidence === null ||
+    (method !== 'decision' && round === null)
   );
 };

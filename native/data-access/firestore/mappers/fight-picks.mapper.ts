@@ -1,13 +1,12 @@
 import {
+  buildFightResultCode,
   FightPick,
   isConfidence,
-  isMethodWithWinner,
-  isRound,
 } from '@fight-picks/models';
 import { WithOptional } from '@fight-picks/utilities';
 import {
+  FirebaseFight,
   FirebaseFightPick,
-  getFighterRef,
   getFightRef,
   getUserRef,
 } from '../db';
@@ -16,40 +15,39 @@ import { FirebaseFightPickUpsertInput } from '../crud';
 
 export const mapFightPickFromFirebase = (
   firebaseFightPick: FirebaseFightPick,
+  fighter1Ref: FirebaseFight['fighter1Ref'],
 ): FightPick => {
   const confidence = isConfidence(firebaseFightPick.confidence)
     ? firebaseFightPick.confidence
     : 1;
 
-  const method = isMethodWithWinner(firebaseFightPick.method)
-    ? firebaseFightPick.method
-    : 'decision';
-
-  if (method === 'decision') {
+  if (firebaseFightPick.resultCode) {
     return {
+      resultCode: firebaseFightPick.resultCode,
       id: firebaseFightPick.id,
       fightId: firebaseFightPick.fightRef.id,
       userUid: firebaseFightPick.userRef.id,
-      winningFighterId: firebaseFightPick.winningFighterRef.id,
-      method,
-      round: null,
-      confidence,
-    };
-  } else {
-    const round = isRound(firebaseFightPick.round)
-      ? firebaseFightPick.round
-      : 1;
-
-    return {
-      id: firebaseFightPick.id,
-      fightId: firebaseFightPick.fightRef.id,
-      userUid: firebaseFightPick.userRef.id,
-      winningFighterId: firebaseFightPick.winningFighterRef.id,
-      method,
-      round,
       confidence,
     };
   }
+  const winningFighter = resolveWinningFighterFromFirebaseFightPick(
+    firebaseFightPick,
+    fighter1Ref,
+  );
+
+  const resultCode = buildFightResultCode(
+    firebaseFightPick.method ?? '',
+    winningFighter,
+    firebaseFightPick.round ?? null,
+  );
+
+  return {
+    id: firebaseFightPick.id,
+    fightId: firebaseFightPick.fightRef.id,
+    userUid: firebaseFightPick.userRef.id,
+    resultCode,
+    confidence,
+  };
 };
 
 export const mapFightPickToFirebaseUpsertInput = (
@@ -62,10 +60,18 @@ export const mapFightPickToFirebaseUpsertInput = (
     id,
     fightRef: getFightRef(fightPick.fightId),
     userRef,
-    winningFighterRef: getFighterRef(fightPick.winningFighterId),
-    method: fightPick.method,
-    round: fightPick.round,
+    resultCode: fightPick.resultCode,
     confidence: fightPick.confidence,
     updatedBy: updatedByUserUid ? getUserRef(updatedByUserUid) : userRef,
   };
+};
+
+const resolveWinningFighterFromFirebaseFightPick = (
+  { winningFighterRef }: Pick<FirebaseFightPick, 'winningFighterRef'>,
+  fighter1Ref: FirebaseFight['fighter1Ref'],
+): 1 | 2 => {
+  return winningFighterRef === undefined ||
+    winningFighterRef?.id === fighter1Ref.id
+    ? 1
+    : 2;
 };

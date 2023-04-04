@@ -2,20 +2,20 @@ import React, { PropsWithChildren } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ActivityIndicator, Text } from 'react-native-paper';
 
-import { FightPick } from '@fight-picks/models';
+import { FightPick, FightResult } from '@fight-picks/models';
 
 import { ThemeSpacing, Translation } from '../../../../app-context';
 import { ColorText, ColorTextProps } from '../../../color-text';
 import { FighterTwoLineName } from '../FighterTwoLineName';
 import { TaleOfTheTapeContainer } from './TaleOfTheTapePickContainer';
 
-interface TaleOfTheTapePickProps
-  extends Pick<FightPick, 'round' | 'method' | 'confidence'> {
+interface TaleOfTheTapePickProps extends Pick<FightResult, 'round' | 'method'> {
   winningFighterName: string;
   playerName: string;
   playerLoading?: boolean;
   score?: number;
   leftAdornment?: () => JSX.Element;
+  confidence: FightPick['confidence'];
 }
 
 export const TaleOfTheTapePick = ({
@@ -31,7 +31,7 @@ export const TaleOfTheTapePick = ({
   return (
     <TaleOfTheTapeContainer>
       {leftAdornment && leftAdornment()}
-      {score !== undefined && <Score>{score}</Score>}
+      <Score>{score ?? ' '}</Score>
       <PlayerName>
         {playerLoading ? <ActivityIndicator /> : playerName}
       </PlayerName>
@@ -47,7 +47,7 @@ export const TaleOfTheTapePick = ({
 };
 
 interface ScoreProps {
-  children: number;
+  children: number | string;
 }
 
 const Score = ({ children }: ScoreProps) => {

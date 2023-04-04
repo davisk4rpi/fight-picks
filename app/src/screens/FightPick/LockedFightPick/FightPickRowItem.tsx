@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { FightPickWithScore } from '@fight-picks/models';
+import { Fighter, FightPickWithScore } from '@fight-picks/models';
 
 import { TaleOfTheTapePick } from '../../../components/feature';
 import { useFightPickRowItem } from './fight-pick-row-item.hook';
@@ -8,17 +8,27 @@ import { useFightPickRowItem } from './fight-pick-row-item.hook';
 interface FightPickRowItemProps {
   fightPick: Pick<
     FightPickWithScore,
-    'userUid' | 'winningFighterId' | 'round' | 'method' | 'confidence' | 'score'
+    'userUid' | 'resultCode' | 'confidence' | 'score'
   >;
+  fighter1: Fighter;
+  fighter2: Fighter;
 }
-export const FightPickRowItem = ({ fightPick }: FightPickRowItemProps) => {
-  const { playerName, winningFighterName } = useFightPickRowItem(fightPick);
+export const FightPickRowItem = ({
+  fightPick,
+  fighter1,
+  fighter2,
+}: FightPickRowItemProps) => {
+  const { playerName, winningFighterName, result } = useFightPickRowItem(
+    fightPick,
+    fighter1,
+    fighter2,
+  );
 
   return (
     <TaleOfTheTapePick
       playerName={playerName}
-      round={fightPick.round}
-      method={fightPick.method}
+      round={result.round}
+      method={result.method}
       score={fightPick.score}
       confidence={fightPick.confidence}
       winningFighterName={winningFighterName}

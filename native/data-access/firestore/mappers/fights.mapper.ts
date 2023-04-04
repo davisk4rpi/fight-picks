@@ -1,4 +1,5 @@
 import {
+  encodeFightResult,
   Fight,
   FightResult,
   FightResultWithFinish,
@@ -7,9 +8,10 @@ import {
   isRound,
 } from '@fight-picks/models';
 
-import { FirebaseFight, FirebaseFightResult, getFighterRef } from '../db';
+import { FirebaseFight, FirebaseFightResult } from '../db';
 
 export const mapFightFromFirebase = (firebaseFight: FirebaseFight): Fight => {
+  const resultCode = resolveResultCodeFromFirebase(firebaseFight);
   return {
     id: firebaseFight.id,
     fightCardId: firebaseFight.fightCardRef.id,
@@ -18,41 +20,47 @@ export const mapFightFromFirebase = (firebaseFight: FirebaseFight): Fight => {
     sex: firebaseFight.sex === 'male' ? 'male' : 'female',
     fighter1Id: firebaseFight.fighter1Ref.id,
     fighter2Id: firebaseFight.fighter2Ref.id,
-    result: mapFightResultFromFirebase(firebaseFight.result),
+    resultCode,
     isCanceled: firebaseFight.isCanceled ?? false,
   };
 };
 
+/**
+ * @deprecated Will remove this after resultCode has fully replaced results in the db
+ * @param firebaseFightResult
+ * @param fighter1Ref
+ * @returns
+ */
 const mapFightResultFromFirebase = (
-  firebaseFightResult?: FirebaseFightResult | null,
-): FightResult | undefined => {
-  if (firebaseFightResult === undefined || firebaseFightResult === null)
-    return undefined;
+  firebaseFightResult: FirebaseFightResult | null,
+  fighter1Ref: FirebaseFight['fighter1Ref'],
+): FightResult | null => {
+  if (firebaseFightResult === null) return null;
 
-  const { winningFighterRef, method, round } = firebaseFightResult;
+  const { method, round } = firebaseFightResult;
+  const winningFighter = resolveWinningFighterFromFirebaseFight(
+    firebaseFightResult,
+    fighter1Ref,
+  );
 
   if (isMethodWithNoWinner(method)) {
     return {
-      winningFighterId: null,
+      winningFighter: null,
       method: method,
       round: null,
     };
   }
 
-  if (winningFighterRef !== null && method === 'decision') {
+  if (winningFighter !== null && method === 'decision') {
     return {
-      winningFighterId: winningFighterRef.id,
+      winningFighter,
       method: 'decision',
       round: null,
     };
   }
-  if (
-    winningFighterRef !== null &&
-    isMethodWithFinish(method) &&
-    isRound(round)
-  ) {
+  if (winningFighter !== null && isMethodWithFinish(method) && isRound(round)) {
     const result: FightResultWithFinish = {
-      winningFighterId: winningFighterRef.id ?? '',
+      winningFighter,
       method: method,
       round: round,
     };
@@ -60,22 +68,33 @@ const mapFightResultFromFirebase = (
   }
 
   // TODO Log abnormality
-  return undefined;
+  console.error('Failed to map firebase fight result', firebaseFightResult);
+  return null;
 };
 
-export const mapFightResultToFirebaseResult = (
-  fightResult?: FightResult | null,
-): FirebaseFightResult | null => {
-  if (fightResult === undefined || fightResult === null) return null;
+const resolveResultCodeFromFirebase = (firebaseFight: FirebaseFight) => {
+  if (firebaseFight.resultCode !== undefined) return firebaseFight.resultCode;
+  const result = mapFightResultFromFirebase(
+    firebaseFight.result ?? null,
+    firebaseFight.fighter1Ref,
+  );
 
-  const { winningFighterId, method, round } = fightResult;
+  return encodeFightResult(result);
+};
 
-  const winningFighterRef =
-    winningFighterId === null ? null : getFighterRef(winningFighterId);
-
-  return {
+const resolveWinningFighterFromFirebaseFight = (
+  {
+    winningFighter,
     winningFighterRef,
-    method,
-    round,
-  };
+  }: Pick<FirebaseFightResult, 'winningFighter' | 'winningFighterRef'>,
+  fighter1Ref: FirebaseFight['fighter1Ref'],
+): 1 | 2 | null => {
+  if (winningFighter === null) return null;
+  if (winningFighter === undefined) {
+    if (!winningFighterRef) {
+      return null;
+    }
+    return winningFighterRef.id === fighter1Ref.id ? 1 : 2;
+  }
+  return winningFighter === 1 ? 1 : 2;
 };

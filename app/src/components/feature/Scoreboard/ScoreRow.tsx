@@ -55,7 +55,7 @@ export const ScoreRow = ({
         {score}
       </DataColumn>
       <DataColumn alignment="center" columnSize={1}>
-        {score === 0 ? -1 * confidence : confidence}
+        {confidence}
       </DataColumn>
     </View>
   );

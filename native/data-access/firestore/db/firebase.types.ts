@@ -7,7 +7,8 @@ export type FirebaseFighter = {
 };
 
 export type FirebaseFightResult = {
-  winningFighterRef: FirebaseFirestoreTypes.DocumentReference<FirebaseFighter> | null;
+  winningFighterRef?: FirebaseFirestoreTypes.DocumentReference<FirebaseFighter> | null;
+  winningFighter?: number | null;
   method: string;
   round: number | null;
 };
@@ -21,18 +22,19 @@ export type FirebaseFight = {
   fighter1Ref: FirebaseFirestoreTypes.DocumentReference<FirebaseFighter>;
   fighter2Ref: FirebaseFirestoreTypes.DocumentReference<FirebaseFighter>;
   result?: FirebaseFightResult | null;
+  resultCode?: string | null;
   isCanceled?: boolean;
   createdAt: FirebaseFirestoreTypes.Timestamp;
 };
 
-export type FirebaseFightPick = Omit<
-  FirebaseFightResult,
-  'winningFighterRef'
+export type FirebaseFightPick = Partial<
+  Omit<FirebaseFightResult, 'winningFighterRef' | 'winningFighter'>
 > & {
   id: string;
   confidence: number;
   userRef: FirebaseFirestoreTypes.DocumentReference<FirebaseUser>;
-  winningFighterRef: FirebaseFirestoreTypes.DocumentReference<FirebaseFighter>;
+  resultCode?: string;
+  winningFighterRef?: FirebaseFirestoreTypes.DocumentReference<FirebaseFighter>;
   fightRef: FirebaseFirestoreTypes.DocumentReference<FirebaseFight>;
   createdAt: FirebaseFirestoreTypes.Timestamp;
   updatedAt: FirebaseFirestoreTypes.Timestamp;

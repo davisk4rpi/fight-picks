@@ -1,13 +1,4 @@
-import {
-  FightPick,
-  FightResult,
-  isFightResultWithFinish,
-} from '@fight-picks/models';
-
-export type CalculatePickScoresFightPick = Omit<
-  FightPick,
-  'fightId' | 'id' | 'userUid' | 'confidence'
->;
+import { FightResult, isFightResultWithFinish } from '@fight-picks/models';
 
 /**
  * Calculates the score for a given FightPick based on a FightResult
@@ -25,13 +16,13 @@ export type CalculatePickScoresFightPick = Omit<
  * @returns fightPickScore
  */
 export const calculatePickScore = (
-  fightPick: CalculatePickScoresFightPick,
+  fightPick: FightResult,
   fightResult?: FightResult,
 ): number | undefined => {
   if (fightResult === undefined) {
     return undefined;
   }
-  if (fightPick.winningFighterId === fightResult.winningFighterId) {
+  if (fightPick.winningFighter === fightResult.winningFighter) {
     let score = 1;
     if (isFightResultWithFinish(fightResult)) {
       score += fightPick.round === fightResult.round ? fightResult.round : 0;
