@@ -53,7 +53,7 @@ export const EditFightPickForm = ({
       </View>
       <View style={styles.formSegment}>
         <FightResultRoundField
-          value={fightPickForm.round}
+          value={fightPickForm.roundDisabled ? null : fightPickForm.round}
           onValueChange={fightPickForm.setRound}
           maxRounds={maxRounds}
           disabled={fightPickForm.roundDisabled}

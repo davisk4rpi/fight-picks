@@ -21,9 +21,6 @@ const UPSERT_FIGHT_PICK_SET_OPTIONS: FirebaseFirestoreTypes.SetOptions = {
   mergeFields: [
     'userRef',
     'fightRef',
-    'winningFighterRef',
-    'round',
-    'method',
     'confidence',
     'resultCode',
     'updatedAt',

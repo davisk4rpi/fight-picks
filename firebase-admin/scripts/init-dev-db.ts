@@ -5,7 +5,7 @@ import { getFirestore } from 'firebase-admin/firestore';
 
 import { initAdminFirestore } from '../init-admin-firestore';
 import { seedUserData } from '../seed/dev/seed-users';
-import { seed0, seed1, seed2 } from './history';
+import { seed0, seed1, seed2, seed3, seed4, seed7 } from './history';
 
 const app = initializeApp({
   credential: applicationDefault(),
@@ -21,6 +21,9 @@ const runInitDevDb = async () => {
   await seed0(adminFirestore);
   await seed1(adminFirestore);
   await seed2(adminFirestore);
+  await seed3(adminFirestore);
+  await seed4(adminFirestore);
+  await seed7(adminFirestore);
 
   await seedUserData(adminFirestore);
 };

@@ -18,7 +18,7 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "buildNumber": "6",
+      "buildNumber": "7",
       "supportsTablet": true,
       "bundleIdentifier": "com.kieranpdavis.fightpicks",
       "googleServicesFile": "./GoogleService-Info.plist",
@@ -27,7 +27,7 @@
       }
     },
     "android": {
-      "versionCode": 8,
+      "versionCode": 9,
       "googleServicesFile": "./google-services.json",
       "package": "com.kieranpdavis.fightpicks",
       "adaptiveIcon": {

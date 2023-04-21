@@ -4,6 +4,7 @@ export * from './jones-vs-gane';
 export * from './krylov-vs-spann';
 export * from './lewis-vs-spivak';
 export * from './makhachev-vs-volkanovski';
+export * from './pavlovich-vs-blaydes';
 export * from './teixeira-vs-hill';
 export * from './vera-vs-sandhagen';
 export * from './yan-vs-dvalishvili';
