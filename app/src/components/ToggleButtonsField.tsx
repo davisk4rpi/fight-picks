@@ -1,34 +1,35 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { StyleSheet, TextStyle, View } from 'react-native';
 import {
-  SegmentedButtons,
-  SegmentedButtonsProps,
   Text,
+  ToggleButton,
+  ToggleButtonProps,
+  ToggleButtonRowProps,
 } from 'react-native-paper';
 
 import { ThemeSpacing } from '../app-context';
 
-export type SegmentedButtonsFieldProps = SegmentedButtonsProps & {
-  label?: string;
-  disabled?: boolean;
+type ToggleButton = {
+  value: string;
+  icon: ToggleButtonProps['icon'];
 };
 
-export type SegmentedButton = SegmentedButtonsFieldProps['buttons'][number];
+export type ToggleButtonsFieldProps = Pick<
+  ToggleButtonRowProps,
+  'value' | 'onValueChange'
+> & {
+  label?: string;
+  disabled?: boolean;
+  buttons: ToggleButton[];
+};
 
-export const SegmentedButtonsField = ({
+export const ToggleButtonsField = ({
   label,
   disabled,
   buttons,
-  ...segmentedButtonsProps
-}: SegmentedButtonsFieldProps) => {
-  const newButtons = useMemo(() => {
-    if (disabled)
-      return buttons.map(button => {
-        return { ...button, disabled: true };
-      });
-    return buttons;
-  }, [disabled, buttons]);
-
+  value,
+  onValueChange,
+}: ToggleButtonsFieldProps) => {
   return (
     <View style={styles.container}>
       {label && (
@@ -38,7 +39,17 @@ export const SegmentedButtonsField = ({
           {label}
         </Text>
       )}
-      <SegmentedButtons buttons={newButtons} {...segmentedButtonsProps} />
+      <ToggleButton.Row onValueChange={onValueChange} value={value}>
+        {buttons.map(button => (
+          <ToggleButton
+            key={button.value}
+            disabled={disabled}
+            icon={button.icon}
+            value={button.value}
+            size={28}
+          />
+        ))}
+      </ToggleButton.Row>
     </View>
   );
 };
