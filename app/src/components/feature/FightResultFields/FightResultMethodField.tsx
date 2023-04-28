@@ -26,16 +26,23 @@ export const FightResultMethodField = ({
     },
     [onValueChange],
   );
-  const methodButtons = fightPickOptionsOnly
-    ? fightPickMethodButtons
-    : allMethodButtons;
+
   return (
-    <SegmentedButtonsField
-      label={Translation.method}
-      buttons={methodButtons}
-      value={value ?? ''}
-      onValueChange={wrappedOnValueChange}
-    />
+    <>
+      <SegmentedButtonsField
+        label={Translation.method}
+        buttons={fightPickMethodButtons}
+        value={value ?? ''}
+        onValueChange={wrappedOnValueChange}
+      />
+      {!fightPickOptionsOnly && (
+        <SegmentedButtonsField
+          buttons={otherMethodButtons}
+          value={value ?? ''}
+          onValueChange={wrappedOnValueChange}
+        />
+      )}
+    </>
   );
 };
 const fightPickMethodButtons: SegmentedButtonsFieldProps['buttons'] = [
@@ -53,8 +60,7 @@ const fightPickMethodButtons: SegmentedButtonsFieldProps['buttons'] = [
   },
 ];
 
-const allMethodButtons: SegmentedButtonsFieldProps['buttons'] = [
-  ...fightPickMethodButtons,
+const otherMethodButtons: SegmentedButtonsFieldProps['buttons'] = [
   {
     value: MethodMap.draw,
     label: Translation.shorthandMethodOfVictory(MethodMap.draw),

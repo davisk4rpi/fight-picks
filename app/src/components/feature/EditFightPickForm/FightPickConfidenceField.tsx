@@ -1,8 +1,11 @@
 import { isConfidence } from '@fight-picks/models';
 import React, { useCallback } from 'react';
 
-import { SegmentedButtonsField, SegmentedButtonsFieldProps } from '../..';
 import { Translation } from '../../../app-context';
+import {
+  ToggleButtonsField,
+  ToggleButtonsFieldProps,
+} from '../../ToggleButtonsField';
 import { FightPickConfidenceFieldValue } from './types';
 
 interface FightPickConfidenceFieldProps {
@@ -19,7 +22,7 @@ export const FightPickConfidenceField = ({
     [onValueChange],
   );
   return (
-    <SegmentedButtonsField
+    <ToggleButtonsField
       label={Translation.confidence}
       buttons={confidenceButtons}
       value={value?.toString() ?? ''}
@@ -28,26 +31,26 @@ export const FightPickConfidenceField = ({
   );
 };
 
-const confidenceButtons: SegmentedButtonsFieldProps['buttons'] = [
+const confidenceButtons: ToggleButtonsFieldProps['buttons'] = [
   {
     value: '1',
-    label: '1',
+    icon: 'numeric-1',
   },
   {
     value: '2',
-    label: '2',
+    icon: 'numeric-2',
   },
   {
     value: '3',
-    label: '3',
+    icon: 'numeric-3',
   },
   {
     value: '4',
-    label: '4',
+    icon: 'numeric-4',
   },
   {
     value: '5',
-    label: '5',
+    icon: 'numeric-5',
   },
 ];
 
