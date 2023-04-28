@@ -2159,6 +2159,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fight-picks/native-data-access@workspace:native/data-access"
   dependencies:
+    "@fight-picks/models": 1.0.0
     "@fight-picks/utilities": 1.0.0
     "@react-native-community/eslint-config": ^3.2.0
     "@typescript-eslint/eslint-plugin": ^5.48.1

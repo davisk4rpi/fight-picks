@@ -2,8 +2,8 @@
   "name": "@fight-picks/native-data-access",
   "version": "1.0.0",
   "dependencies": {
-    "@fight-picks/utilities": "1.0.0",
     "@fight-picks/models": "1.0.0",
+    "@fight-picks/utilities": "1.0.0",
     "cross-env": "5.0.5",
     "nanoid": "^4.0.0"
   },
