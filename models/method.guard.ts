@@ -22,7 +22,7 @@ export const isMethodWithNoWinner = (
 export const isMethodWithNoRound = (
   method?: string | null,
 ): method is MethodWithNoRound => {
-  return method === MethodMap.decision || isMethodWithNoWinner(method);
+  return method === MethodMap.decision || method === MethodMap.draw;
 };
 
 export const isMethodWithFinish = (

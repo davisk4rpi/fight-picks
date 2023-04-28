@@ -1,4 +1,8 @@
-import { isMethodWithNoRound, isMethodWithNoWinner } from '@fight-picks/models';
+import {
+  isFightResult,
+  isMethodWithNoRound,
+  isMethodWithNoWinner,
+} from '@fight-picks/models';
 import { useCallback, useRef, useState } from 'react';
 
 import { FightResultFormValues } from './types';
@@ -20,9 +24,9 @@ export const useFightResultForm = ({
 
   const formValuesRef = useRef<FightResultFormValues>(initialValues);
   formValuesRef.current = {
-    winningFighter,
+    winningFighter: isMethodWithNoWinner(method) ? null : winningFighter,
     method,
-    round,
+    round: isMethodWithNoRound(method) ? null : round,
   };
 
   const handleSubmit = useCallback(() => {
@@ -34,9 +38,9 @@ export const useFightResultForm = ({
   const submitDisabled = !isValidForm(formValuesRef.current);
 
   return {
-    winningFighter,
+    winningFighter: formValuesRef.current.winningFighter,
     method,
-    round,
+    round: formValuesRef.current.round,
     setWinningFighter,
     setMethod,
     setRound,
@@ -48,13 +52,8 @@ export const useFightResultForm = ({
 };
 
 const isValidForm = ({
-  winningFighter,
   method,
+  winningFighter,
   round,
-}: Omit<FightResultFormValues, 'id'>) => {
-  return !(
-    winningFighter === null ||
-    method === null ||
-    (method !== 'decision' && round === null)
-  );
-};
+}: Omit<FightResultFormValues, 'id'>) =>
+  method !== null && isFightResult({ method, winningFighter, round });

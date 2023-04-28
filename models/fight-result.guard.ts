@@ -1,4 +1,8 @@
-import { isMethodWithFinish, isMethodWithNoWinner } from './method.guard';
+import {
+  isMethodWithFinish,
+  isMethodWithNoRound,
+  isMethodWithNoWinner,
+} from './method.guard';
 import {
   Confidence,
   FightResult,
@@ -37,10 +41,12 @@ export const isFightResultWithNoWinner = (
 ): fightResult is FightResultWithNoWinner => {
   if (
     isMethodWithNoWinner(fightResult.method) &&
-    fightResult.winningFighter === null &&
-    fightResult.round === null
-  )
-    return true;
+    fightResult.winningFighter === null
+  ) {
+    if (isMethodWithNoRound(fightResult.method))
+      return fightResult.round === null;
+    else return fightResult.round !== null;
+  }
   return false;
 };
 
